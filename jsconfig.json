@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "baseUrl": "src/",
+        "paths": {
+            "@components/*": [
+                "components/*"
+            ],
+            "@hooks/*": [
+                "hooks/*"
+            ],
+            "@constant/*": [
+                "constant/*"
+            ],
+            "@lib/*": [
+                "lib/*"
+            ],
+            "@icon/*": [
+                "assets/icons/*"
+            ],
+            "@store/*": [
+                "store/*"
+            ],
+            "@config/*": [
+                "config/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
