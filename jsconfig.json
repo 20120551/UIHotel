@@ -16,14 +16,14 @@
             "@lib/*": [
                 "lib/*"
             ],
-            "@icon/*": [
-                "assets/icons/*"
-            ],
             "@store/*": [
                 "store/*"
             ],
             "@config/*": [
                 "config/*"
+            ],
+            "@pages/*": [
+                "pages/*"
             ]
         }
     },

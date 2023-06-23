@@ -1,5 +1,5 @@
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks';
+import { useAuth } from '@hooks';
 
 // protect route
 function ProtectRoute({ allowRoles }) {
@@ -7,6 +7,7 @@ function ProtectRoute({ allowRoles }) {
     const location = useLocation();
 
     const authorized = allowRoles.some(role => role === authState.role);
+
     return (
         authorized
             ? <Outlet />

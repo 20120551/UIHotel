@@ -1,21 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
-import { ProtectRoute } from './components/authorization';
-import { role } from './config';
-import Login from './pages/login';
-import Header from './components/structure/header/header';
-import Footer from './components/structure/footer/footer';
-import SideBar from '@components/structure/sidebar/sidebar';
+import { ProtectRoute } from '@components/authorization';
+import { role } from '@config';
+import Login from '@pages/login';
+import { HomeLayout } from 'layouts';
 
 function App() {
     return (
         <>
             <Routes>
-                <Route path='/' element={<Home />} />
-                <Route element={<ProtectRoute allowRoles={[role.STAFF]} />}>
-                    <Route path='/create' element={<Create />} />
+                <Route path='/' element={<HomeLayout />} >
+                    <Route element={<ProtectRoute allowRoles={[role.STAFF]} />}>
+                        <Route path='/create' element={<Create />} />
+                    </Route>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/unauthorized' element={<Unauthorization />} />
                 </Route>
-                <Route path='/login' element={<Login />} />
-                <Route path='/unauthorized' element={<Unauthorization />} />
             </Routes>
         </>
     )
@@ -26,15 +25,6 @@ function Create() {
 }
 function Unauthorization() {
     return <h1>Unauthorization page</h1>
-}
-function Home() {
-    return (
-        <>
-            <Header />
-            <SideBar />
-            {/* <Footer /> */}
-        </>
-    )
 }
 
 export default App;
