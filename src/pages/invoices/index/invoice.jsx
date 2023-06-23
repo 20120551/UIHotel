@@ -3,12 +3,10 @@ import MayEmpty from "@components/mayEmpty/mayEmpty";
 export default function Invoice() {
 
     return (
-        <div class="page-wrapper">
-            <div class="content container-fluid">
-                <Header />
-                <Body invoices={[]} />
-            </div>
-        </div>
+        <>
+            <Header />
+            <Body invoices={[]} />
+        </>
     );
 }
 
@@ -82,7 +80,7 @@ function Header() {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Invoice</label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">

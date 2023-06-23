@@ -3,12 +3,16 @@ import { ProtectRoute } from '@components/authorization';
 import { role } from '@config';
 import Login from '@pages/login';
 import { HomeLayout } from 'layouts';
+import InvoiceRoute from 'routes/invoice-route';
 
 function App() {
     return (
         <>
             <Routes>
                 <Route path='/' element={<HomeLayout />} >
+                    <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
+                        <Route path='/invoice/*' element={<InvoiceRoute />} />
+                    </Route>
                     <Route element={<ProtectRoute allowRoles={[role.STAFF]} />}>
                         <Route path='/create' element={<Create />} />
                     </Route>

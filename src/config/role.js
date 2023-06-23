@@ -1,2 +1,2 @@
 export const STAFF = 'staff';
-export const OWNER = 'manager';
+export const MANAGER = 'manager';

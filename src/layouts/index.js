@@ -9,10 +9,13 @@ export function HomeLayout() {
             <Header />
             <Container>
                 <SideBar />
-                <div className="col-10 d-inline-block">
-                    <Outlet />
+
+                <div class="page-wrapper">
+                    <div class="content container-fluid">
+                        <Outlet />
+                    </div>
                 </div>
-            </Container>
+            </Container >
             {/* <Footer /> */}
         </>
     );

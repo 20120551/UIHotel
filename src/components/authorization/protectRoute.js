@@ -2,7 +2,7 @@ import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@hooks';
 
 // protect route
-function ProtectRoute({ allowRoles }) {
+function ProtectRoute({ allowRoles = [] }) {
     const [authState] = useAuth();
     const location = useLocation();
 
