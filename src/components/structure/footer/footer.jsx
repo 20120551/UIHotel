@@ -1,5 +1,4 @@
-import './footer.css';
-// import './../../../assets/css/style.css'
+import "./footer.css";
 
 function Footer() {
     return (
@@ -34,4 +33,4 @@ function Footer() {
     )
 }
 
-export default Footer;
+export default Footer

@@ -4,6 +4,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    background-color: #009688;
 }
 
 .footer-container {
@@ -22,7 +23,7 @@
 }
 
 .bg-represent {
-    background-image: url('./../../../assets/images/Counter.png');
+    background-image: url('https://cdn-icons-png.flaticon.com/512/235/235889.png');
     width: 50%;
     height: 50px;
     background-size: contain;

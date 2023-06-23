@@ -4,6 +4,7 @@ import { role } from './config';
 import Login from './pages/login';
 import Header from './components/structure/header/header';
 import Footer from './components/structure/footer/footer';
+import SideBar from '@components/structure/sidebar/sidebar';
 
 function App() {
     return (
@@ -30,7 +31,8 @@ function Home() {
     return (
         <>
             <Header />
-            <Footer />
+            <SideBar />
+            {/* <Footer /> */}
         </>
     )
 }
