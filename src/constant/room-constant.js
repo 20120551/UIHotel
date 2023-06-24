@@ -1,0 +1,1 @@
+export const GET_FREE_ROOMS = "GET_FREE_ROOMS";

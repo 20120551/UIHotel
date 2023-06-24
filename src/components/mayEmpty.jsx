@@ -2,8 +2,8 @@ export default function MayEmpty({ name, isEmpty, children }) {
     return (
         isEmpty ?
             <>
-                "{name} is empty"
+                <p className="text-center">{name} is empty</p>
             </> :
-            { children }
+            children
     )
 }

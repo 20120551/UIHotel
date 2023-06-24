@@ -1,13 +1,11 @@
 import axios from "axios";
-const API_URL = 'https://roomee.eastasia.cloudapp.azure.com';
-
-const accessToken = localStorage.getItem("accessToken") || "";
+const API_URL = 'http://localhost:5000/api';
 
 export const privateAxios = axios.create({
     baseURL: API_URL,
-    withCredentials: true,
+    // withCredentials: true,
     headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${localStorage.getItem("accessToken") || ""}`
     }
 })
 

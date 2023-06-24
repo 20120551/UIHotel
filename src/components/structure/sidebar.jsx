@@ -6,7 +6,7 @@ export default function SideBar() {
             <div className="sidebar-inner slimscroll">
                 <div id="sidebar-menu" className="sidebar-menu">
                     <ul>
-                        <li> <a href="index.html"><i className="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
+                        <li> <Link to="/"><i className="fas fa-tachometer-alt"></i> <span>Dashboard</span></Link> </li>
                         <li className="list-divider"></li>
                         <li className="submenu"> <a href="#"><i className="fas fa-suitcase"></i> <span> Booking </span> <span className="menu-arrow"></span></a>
                             <ul className="submenu_className d-none">
