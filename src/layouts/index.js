@@ -1,5 +1,5 @@
-import Container from "@components/structure/container";
 import Header from "@components/structure/header";
+import Footer from "@components/structure/footer";
 import SideBar from "@components/structure/sidebar";
 import { Outlet } from "react-router-dom";
 
@@ -7,15 +7,13 @@ export function HomeLayout() {
     return (
         <>
             <Header />
-            <Container>
-                <SideBar />
+            <SideBar />
 
-                <div class="page-wrapper">
-                    <div class="content container-fluid">
-                        <Outlet />
-                    </div>
+            <div className="page-wrapper">
+                <div className="content container-fluid">
+                    <Outlet />
                 </div>
-            </Container >
+            </div>
             {/* <Footer /> */}
         </>
     );

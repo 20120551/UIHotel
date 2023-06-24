@@ -5,6 +5,7 @@ import Login from '@pages/login';
 import { HomeLayout } from 'layouts';
 import InvoiceRoute from 'routes/invoice-route';
 import InvoiceDetail from '@pages/invoices/detail';
+import ReservationRoute from 'routes/reservation-route';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     </Route>
                     <Route path='/login' element={<Login />} />
                     <Route path='/unauthorized' element={<Unauthorization />} />
+                    <Route path='/reservation' element={<ReservationRoute />} />
                 </Route>
             </Routes>
         </>

@@ -2,7 +2,7 @@ import "./css/footer.css";
 
 function Footer() {
     return (
-        <div id="footer">
+        <div className="page-footer">
             <div className="footer-container" >
                 <div className="footer-container__bg" >
                     <div className="bg-represent" ></div >
