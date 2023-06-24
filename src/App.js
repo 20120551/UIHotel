@@ -17,7 +17,7 @@ function App() {
                         <Route path='/create' element={<Create />} />
                     </Route>
                     
-                    <Route path='/all-regulations' element={<RoomRegulationRoute/>}/>
+                    <Route path='/regulation/*' element={<RoomRegulationRoute/>}/>
                     <Route path='/login' element={<Login />} />
                     <Route path='/unauthorized' element={<Unauthorization />} />
                 </Route>

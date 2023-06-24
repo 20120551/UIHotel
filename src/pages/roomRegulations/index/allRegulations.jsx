@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 const baseURL = "http://localhost:5000/api/Regulation";
 function AllRegulations() {
 
@@ -53,7 +54,7 @@ function AllRegulations() {
                     <div className="row align-items-center">
                         <div className="col">
                             <div className="mt-5">
-                                <h4 className="card-title float-left mt-2">Regulations</h4> <a href="add-regulation.html" className="btn btn-primary float-right veiwbutton">Add Regulation</a> </div>
+                                <h4 className="card-title float-left mt-2">Regulations</h4> <Link to="./add-regulation" relative="path" className="btn btn-primary float-right veiwbutton">Add Regulation</Link> </div>
                         </div>
                     </div>
                 </div>
