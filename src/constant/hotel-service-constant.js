@@ -1,0 +1,1 @@
+export const GET_CARD_BY_CATEGORY = "GET_CARD_BY_CATEGORY";

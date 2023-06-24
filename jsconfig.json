@@ -24,6 +24,13 @@
             ],
             "@pages/*": [
                 "pages/*"
+            ],
+            "@services/*": [
+                "services/*"
+            ],
+            "@utls/*": [
+                "utils",
+                "utils/*"
             ]
         }
     },
