@@ -4,7 +4,7 @@ import { role } from '@config';
 import Login from '@pages/login';
 import { HomeLayout } from 'layouts';
 import InvoiceRoute from 'routes/invoice-route';
-
+import RoomRegulationRoute from 'routes/roomRegulation-route';
 function App() {
     return (
         <>
@@ -16,6 +16,8 @@ function App() {
                     <Route element={<ProtectRoute allowRoles={[role.STAFF]} />}>
                         <Route path='/create' element={<Create />} />
                     </Route>
+                    
+                    <Route path='/all-regulations' element={<RoomRegulationRoute/>}/>
                     <Route path='/login' element={<Login />} />
                     <Route path='/unauthorized' element={<Unauthorization />} />
                 </Route>
