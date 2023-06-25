@@ -5,14 +5,43 @@ import { roomRegulationService } from "@services";
 import { useRoomRegulation } from "@hooks/context-hooks";
 
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-function AddRegulation() {
+function EditRegulation() {
+
+    let { id } = useParams();
+
+    const [state, dispatch] = React.useState("");
+    const isRoomRegulationValid = state?.length === 0 ? true : false;
+    const [idr, setID] = React.useState("");
     const [roomExchangeFee, setRoomExchangeFee] = React.useState("");
     const [maximumGuests, setMaximumGuests] = React.useState("");
     const [defaultGuest, setDefaultGuets] = React.useState("");
     const [maxSurchargeRatio, setMaxSurchargeRatio] = React.useState("");
     const [maxOverseaSurchargeRatio, setMaxOverseaSurchagreRatio] = React.useState("");
-
+    React.useEffect(() => {
+        roomRegulationService.getByID({ index: id }).then(roomRegulation => {
+            dispatch(roomRegulation);
+            if (roomRegulation?.length !== 0) {
+                console.log(roomRegulation);
+                setID(id);
+                setDefaultGuets(roomRegulation.defaultGuest)
+                setMaxOverseaSurchagreRatio(roomRegulation.maxOverseaSurchargeRatio)
+                setMaxSurchargeRatio(roomRegulation.maxSurchargeRatio)
+                setMaximumGuests(roomRegulation.maxGuest)
+                setRoomExchangeFee(roomRegulation.roomExchangeFee)
+            }
+            else {
+                console.log('haha');
+                alert("Invalid room regulation id");
+                navigate("/regulation");
+            }
+        }).catch(error => {
+            alert("Invalid room regulation id")
+            navigate("/regulation")
+        });
+    }, [idr]);
+    const navigate = useNavigate();
     const handleSubmit = async (event) => {
         // event.preventDefault();
         await roomRegulationService.addRoomRegulation({
@@ -50,11 +79,15 @@ function AddRegulation() {
                         <form>
                             <div class="row formtype">
 
-                                {/* <div class="col-md-4">
+                                <div class="col-md-4">
                                     <div class="form-group ">
-                                        <label>Room </label>
-                                        <input class="form-control" type="number" value="200000" /> </div>
-                                </div> */}
+                                        <label>ID </label>
+                                        <input
+                                            disabled
+                                            value={idr}
+                                            onChange={(e) => setID(e.target.value)}
+                                            class="form-control" type="number" /> </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Room Exchange Fee:</label>
@@ -122,4 +155,4 @@ function AddRegulation() {
         </>
     );
 }
-export default AddRegulation
+export default EditRegulation

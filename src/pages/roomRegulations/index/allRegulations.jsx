@@ -1,19 +1,21 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
+import {roomRegulationService} from "@services";
+import { useRoomRegulation } from "@hooks/context-hooks";
 import { Link } from "react-router-dom";
-const baseURL = "http://localhost:5000/api/Regulation";
+import { useNavigate } from "react-router-dom";
 function AllRegulations() {
+    const navigate = useNavigate();
+    const [state,dispatch]=useState();
 
-    const[regulations,setRegulations]= React.useState([]);
     React.useEffect(() => {
-      axios.get(baseURL).then((response) => {
-        const results=[null];
+         roomRegulationService.getAll().then(roomRegulation=>{
+            dispatch(setData(roomRegulation));
+            console.log(roomRegulation)
+         })
+    },[]);
 
-        setRegulations(setData(response.data));
-      })
-    }, [regulations]);
-
-    function setData(data){
+   const setData=(data)=>{
         const results=[null];
         data.forEach((employee, index) => {
             results.push(
@@ -76,7 +78,7 @@ function AllRegulations() {
                                             </tr>
                                         </thead>
                                         <tbody className="text-center">
-                                            {regulations}
+                                            {state}
                                         </tbody>
                                     </table>
                                 </div>
