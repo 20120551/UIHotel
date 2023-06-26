@@ -1,20 +1,72 @@
 import { reservationService } from "@services/index";
 import MayEmpty from "@components/mayEmpty";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
-    const [entries, setEntries] = useState(5);
+    const [entries, setEntries] = useState(2);
+    const [totalPage, setTotalPage] = useState();
+    const [invoiceId, setInvoiceId] = useState('');
+    const [cardId, setCardId] = useState('');
     const [reservationCards, setReservationCards] = useState();
     const [isEmpty, setIsEmpty] = useState(true);
+    const [isSearching, setIsSeaching] = useState(false);
     const navigate = useNavigate();
-
+    const inputTimeRef = useRef();
     // const isEmpty = reservationCards.length === 0 ? true : false;
 
     // // const handleSearch = function () {
     // //     navigate(`/invoice/${search}`);
     // // }
+
+    const HandleSeachByInvoiceId = (id) => {
+        setIsSeaching(true);
+        inputTimeRef.current.value = '';
+        setCardId('');
+        reservationService.getByInvoiceId(id)
+            .then(cards => {
+                setReservationCards(cards);
+                setIsEmpty(cards.length === 0 ? true : false);
+            })
+            .catch(() => {
+                setIsEmpty(true);
+            })
+    }
+
+    const HandleSeachByCardId = (id) => {
+        setIsSeaching(true);
+        setInvoiceId('');
+        reservationService.getByReservationCardId(id)
+            .then(cards => {
+                setReservationCards(cards);
+                setIsEmpty(cards.length === 0 ? true : false);
+            })
+            .catch(() => {
+                setIsEmpty(true);
+            })
+    }
+
+    const HandleSeachByPeriodTime = () => {
+        setIsSeaching(true);
+        setCardId('');
+        setInvoiceId('');
+        console.log(inputTimeRef.current.value);
+        const timeList = inputTimeRef.current.value.split(" - ");
+        if (timeList.length != 2)
+        {
+            setIsEmpty(true);
+            return;
+        }
+        reservationService.getByReservationByPeriodTime({from: timeList[0], to: timeList[1]})
+            .then(cards => {
+                setReservationCards(cards);
+                setIsEmpty(cards.length === 0 ? true : false);
+            })
+            .catch(() => {
+                setIsEmpty(true);
+            })
+    }
 
     useEffect(() => {
         reservationService.getAll({ page: page, entries: entries })
@@ -22,6 +74,11 @@ export default function Reservation() {
                 setReservationCards(cards);
                 setIsEmpty(cards.length === 0 ? true : false);
             })
+
+        reservationService.getTotalPage({ page: page, entries: entries })
+            .then(page => {
+                setTotalPage(page);
+        })
     }, [page, entries])
 
     return (
@@ -43,22 +100,24 @@ export default function Reservation() {
                         <div className="card-body booking_card">
                             <div className="table-responsive">
                                 <div className="mb-3 d-flex justify-content-between col-lg-8">
-                                    <form className="form-inline my-2 my-lg-0">
-                                        <input className="form-control mr-sm-2" type="search" placeholder="Invoice ID"
-                                            aria-label="Search" />
+                                    <div className="form-inline my-2 my-lg-0">
+                                        <input className="form-control mr-sm-2" type="number" placeholder="Invoice ID"
+                                            aria-label="Search" onChange={(e) => setInvoiceId(e.target.value)} />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
-                                            type="submit">&#x1F50E;</button>
-                                    </form>
-                                    <form className="form-inline my-2 my-lg-0">
-                                        <input className="form-control mr-sm-2" type="search"
+                                            type="button" onClick={() => HandleSeachByInvoiceId(invoiceId)}>&#x1F50E;</button>
+                                    </div>
+                                    <div className="form-inline my-2 my-lg-0">
+                                        <input className="form-control mr-sm-2" type="number" 
+                                            onChange={(e) => setCardId(e.target.value)}
                                             placeholder="Reservation ID" aria-label="Search" />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
-                                            type="submit">&#x1F50E;</button>
-                                    </form>
+                                            type="button" onClick={() => HandleSeachByCardId(cardId)}>&#x1F50E;</button>
+                                    </div>
                                     <form className="form-inline my-2 my-lg-0">
-                                        <input type="text" name="DateRangePicker" className="form-control mr-sm-2" />
+                                        <input type="text" name="DateRangePickerReservationCard" 
+                                            className="form-control mr-sm-2" ref={inputTimeRef}/>
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
-                                            type="submit">&#x1F50E;</button>
+                                            type="button" onClick={() => HandleSeachByPeriodTime()}>&#x1F50E;</button>
                                     </form>
                                 </div>
 
@@ -138,6 +197,27 @@ export default function Reservation() {
                     </div>
                 </div>
             </div>
+            {isSearching ? <></> :
+                <nav aria-label="Page navigation" className="mt-3 float-right">
+                    <ul className="pagination">
+                        <li
+                            className="page-item page-link"
+                            onClick={() => setPage(page == 1 ? page : page - 1)}>Previous</li>
+                        <li
+                            className="page-item page-link">{page}</li>
+                        <li
+                            className="page-item page-link"
+                            onClick={() => {
+                                if (page == totalPage){
+                                    setPage(page);
+                                }
+                                else{
+                                    setPage(page + 1)
+                                }
+                            }}>Next</li>
+                    </ul>
+                </nav>
+            }
         </>
     );
 }

@@ -36,3 +36,14 @@ $(function () {
     });
 
 });
+
+$(function () {
+    $('input[name="DateRangePickerReservationCard"]').daterangepicker({
+        autoApply: true,
+        locale: {
+            format: 'DD/MM/YYYY'
+        }
+    });
+
+});
+
