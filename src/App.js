@@ -4,12 +4,16 @@ import { role } from '@config';
 import Login from '@pages/login';
 import { HomeLayout, UserLayout } from 'layouts';
 import InvoiceRoute from 'routes/invoice-route';
+
+import RoomRegulationRoute from 'routes/roomRegulation-route';
+
 import InvoiceDetail from '@pages/invoices/detail';
 import RoomPaying from '@pages/search/roomPaying';
 import SearchRoute from 'routes/search-route';
 import Home from '@pages/home/home';
 import ReservationRoute from 'routes/reservation-route';
 
+import RoomDetailRoute from 'routes/roomDetail-route';
 function App() {
     return (
         <>
@@ -24,6 +28,11 @@ function App() {
                     <Route path='login' element={<Login />} />
                     <Route path='unauthorized' element={<Unauthorization />} />
                     <Route path='reservation/*' element={<ReservationRoute />} />
+                    <Route path='room-detail/*' element={<RoomDetailRoute/>}/>
+                    <Route path='regulation/*' element={<RoomRegulationRoute/>}/>
+                    <Route path='login' element={<Login />} />
+                    <Route path='unauthorized' element={<Unauthorization />} />
+
                 </Route>
             </Routes>
 
@@ -32,7 +41,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path='search/*' element={<SearchRoute />} />
                     <Route path='payment' element={<RoomPaying />} />
-                </Route>
+            </Route>
             </Routes>
         </>
     )
