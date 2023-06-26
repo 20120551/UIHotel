@@ -4,9 +4,9 @@ function Header() {
         <div className="header">
             <div className="header-left">
                 <a href="index.html" className="logo">
-                    <img src="assets/img/hotel_logo.png" width="50" height="70"
+                    <img src="/assets/img/hotel_logo.png" width="50" height="70"
                         alt="logo" /> <span className="logoclassName">HOTEL</span> </a>
-                <a href="index.html" className="logo logo-small"> <img src="assets/img/hotel_logo.png" alt="Logo" width="30"
+                <a href="index.html" className="logo logo-small"> <img src="/assets/img/hotel_logo.png" alt="Logo" width="30"
                     height="30" /> </a>
             </div>
             <a id="toggle_btn"> <i className="fe fe-text-align-left"></i> </a>
@@ -24,7 +24,7 @@ function Header() {
                                     <a href="#">
                                         <div className="media"> <span className="avatar avatar-sm">
                                             <img className="avatar-img rounded-circle" alt="User Image"
-                                                src="assets/img/profiles/avatar-02.jpg" />
+                                                src="/assets/img/profiles/avatar-02.jpg" />
                                         </span>
                                             <div className="media-body">
                                                 <p className="noti-details"><span className="noti-title">Carlson Tech</span> has
@@ -39,7 +39,7 @@ function Header() {
                                     <a href="#">
                                         <div className="media"> <span className="avatar avatar-sm">
                                             <img className="avatar-img rounded-circle" alt="User Image"
-                                                src="assets/img/profiles/avatar-11.jpg" />
+                                                src="/assets/img/profiles/avatar-11.jpg" />
                                         </span>
                                             <div className="media-body">
                                                 <p className="noti-details"><span className="noti-title">International Software
@@ -55,7 +55,7 @@ function Header() {
                                     <a href="#">
                                         <div className="media"> <span className="avatar avatar-sm">
                                             <img className="avatar-img rounded-circle" alt="User Image"
-                                                src="assets/img/profiles/avatar-17.jpg" />
+                                                src="/assets/img/profiles/avatar-17.jpg" />
                                         </span>
                                             <div className="media-body">
                                                 <p className="noti-details"><span className="noti-title">John Hendry</span> sent
@@ -71,7 +71,7 @@ function Header() {
                                     <a href="#">
                                         <div className="media"> <span className="avatar avatar-sm">
                                             <img className="avatar-img rounded-circle" alt="User Image"
-                                                src="assets/img/profiles/avatar-13.jpg" />
+                                                src="/assets/img/profiles/avatar-13.jpg" />
                                         </span>
                                             <div className="media-body">
                                                 <p className="noti-details"><span className="noti-title">Mercury Software
@@ -90,11 +90,11 @@ function Header() {
                 </li>
                 <li className="nav-item dropdown has-arrow">
                     <a href="#" className="dropdown-toggle nav-link" data-toggle="dropdown"> <span className="user-img"><img
-                        className="rounded-circle" src="assets/img/profiles/avatar-01.jpg" width="31"
+                        className="rounded-circle" src="/assets/img/profiles/avatar-01.jpg" width="31"
                         alt="Soeng Souy" /></span> </a>
                     <div className="dropdown-menu">
                         <div className="user-header">
-                            <div className="avatar avatar-sm"> <img src="assets/img/profiles/avatar-01.jpg" alt="User Image"
+                            <div className="avatar avatar-sm"> <img src="/assets/img/profiles/avatar-01.jpg" alt="User Image"
                                 className="avatar-img rounded-circle" /> </div>
                             <div className="user-text">
                                 <h6>Soeng Souy</h6>

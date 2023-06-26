@@ -7,7 +7,7 @@ export default function Header() {
                         <div className="col-lg-2">
                             <div className="logo">
                                 <a href="./index.html">
-                                    <img src="img/logo.png" alt="" />
+                                    <img src="/assets/img/logomain.png" alt="" />
                                 </a>
                             </div>
                         </div>

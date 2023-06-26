@@ -1,8 +1,10 @@
+import QRCode from 'qrcode'
 import PayInfo from "@components/search/payInfo";
+import PaymentModel from "@components/search/paymentModdle";
 import { useSearch } from "@hooks/context-hooks";
 import { cardService, paymentService } from "@services/index";
 import { search } from "@store/actions";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const payMethod = [{
@@ -17,8 +19,15 @@ const payMethod = [{
 }]
 
 export default function RoomPaying() {
+    const buttonRef = useRef(null);
     const navigator = useNavigate();
     const [state, dispatch] = useSearch();
+    const [activeModel, setActiveModel] = useState({
+        url: '',
+        timer: 0,
+        total: 0,
+        isActive: false
+    });
     const [timer, setTimer] = useState(0);
     const [guest, setGuest] = useState({
         firstname: '',
@@ -32,6 +41,12 @@ export default function RoomPaying() {
     }
 
     const handleCreateCard = function () {
+
+        setActiveModel(prev => ({
+            ...prev,
+            isActive: true
+        }))
+
         const _useFetch = async function () {
             const { cardInfo, searchInfo } = state;
             const card = cardInfo.find(
@@ -47,7 +62,11 @@ export default function RoomPaying() {
 
             const payload = await paymentService.createPayment(invoiceId, { payMethod: guest.payMethod });
 
-            return payload;
+            const qrcode = await QRCode.toDataURL(payload.url);
+            return {
+                ...payload,
+                url: qrcode
+            };
         }
 
         _useFetch()
@@ -58,8 +77,13 @@ export default function RoomPaying() {
                     expireAt
                 } = payload
 
-                console.log(payload);
                 // bind url
+                setActiveModel(prev => ({
+                    ...prev,
+                    url,
+                    total: expireAt * 60 * 1000,
+                    isActive: true
+                }))
 
                 // timeout
                 let interval1 = setInterval(() => {
@@ -70,6 +94,8 @@ export default function RoomPaying() {
                         // notify
 
                         setTimeout(() => {
+                            buttonRef.current.click();
+                            dispatch(search.createCard())
                             navigator("/");
                         }, 1000 * 5);
                     }
@@ -83,16 +109,18 @@ export default function RoomPaying() {
                                 clearInterval(interval2);
                                 setTimeout(() => {
                                     clearInterval(interval1);
+                                    buttonRef.current.click();
+                                    dispatch(search.createCard())
                                     navigator("/");
                                 }, 1000 * timeout);
                             }
                         })
-                }, 1000 * 30) // 30s
+                }, 1000 * 10) // 30s
             })
     }
 
     return (
-        <div className="mt-4">
+        <div className="mt-15">
             <section className="rooms-section spad">
                 <div className="container">
                     <div className="row">
@@ -204,6 +232,13 @@ export default function RoomPaying() {
                     </div>
                 </div>
             </section>
+            <PaymentModel
+                isActive={activeModel.isActive}
+                url={activeModel.url}
+                timer={timer}
+                total={activeModel.total}
+                payMethod={guest.payMethod}
+                buttonRef={buttonRef} />
         </div>
     );
 }

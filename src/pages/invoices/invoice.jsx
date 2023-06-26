@@ -16,7 +16,7 @@ export default function Invoice() {
     const isEmpty = state.invoices?.length === 0 ? true : false;
 
     const handleSearch = function () {
-        navigate(`/invoice/${search}`);
+        navigate(`/hotel/invoice/${search}`);
     }
 
     useEffect(() => {
@@ -28,6 +28,16 @@ export default function Invoice() {
 
     return (
         <>
+
+            <div className="page-header">
+                <div className="row align-items-center">
+                    <div className="col">
+                        <div className="mt-5">
+                            <h3 className="card-title float-left mt-2">Invoice</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-lg-12">
                     <form>

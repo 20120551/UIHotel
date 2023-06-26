@@ -1,1 +1,6 @@
-export const GET_ALL_ROOM_DETAIL = "GET_ALL_ROOM_DETAIL";
+import { roomDetail } from "@constant/index";
+
+export const getAll = payload => ({
+    type: roomDetail.GET_ALL_ROOM_DETAIL,
+    payload
+})

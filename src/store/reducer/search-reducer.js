@@ -27,7 +27,7 @@ function createDefaultSearchInfo() {
     return {
         from: getVietnameseDate(),
         to: getVietnameseDate(date),
-        type: "double",
+        type: "Double",
         ttl: createTtl(DEFAULT_TTL)
     }
 }
@@ -143,6 +143,8 @@ const searchReducer = (state, action) => {
 
             // _cardInfo = [...cardInfo];
             _searchInfo = createDefaultCardInfo();
+            localStorage.setItem("searchInfo", JSON.stringify(_searchInfo));
+
             return {
                 ...state,
                 searchInfo: _searchInfo,

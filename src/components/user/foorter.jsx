@@ -8,7 +8,7 @@ export default function Footer() {
                             <div className="ft-about">
                                 <div className="logo">
                                     <a href="#">
-                                        <img src="img/footer-logo.png" alt="" />
+                                        <img src="/assets/img/footer-logo.png" alt="" />
                                     </a>
                                 </div>
                                 <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>

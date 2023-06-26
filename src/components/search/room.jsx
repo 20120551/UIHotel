@@ -5,7 +5,7 @@ export default function Room({ room, handleBooking }) {
     return (
         <div className="col-lg-6 col-md-6">
             <div className="room-item">
-                <img src={room.image} alt={`Room ${room.id}`} />
+                <img src={`/assets/img/room/room-${Math.round(Math.random() * 6)}.jpg`} alt={`Room ${room.id}`} />
                 <div className="ri-text">
                     <h4>Room {room.id}</h4>
                     <h3>{room.price}<span>/night</span></h3>
