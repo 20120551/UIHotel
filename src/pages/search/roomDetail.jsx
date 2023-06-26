@@ -53,7 +53,7 @@ export default function RoomDetail() {
                     <div className="row">
                         <div className="col-8 col-md-8">
                             <div className="room-details-item">
-                                <img src="img/room/room-details.jpg" alt="" />
+                                <img src="/assets/img/room/room-details.jpg" alt="" />
                                 <div className="rd-text">
                                     <div className="rd-title">
                                         <h3>Premium King Room</h3>

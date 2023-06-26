@@ -63,9 +63,18 @@ export default function InvoiceDetail() {
 
     return (
         <div className="row flex flex-column">
-            <h3>
-                Invoice {state.invoice.id}
-                <InvoiceStatus status={state.invoice.status} /></h3>
+            <div className="page-header">
+                <div className="row align-items-center">
+                    <div className="col">
+                        <div className="mt-5">
+                            <h3 className="card-title float-left mt-2">
+                                Invoice {state.invoice.id}
+                                <InvoiceStatus status={state.invoice.status} />
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-8 col-md-8">
                     <div className="card-body">

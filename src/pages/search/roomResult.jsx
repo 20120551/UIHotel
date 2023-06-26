@@ -43,14 +43,14 @@ export default function RoomResult() {
     }
 
     return (
-        <div className="mt-4">
+        <div className="mt-15">
             <section className="search-section">
                 <SearchBar
                     info={state.searchInfo}
                     handleSearch={handleSearch} />
             </section>
 
-            <section className="rooms-section spad">
+            <section className="rooms-section spad mt-5">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8 row">

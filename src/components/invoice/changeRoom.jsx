@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { roomService } from "@services/index";
-import { useRoom } from "@hooks/context-hooks";
-import { room } from "@store/actions/index";
+import { roomDetailService, roomService } from "@services/index";
+import { useRoom, useRoomDetail } from "@hooks/context-hooks";
+import { room, roomDetail } from "@store/actions/index";
 import { getVietnameseDate } from "@utls/date";
 import RoomTable from "./roomTable";
 
@@ -9,6 +9,8 @@ const date = new Date();
 date.setDate(date.getDate() + 1)
 export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
     const [state, dispatch] = useRoom();
+    const [roomDetailState, roomDetailDispatch] = useRoomDetail();
+
     const [roomChanged, setRoomChanged] = useState({
         from: getVietnameseDate(),
         to: getVietnameseDate(date),
@@ -24,6 +26,12 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
         })
             .then(data => dispatch(room.getFreeRooms({ rooms: data })));
     }, [roomChanged.roomType, roomChanged.from, roomChanged.to]);
+
+
+    useEffect(() => {
+        roomDetailService.getAll()
+            .then(data => roomDetailDispatch(roomDetail.getAll({ rooms: data })))
+    }, []);
 
     return (
         <>
@@ -89,8 +97,13 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                                         ...prev, roomType: e.target.value
                                     }))}
                                     className="form-control" id="sel1" name="sellist1">
-                                    <option value="double">Double</option>
-                                    <option value="2">Category 2</option>
+                                    {roomDetailState.rooms.map(room => {
+                                        return (
+                                            <option
+                                                key={room.id}
+                                                value={room.roomType}>{room.roomType}</option>
+                                        )
+                                    })}
                                 </select>
                             </div>
                         </div>

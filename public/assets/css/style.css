@@ -7002,9 +7002,21 @@ ol {
     justify-content: center;
 }
 
+.mt-15 {
+    margin-top: 80px;
+}
+
 /*---------------------
   Header
 -----------------------*/
+.header-section {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
 
 .header-section.header-normal .menu-item {
     -webkit-box-shadow: 0px 12px 15px rgba(36, 11, 12, 0.05);
@@ -9543,4 +9555,11 @@ ol {
 .custom-radio input:checked+.radio-btn>i {
     opacity: 1;
     transform: translateX(-50%) scale(1);
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000
 }

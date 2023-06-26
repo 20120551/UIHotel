@@ -40,6 +40,7 @@ export default function PayInfo({
                 <h4 className="font-weight-bold">{cardInfo.reduce((init, card) => init + card.price, 0)} VND</h4>
             </div>
             <button
+                data-toggle="modal" data-target="#exampleModal"
                 onClick={() => handleCreateCard()}
                 className="btn btn-info btn-block my-3">
                 next

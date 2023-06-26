@@ -31,6 +31,9 @@
             "@utls/*": [
                 "utils",
                 "utils/*"
+            ],
+            "@assets/*": [
+                "assets/*"
             ]
         }
     },

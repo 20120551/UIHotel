@@ -25,9 +25,6 @@
             return false;
         }
     });
-<<<<<<< HEAD
-})(jQuery);
-=======
 })(jQuery);
 $(function () {
     $('input[name="DateRangePicker"]').daterangepicker({
@@ -39,4 +36,3 @@ $(function () {
     });
 
 });
->>>>>>> 2f633cdd0c4eb02588b27413c246c3a93d52f590

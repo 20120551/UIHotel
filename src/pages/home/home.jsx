@@ -1,6 +1,7 @@
 import SearchBar from "@components/search/searchBar";
 import { useSearch } from "@hooks/context-hooks";
 import { search } from "@store/actions";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -10,6 +11,15 @@ export default function Home() {
         dispatch(search.cacheSearch(searchInfo));
         navigate("/search");
     }
+
+    useEffect(() => {
+        document.querySelectorAll(".set-bg")
+            .forEach(tag => {
+                const bg = tag.getAttribute("data-setbg");
+                tag.style.backgroundImage = 'url(' + bg + ')'
+            })
+    })
+
     return (
         <>
             <section className="hero-section">
@@ -27,9 +37,12 @@ export default function Home() {
                 </div>
 
                 <div className="hero-slider owl-carousel">
-                    <div className="hs-item set-bg" data-setbg="img/hero/hero-1.jpg"></div>
-                    <div className="hs-item set-bg" data-setbg="img/hero/hero-2.jpg"></div>
-                    <div className="hs-item set-bg" data-setbg="img/hero/hero-3.jpg"></div>
+                    <div className="hs-item set-bg" data-setbg="/assets/img/hero/hero-1.jpg">
+                    </div>
+                    {/* <div className="hs-item set-bg" data-setbg="/assets/img/hero/hero-2.jpg">
+                    </div>
+                    <div className="hs-item set-bg" data-setbg="/assets/img/hero/hero-3.jpg">
+                    </div> */}
                 </div>
                 <div className="container" style={{
                     bottom: "-50px",
@@ -61,10 +74,10 @@ export default function Home() {
                             <div className="about-pic">
                                 <div className="row">
                                     <div className="col-sm-6">
-                                        <img src="img/about/about-1.jpg" alt="" />
+                                        <img src="/assets/img/about/about-1.jpg" alt="" />
                                     </div>
                                     <div className="col-sm-6">
-                                        <img src="img/about/about-2.jpg" alt="" />
+                                        <img src="/assets/img/about/about-2.jpg" alt="" />
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +159,7 @@ export default function Home() {
                     </div>
                     <div className="row">
                         <div className="col-lg-4">
-                            <div className="blog-item set-bg" data-setbg="img/blog/blog-1.jpg">
+                            <div className="blog-item set-bg" data-setbg="/assets/img/blog/blog-1.jpg">
                                 <div className="bi-text">
                                     <span className="b-tag">Travel Trip</span>
                                     <h4><a href="#">Tremblant In Canada</a></h4>
@@ -155,7 +168,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="col-lg-4">
-                            <div className="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
+                            <div className="blog-item set-bg" data-setbg="/assets/img/blog/blog-2.jpg">
                                 <div className="bi-text">
                                     <span className="b-tag">Camping</span>
                                     <h4><a href="#">Choosing A Static Caravan</a></h4>
@@ -164,7 +177,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="col-lg-4">
-                            <div className="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
+                            <div className="blog-item set-bg" data-setbg="/assets/img/blog/blog-3.jpg">
                                 <div className="bi-text">
                                     <span className="b-tag">Event</span>
                                     <h4><a href="#">Copper Canyon</a></h4>
@@ -173,7 +186,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="col-lg-8">
-                            <div className="blog-item small-size set-bg" data-setbg="img/blog/blog-wide.jpg">
+                            <div className="blog-item small-size set-bg" data-setbg="/assets/img/blog/blog-wide.jpg">
                                 <div className="bi-text">
                                     <span className="b-tag">Event</span>
                                     <h4><a href="#">Trip To Iqaluit In Nunavut A Canadian Arctic City</a></h4>
@@ -182,7 +195,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="col-lg-4">
-                            <div className="blog-item small-size set-bg" data-setbg="img/blog/blog-10.jpg">
+                            <div className="blog-item small-size set-bg" data-setbg="/assets/img/blog/blog-10.jpg">
                                 <div className="bi-text">
                                     <span className="b-tag">Travel</span>
                                     <h4><a href="#">Traveling To Barcelona</a></h4>

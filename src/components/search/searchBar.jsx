@@ -1,7 +1,16 @@
-import { useState } from "react";
+import { useRoomDetail } from "@hooks/context-hooks";
+import { roomDetailService } from "@services/index";
+import { roomDetail } from "@store/actions";
+import { useEffect, useState } from "react";
 
 export default function SearchBar({ handleSearch, info }) {
     const [search, setSearch] = useState({ ...info });
+    const [roomDetailState, roomDetailDispatch] = useRoomDetail();
+
+    useEffect(() => {
+        roomDetailService.getAll()
+            .then(data => roomDetailDispatch(roomDetail.getAll({ rooms: data })));
+    }, [])
 
     return (
         <div className="bg-white shadow" style={{ padding: "35px" }}>
@@ -32,11 +41,16 @@ export default function SearchBar({ handleSearch, info }) {
                             <label>Are you sure</label>
                             <div className="pr-5">
                                 <select
+                                    value={search.type}
                                     onChange={(e) => setSearch(prev => ({ ...prev, type: e.target.value }))}
                                     className="form-control">
-                                    <option value="1">Adult 1</option>
-                                    <option value="2">Adult 2</option>
-                                    <option value="3">Adult 3</option>
+                                    {roomDetailState.rooms.map(room => {
+                                        return (
+                                            <option
+                                                key={room.id}
+                                                value={room.roomType}>{room.roomType}</option>
+                                        )
+                                    })}
                                 </select>
                             </div>
                         </div>
