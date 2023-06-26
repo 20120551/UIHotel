@@ -1,8 +1,8 @@
-import { privateAxios } from "@lib/axios";
+import axios, { privateAxios } from "@lib/axios";
 
 export const getAll = async function () {
     console.log("make request to endpoint: ", `/RoomDetail`);
-    const roomDetails = await privateAxios.get(`/RoomDetail`);
+    const roomDetails = await axios.get(`/RoomDetail`);
     return roomDetails.data;
 }
 
@@ -28,4 +28,4 @@ export const addRoomDetail = async function (payload) {
 //     const roomDetail = await privateAxios.post(`/Detail/${roomDetailId}/service/${serviceId}`);
 //     return roomDetail.data;
 // }
-import axios from "@lib/axios"
+

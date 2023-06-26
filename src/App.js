@@ -25,11 +25,23 @@ function App() {
                     <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
                         <Route path='create' element={<InvoiceDetail />} />
                     </Route>
-                    <Route path='/room-detail/*' element={<RoomDetailRoute/>}/>
-                    <Route path='/regulation/*' element={<RoomRegulationRoute/>}/>
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/unauthorized' element={<Unauthorization />} />
+                    <Route path='login' element={<Login />} />
+                    <Route path='unauthorized' element={<Unauthorization />} />
+                    <Route path='reservation' element={<ReservationRoute />} />
+                    <Route path='room-detail/*' element={<RoomDetailRoute/>}/>
+                    <Route path='regulation/*' element={<RoomRegulationRoute/>}/>
+                    <Route path='login' element={<Login />} />
+                    <Route path='unauthorized' element={<Unauthorization />} />
+
                 </Route>
+            </Routes>
+
+            <Routes>
+                <Route path="/" element={<UserLayout />}>
+                    <Route index element={<Home />} />
+                    <Route path='search/*' element={<SearchRoute />} />
+                    <Route path='payment' element={<RoomPaying />} />
+            </Route>
             </Routes>
         </>
     )

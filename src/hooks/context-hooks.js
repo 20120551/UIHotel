@@ -1,4 +1,3 @@
-import { AuthContext, UserContext, InvoiceContext, RoomContext, ServiceContext,RoomRegulationContext } from '@store/context';
 import {
     AuthContext, UserContext, InvoiceContext,
     RoomContext, ServiceContext, SearchContext, RoomDetailContext,
@@ -24,10 +23,10 @@ export const useInvoice = function () {
     const [state, dispatch] = useContext(InvoiceContext);
     return [state, dispatch];
 }
-export const useRoomRegulation = function () {
-    const [state, dispatch] = useContext(RoomRegulationContext);
-    return [state, dispatch];
-}
+// export const useRoomRegulation = function () {
+//     const [state, dispatch] = useContext(RoomRegulationContext);
+//     return [state, dispatch];
+// }
 
 export const useRoom = function () {
     const [state, dispatch] = useContext(RoomContext);
