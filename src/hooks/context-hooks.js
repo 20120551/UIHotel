@@ -1,4 +1,6 @@
-import { AuthContext, UserContext, InvoiceContext, RoomContext, ServiceContext } from '@store/context';
+import {
+    AuthContext, UserContext, InvoiceContext, RoomContext, ServiceContext, SearchContext
+} from '@store/context';
 import { useContext } from 'react';
 
 /**
@@ -27,5 +29,10 @@ export const useRoom = function () {
 
 export const useService = function () {
     const [state, dispatch] = useContext(ServiceContext);
+    return [state, dispatch];
+}
+
+export const useSearch = function () {
+    const [state, dispatch] = useContext(SearchContext);
     return [state, dispatch];
 }

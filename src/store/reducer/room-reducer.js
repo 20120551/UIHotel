@@ -1,7 +1,8 @@
-import { room } from "@constant/index";
+import { room, search } from "@constant/index";
 
 const roomInitialState = {
-    rooms: []
+    rooms: [],
+    room: {}
 }
 
 const roomReducer = (state, action) => {
@@ -13,6 +14,29 @@ const roomReducer = (state, action) => {
                 ...state,
                 rooms: action.payload.rooms
             };
+        case room.GET_ROOM_DETAIL:
+            console.log("handing event get detail room");
+            console.log(action.payload.rooms);
+            return {
+                ...state,
+                room: action.payload.room
+            };
+        case search.CACHE_RESERVATION_CARD:
+            console.log("handing event cache reservation card");
+            console.log(action.payload.room);
+            const _rooms = state.rooms.filter(room => room.id !== action.payload.room.id);
+            return {
+                ...state,
+                rooms: _rooms
+            }
+
+        case search.REMOVE_CACHE_RESERVATION_CARD:
+            console.log("handing event cache reservation card");
+            console.log(action.payload.room);
+            state.rooms.push(action.payload.room);
+            return {
+                ...state
+            }
         default:
             return { ...state }
     }

@@ -1,0 +1,1 @@
+export const CREATE_PAYMENT = "CREATE_PAYMENT";

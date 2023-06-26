@@ -1,12 +1,12 @@
 export default function RoomTable({ rooms, setRoomChanged }) {
     return (
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Room</h4>
+        <div className="card">
+            <div className="card-header">
+                <h4 className="card-title">Room</h4>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-nowrap mb-0">
+            <div className="card-body">
+                <div className="table-responsive">
+                    <table className="table table-nowrap mb-0">
                         <thead>
                             <tr>
                                 <th>#</th>

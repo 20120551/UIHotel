@@ -27,43 +27,43 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
 
     return (
         <>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Change room</h4>
+            <div className="card">
+                <div className="card-header">
+                    <h4 className="card-title">Change room</h4>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                     <form>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2">Old Room</label>
-                            <div class="col-md-10">
+                        <div className="form-group row">
+                            <label className="col-form-label col-md-2">Old Room</label>
+                            <div className="col-md-10">
                                 <input
                                     readOnly
                                     value={oldRoom}
                                     type="text"
-                                    class="form-control"
+                                    className="form-control"
                                     placeholder=".form-control" />
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2">New Room</label>
-                            <div class="col-md-10">
+                        <div className="form-group row">
+                            <label className="col-form-label col-md-2">New Room</label>
+                            <div className="col-md-10">
                                 <input
                                     readOnly
                                     value={roomChanged.newRoom}
                                     type="text"
-                                    class="form-control" placeholder=".form-control" />
+                                    className="form-control" placeholder=".form-control" />
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-2">From</label>
+                        <div className="form-group row">
+                            <label className="col-form-label col-md-2">From</label>
                             <div className="col-md-10">
-                                <div class="cal-icon">
+                                <div className="cal-icon">
                                     <input
                                         onChange={(e) => setRoomChanged(prev => ({
                                             ...prev, from: e.target.value
                                         }))}
                                         value={roomChanged.from}
-                                        type="text" class="form-control datetimepicker" />
+                                        type="text" className="form-control datetimepicker" />
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div className="form-group row">
                             <label className="col-form-label col-md-2">Room Type</label>
                             <div className="col-md-10">
                                 <select

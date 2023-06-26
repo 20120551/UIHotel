@@ -1,6 +1,6 @@
-import ChangeRoom from "@components/changeRoom";
-import ChangeService from "@components/changeService";
-import InvoiceStatus from "@components/invoiceStatus";
+import ChangeRoom from "@components/invoice/changeRoom";
+import ChangeService from "@components/invoice/changeService";
+import InvoiceStatus from "@components/invoice/invoiceStatus";
 import MayEmpty from "@components/mayEmpty";
 import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services";
@@ -121,7 +121,7 @@ export default function InvoiceDetail() {
                                                                         oldRoom: roomId,
                                                                         isActiveRoomChange: true
                                                                     }))}
-                                                                    class="btn btn-info">Change</button>
+                                                                    className="btn btn-info">Change</button>
                                                             </td>
                                                         </tr>
                                                     )

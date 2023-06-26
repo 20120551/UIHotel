@@ -1,4 +1,4 @@
-import InvoiceStatus from "@components/invoiceStatus";
+import InvoiceStatus from "@components/invoice/invoiceStatus";
 import MayEmpty from "@components/mayEmpty";
 import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services/index";

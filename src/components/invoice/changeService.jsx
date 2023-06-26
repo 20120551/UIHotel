@@ -14,11 +14,11 @@ export default function ChangeService({ handleChangeService }) {
     }, [categoryId]);
     return (
         <>
-            <div class="form-group m-2">
+            <div className="form-group m-2">
                 <label>Category</label>
                 <select
                     onChange={(e) => setCategoryId(e.target.value)}
-                    class="form-control" id="sel1" name="sellist1">
+                    className="form-control" id="sel1" name="sellist1">
                     <option value="1">Category 1</option>
                     <option value="2">Category 2</option>
                 </select>
