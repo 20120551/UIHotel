@@ -9,6 +9,7 @@ import RoomRegulationRoute from 'routes/roomRegulation-route';
 
 import InvoiceDetail from '@pages/invoices/detail';
 
+import RoomDetailRoute from 'routes/roomDetail-route';
 function App() {
     return (
         <>
@@ -20,7 +21,7 @@ function App() {
                     <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
                         <Route path='/create' element={<InvoiceDetail />} />
                     </Route>
-                    
+                    <Route path='/room-detail/*' element={<RoomDetailRoute/>}/>
                     <Route path='/regulation/*' element={<RoomRegulationRoute/>}/>
                     <Route path='/login' element={<Login />} />
                     <Route path='/unauthorized' element={<Unauthorization />} />
