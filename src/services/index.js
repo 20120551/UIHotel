@@ -4,3 +4,4 @@ export * as roomService from './room-service';
 export * as hotelServiceService from './hotel-service-service';
 export * as cardService from './card-service';
 export * as paymentService from './payment-service';
+export * as reservationService from './reservation-service';

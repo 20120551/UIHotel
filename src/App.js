@@ -8,6 +8,7 @@ import InvoiceDetail from '@pages/invoices/detail';
 import RoomPaying from '@pages/search/roomPaying';
 import SearchRoute from 'routes/search-route';
 import Home from '@pages/home/home';
+import ReservationRoute from 'routes/reservation-route';
 
 function App() {
     return (
@@ -20,14 +21,9 @@ function App() {
                     <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
                         <Route path='create' element={<InvoiceDetail />} />
                     </Route>
-                    <Route path='login' element={<Login />} />
-                    <Route path='unauthorized' element={<Unauthorization />} />
-                </Route>
-
-                <Route path='/' element={<UserLayout />}>
-                    <Route path='/' element={<Home />} />
-                    <Route path='search/*' element={<SearchRoute />} />
-                    <Route path='payment' element={<RoomPaying />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/unauthorized' element={<Unauthorization />} />
+                    <Route path='/reservation' element={<ReservationRoute />} />
                 </Route>
             </Routes>
         </>

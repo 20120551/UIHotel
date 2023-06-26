@@ -1,5 +1,5 @@
-import Container from "@components/structure/container";
 import Header from "@components/structure/header";
+import Footer from "@components/structure/footer";
 import SideBar from "@components/structure/sidebar";
 import UserHeader from "@components/user/header";
 import UserFooter from "@components/user/foorter";
@@ -14,6 +14,7 @@ export function HomeLayout() {
         <>
             <Header />
             <SideBar />
+
             <div className="page-wrapper">
                 <div className="content container-fluid">
                     <Outlet />
