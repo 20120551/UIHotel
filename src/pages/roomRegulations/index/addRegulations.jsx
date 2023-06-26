@@ -18,6 +18,7 @@ function AddRegulation() {
         await roomRegulationService.addRoomRegulation({
             roomExchangeFee: roomExchangeFee,
             maxGuest: maximumGuests,
+            maxOverseaSurchargeRatio:maxOverseaSurchargeRatio,
             maxSurchargeRatio: maxSurchargeRatio,
             defaultGuest: defaultGuest
         }).then(data => {
@@ -33,7 +34,7 @@ function AddRegulation() {
         }).catch(function (error) {
             console.log(error);
         })
-        console.log("haha");
+ 
 
     }
     return (

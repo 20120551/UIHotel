@@ -11,6 +11,10 @@ export const getByID = async function ({ index }) {
     const roomRegulation = await privateAxios.get(`Regulation/id?id=${index}`);
     return roomRegulation.data;
 }
+export const removeRoomRegulation = async function ({id}) {
+    const roomRegulation = await privateAxios.delete(`/Regulation?id=${id}`);
+    return roomRegulation.data;
+}
 
 export const addRoomRegulation = async function (payload) {
     const roomRegulation = await privateAxios.post(`/Regulation`, {
@@ -19,12 +23,15 @@ export const addRoomRegulation = async function (payload) {
     return roomRegulation.data;
 }
 
+
 // export const addHotelService = async function ({ roomRegulationId, serviceId }) {
 //     const roomRegulation = await privateAxios.post(`/Regulation/${roomRegulationId}/service/${serviceId}`);
 //     return roomRegulation.data;
 // }
 
-export const updateRoomRegulationstatus = async function ({ roomRegulationId }) {
-    const roomRegulation = await privateAxios.put(`/Regulation/${roomRegulationId}`);
+export const updateRoomRegulation = async function ({ roomRegulationId },payload) {
+    const roomRegulation = await privateAxios.put(`/Regulation/${roomRegulationId}`,{
+        ...payload
+    });
     return roomRegulation.data;
 }

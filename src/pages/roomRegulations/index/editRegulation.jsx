@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { roomRegulationService } from "@services";
@@ -44,13 +44,15 @@ function EditRegulation() {
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
         // event.preventDefault();
-        await roomRegulationService.addRoomRegulation({
+        await roomRegulationService.updateRoomRegulation({ roomRegulationId:idr },{
             roomExchangeFee: roomExchangeFee,
             maxGuest: maximumGuests,
+            maxOverseaSurchargeRatio:maxOverseaSurchargeRatio,
             maxSurchargeRatio: maxSurchargeRatio,
             defaultGuest: defaultGuest
         }).then(data => {
-
+            navigate("/regulation");
+            console.log(data);
             setDefaultGuets("");
             setMaxOverseaSurchagreRatio("");
             setMaximumGuests("");
@@ -150,7 +152,7 @@ function EditRegulation() {
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/regulation" relative="">Cancel</Link></button>
-                <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">Add</button>
+                <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">submit</button>
             </div>
         </>
     );
