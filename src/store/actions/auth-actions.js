@@ -9,3 +9,8 @@ export const logout = payload => ({
     type: auth.LOGOUT,
     payload
 })
+
+export const profile = payload => ({
+    type: auth.PROFILE,
+    payload
+})

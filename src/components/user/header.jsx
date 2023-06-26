@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function Header() {
     return (
         <header className="header-section">
@@ -6,32 +8,24 @@ export default function Header() {
                     <div className="row">
                         <div className="col-lg-2">
                             <div className="logo">
-                                <a href="./index.html">
+                                <Link to="/">
                                     <img src="/assets/img/logomain.png" alt="" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="col-lg-10">
                             <div className="nav-menu">
                                 <nav className="mainmenu">
                                     <ul>
-                                        <li className="active"><a href="./index.html">Home</a></li>
-                                        <li><a href="./rooms.html">Rooms</a></li>
-                                        <li><a href="./about-us.html">About Us</a></li>
-                                        <li><a href="./pages.html">Pages</a>
-                                            <ul className="dropdown">
-                                                <li><a href="./room-details.html">Room Details</a></li>
-                                                <li><a href="./blog-details.html">Blog Details</a></li>
-                                                <li><a href="#">Family Room</a></li>
-                                                <li><a href="#">Premium Room</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="./blog.html">News</a></li>
-                                        <li><a href="./contact.html">Contact</a></li>
+                                        <li className="active"><Link to="/">Home</Link></li>
+                                        <li><Link to="/">Rooms</Link></li>
+                                        <li><Link to="/">About Us</Link></li>
+                                        <li><Link to="/">News</Link></li>
+                                        <li><Link to="/">Contact</Link></li>
                                     </ul>
                                 </nav>
-                                <div className="nav-right search-switch">
-                                    <i className="icon_search"></i>
+                                <div className="nav-right search-switch float-right">
+                                    <Link to="/login">Login</Link>
                                 </div>
                             </div>
                         </div>

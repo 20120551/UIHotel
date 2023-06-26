@@ -17,15 +17,23 @@ const authReducer = (state, action) => {
                 user,
                 accessToken = ''
             } = action.payload;
+            console.log(user);
             // lưu vào local storage
             localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('role', user.role);
+            localStorage.setItem('role', user.roles);
 
-            return { accessToken, role: user.role, user };
+            return { accessToken, role: user.roles, user };
         case auth.LOGOUT:
             localStorage.removeItem('accessToken');
             localStorage.removeItem('role');
             return { accessToken: '', role: "" };
+        case auth.PROFILE:
+            console.log("handle get auth profile");
+            console.log(action.payload);
+            return {
+                ...state,
+                user: action.payload.user
+            }
         // refresh token case
         default:
             return { ...state }
