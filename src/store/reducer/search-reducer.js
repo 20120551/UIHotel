@@ -117,7 +117,7 @@ const searchReducer = (state, action) => {
                 cardInfo[index].ttl = createTtl(DEFAULT_TTL);
             }
 
-            cardInfo[index] = cardInfo[index].filter(card => card.id !== id);
+            cardInfo[index].items = cardInfo[index].items.filter(card => card.id !== id);
 
             localStorage.setItem("cardInfo", JSON.stringify(cardInfo));
             // _cardInfo = [...cardInfo];

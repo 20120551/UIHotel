@@ -15,7 +15,16 @@ export default function RoomResult() {
 
     useEffect(() => {
         roomService.getFreeRooms(state.searchInfo)
-            .then(data => roomDispatch(room.getFreeRooms({ rooms: data })));
+            .then(data => {
+                var card =
+                    state.cardInfo.find(
+                        card => card.from === state.searchInfo.from && card.to === state.searchInfo.to)?.items;
+
+                var rooms = data.filter(room => {
+                    return card.some(card => card.id !== room.id)
+                });
+                roomDispatch(room.getFreeRooms({ rooms: rooms }));
+            });
     }, []);
 
     const handleBooking = function (room) {

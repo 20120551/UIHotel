@@ -29,7 +29,7 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<UserLayout />}>
-                    <Route path='/' element={<Home />} />
+                    <Route index element={<Home />} />
                     <Route path='search/*' element={<SearchRoute />} />
                     <Route path='payment' element={<RoomPaying />} />
                 </Route>
