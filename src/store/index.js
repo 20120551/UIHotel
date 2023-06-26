@@ -1,5 +1,9 @@
 import { provider, ProviderComposer } from './combine';
-import { AuthProvider, InvoiceProvider, RoomProvider, SearchProvider, ServiceProvider, UserProvider } from './provider';
+import {
+    AuthProvider, InvoiceProvider,
+    RoomDetailProvider, RoomProvider,
+    SearchProvider, ServiceProvider, UserProvider
+} from './provider';
 
 export default function Provider({ children }) {
     return (
@@ -11,6 +15,7 @@ export default function Provider({ children }) {
                 provider(ServiceProvider),
                 provider(RoomProvider),
                 provider(SearchProvider),
+                provider(RoomDetailProvider),
             ]}
         >
             {children}

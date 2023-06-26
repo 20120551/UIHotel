@@ -4,3 +4,4 @@ export { default as invoiceReducer, invoiceInitialState } from './invoice-reduce
 export { default as roomReducer, roomInitialState } from './room-reducer';
 export { default as serviceReducer, serviceInitialState } from './service-reducer';
 export { default as searchReducer, searchInitialState } from './search-reducer';
+export { default as roomDetailReducer, roomDetailInitialState } from './room-detail-reducer';

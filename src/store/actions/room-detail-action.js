@@ -1,0 +1,1 @@
+export const GET_ALL_ROOM_DETAIL = "GET_ALL_ROOM_DETAIL";

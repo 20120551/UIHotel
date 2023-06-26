@@ -1,7 +1,8 @@
 import {
-    AuthContext, UserContext, InvoiceContext, RoomContext, ServiceContext, SearchContext
+    AuthContext, UserContext, InvoiceContext,
+    RoomContext, ServiceContext, SearchContext, RoomDetailContext,
+    ReservationCardContext
 } from '@store/context';
-import { AuthContext, UserContext, InvoiceContext, RoomContext, ServiceContext, ReservationCardContext } from '@store/context';
 import { useContext } from 'react';
 
 /**
@@ -39,5 +40,10 @@ export const useSearch = function () {
 }
 export const useReservationCard = function () {
     const [state, dispatch] = useContext(ReservationCardContext);
+    return [state, dispatch];
+}
+
+export const useRoomDetail = function () {
+    const [state, dispatch] = useContext(RoomDetailContext);
     return [state, dispatch];
 }
