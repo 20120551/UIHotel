@@ -27,7 +27,7 @@ function App() {
                     </Route>
                     <Route path='login' element={<Login />} />
                     <Route path='unauthorized' element={<Unauthorization />} />
-                    <Route path='reservation' element={<ReservationRoute />} />
+                    <Route path='reservation/*' element={<ReservationRoute />} />
                     <Route path='room-detail/*' element={<RoomDetailRoute/>}/>
                     <Route path='regulation/*' element={<RoomRegulationRoute/>}/>
                     <Route path='login' element={<Login />} />
