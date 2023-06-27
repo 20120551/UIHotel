@@ -14,7 +14,6 @@ function Header() {
     }
 
     useEffect(() => {
-        console.log("here")
         authService.profile()
             .then(data => dispatch(auth.profile({ user: data })));
     }, [])

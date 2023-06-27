@@ -1,12 +1,21 @@
+import { createTtl } from '@utls/ttl';
 import { auth } from './../../constant';
 
 const accessToken = localStorage.getItem('accessToken');
 const role = localStorage.getItem('role');
 
+const DEFAULT_TTL = 1 * 60 * 60 * 1000; // 1hour
 const authInitialState = {
-    accessToken: accessToken || '',
-    role: role || "",
+    accessToken: accessToken ? JSON.parse(accessToken) : { accessToken: '', ttl: 0 },
+    role: role || '',
     user: null,
+}
+
+function createDefaultAccessToken(accessToken) {
+    return {
+        accessToken,
+        ttl: createTtl(DEFAULT_TTL)
+    }
 }
 
 const authReducer = (state, action) => {
@@ -17,12 +26,13 @@ const authReducer = (state, action) => {
                 user,
                 accessToken = ''
             } = action.payload;
-            console.log(user);
+
+            const token = createDefaultAccessToken(accessToken);
             // lưu vào local storage
-            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('accessToken', JSON.stringify(token));
             localStorage.setItem('role', user.roles);
 
-            return { accessToken, role: user.roles, user };
+            return { accessToken: token, role: user.roles, user };
         case auth.LOGOUT:
             localStorage.removeItem('accessToken');
             localStorage.removeItem('role');

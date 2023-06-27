@@ -11,7 +11,6 @@ const verify = verifyState({
     searchInfo: searchInfo ? JSON.parse(searchInfo) : { ttl: 0 }
 });
 
-console.log(verify);
 localStorage.setItem("cardInfo", JSON.stringify(verify.cardInfo));
 localStorage.setItem("searchInfo", JSON.stringify(verify.searchInfo));
 
