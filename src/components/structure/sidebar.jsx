@@ -60,9 +60,16 @@ export default function SideBar() {
                         </li>
                         <li className="submenu"> <a href="#"><i className="fas fa-key"></i> <span> Rooms </span> <span className="menu-arrow"></span></a>
                             <ul className="submenu_class">
-                                <li><a href="all-rooms.html">All Rooms </a></li>
-                                <li><a href="edit-room.html"> Edit Rooms </a></li>
-                                <li><a href="add-room.html"> Add Rooms </a></li>
+                                <li><Link to="/hotel/room" >All Rooms </Link></li>
+      
+                                <li><Link to="/hotel/room/add-room"> Add Room </Link></li>
+                            </ul>
+                        </li>
+                        <li className="submenu"> <a href="#"><i className="fas fa-key"></i> <span> Report </span> <span className="menu-arrow"></span></a>
+                            <ul className="submenu_class">
+                                <li><Link to="/hotel/revenue" >Room Revenue </Link></li>
+      
+                                <li><Link to="/hotel/room-occupancy"> Room Occupancy</Link></li>
                             </ul>
                         </li>
                         <li className="submenu"> <a href="#"><i className="fas fa-user"></i> <span> Staff </span> <span className="menu-arrow"></span></a>

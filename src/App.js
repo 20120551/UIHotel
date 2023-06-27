@@ -8,6 +8,7 @@ import RevenueRoute from 'routes/revenue-route';
 import RoomPaying from '@pages/search/roomPaying';
 import SearchRoute from 'routes/search-route';
 import Home from '@pages/home/home';
+import RoomRoute from "routes/room-route";
 import ReservationRoute from 'routes/reservation-route';
 import RoomOccupancyRoute from 'routes/room-occupancy-route';
 import RoomDetailRoute from 'routes/roomDetail-route';
@@ -26,6 +27,7 @@ function App() {
                             <Route path='invoice/*' element={<InvoiceRoute />} />
                         </Route>
                         <Route path="revenue/*" element={<RevenueRoute/>}/>
+                        <Route path="room/*" element={<RoomRoute/>}/>
                         <Route path="room-occupancy/*" element={<RoomOccupancyRoute/>}/>
                         <Route path='reservation/*' element={<ReservationRoute />} />
                         <Route path='room-detail/*' element={<RoomDetailRoute />} />
