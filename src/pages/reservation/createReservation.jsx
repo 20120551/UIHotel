@@ -2,6 +2,10 @@ import { reservationService, roomDetailService, roomService, invoiceService } fr
 import MayEmpty from "@components/mayEmpty";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import 'daterangepicker/daterangepicker.css';
+import 'daterangepicker';
+import moment from "moment";
+import $ from 'jquery';
 
 export default function Reservation() {
     const [roomDetail, setRoomDetail] = useState();
@@ -18,6 +22,16 @@ export default function Reservation() {
     const [isGuestInfoShow, setGuestInfoShow] = useState(false);
     const navigate = useNavigate();
     const inputTimeRef = useRef();
+
+    useEffect(() => {
+        $(inputTimeRef.current).daterangepicker({
+            minDate: moment().startOf('day'),
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+    }, []);
 
     const HandleGetListFreeRoomsByTime = (type) => {
         if (from == '' && to == '') {
@@ -78,7 +92,7 @@ export default function Reservation() {
         setTotalAmount(totalAmount - room.price * days);
 
         if (newSelectedRooms.length == 0 && isGuestInfoShow) {
-            invoiceService.deleteInvoice(({invoiceId: invoiceId}));
+            invoiceService.deleteInvoice(({ invoiceId: invoiceId }));
             window.location.reload();
         }
     }
@@ -95,9 +109,9 @@ export default function Reservation() {
                     Guests: []
                 }))
             }))
-            .then(res => {
-                setInvoiceId(res.invoiceId);
-            })
+                .then(res => {
+                    setInvoiceId(res.invoiceId);
+                })
             setGuestInfoShow(true);
         }
     }
@@ -111,7 +125,7 @@ export default function Reservation() {
     }
 
     const HandleOnSubmitCreateReservation = () => {
-        if (nameCus != '' && email != ''){
+        if (nameCus != '' && email != '') {
             reservationService.confirmReservation(({
                 invoiceId: invoiceId,
                 email: email,
@@ -126,14 +140,14 @@ export default function Reservation() {
                     Guests: room.guests
                 }))
             }))
-            .then(res => {
-                navigate(`/hotel/invoice/${res.id}`);
-            })
+                .then(res => {
+                    navigate(`/hotel/invoice/${res.id}`);
+                })
         }
     }
 
     const HandleCancleReservation = () => {
-        invoiceService.deleteInvoice(({invoiceId: invoiceId}));
+        invoiceService.deleteInvoice(({ invoiceId: invoiceId }));
         window.location.reload();
     }
 
@@ -244,25 +258,25 @@ export default function Reservation() {
                                 <div className="row align-items-center">
                                     <div className="col">
                                         <h3 className="page-title mt-5">Add Booking - Guests infomation</h3>
-                                        <div className="btn btn-outline-danger" type="button" onClick={() => {HandleCancleReservation()}}>cancle</div>
+                                        <div className="btn btn-outline-danger" type="button" onClick={() => { HandleCancleReservation() }}>cancle</div>
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <div className="col-4">
                                         <label>Customer name</label>
-                                        <input className="form-control font-weight-bold" type="text" 
-                                            onChange={(e) => { setNameCus(e.target.value) }} required/>
+                                        <input className="form-control font-weight-bold" type="text"
+                                            onChange={(e) => { setNameCus(e.target.value) }} required />
                                     </div>
                                     <div className="col-4">
                                         <label>Customer email</label>
-                                        <input className="form-control font-weight-bold" type="text" 
-                                            onChange={(e) => { setEmail(e.target.value) }} required/>
+                                        <input className="form-control font-weight-bold" type="text"
+                                            onChange={(e) => { setEmail(e.target.value) }} required />
                                     </div>
-                                    
+
                                     <div className="col-4">
                                         <label>Down payment</label>
-                                        <input className="form-control font-weight-bold" type="number" 
-                                            onChange={(e) => { setDownPayment(e.target.value) }} required/>
+                                        <input className="form-control font-weight-bold" type="number"
+                                            onChange={(e) => { setDownPayment(e.target.value) }} required />
                                     </div>
                                 </div>
                             </div>

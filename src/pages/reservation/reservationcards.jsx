@@ -1,9 +1,11 @@
-// import '@assets/customDateTimeRangePicker'
 import { reservationService } from "@services/index";
 import MayEmpty from "@components/mayEmpty";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import 'daterangepicker/daterangepicker.css';
+import 'daterangepicker';
+import $ from 'jquery';
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
@@ -33,6 +35,15 @@ export default function Reservation() {
                 setIsEmpty(true);
             })
     }
+
+    useEffect(() => {
+        $(inputTimeRef.current).daterangepicker({
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+      }, []);
 
     const HandleDetail = function (id) {
         navigate(`/hotel/reservation/${id}`);
@@ -82,7 +93,7 @@ export default function Reservation() {
     }
 
     const handleLinkClick = () => {
-        window.location.href = '/hotel/reservation/booking';
+        navigate('/hotel/reservation/booking');
     };
 
     const HandleReloadPage = () => {
