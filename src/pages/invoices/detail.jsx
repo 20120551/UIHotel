@@ -45,8 +45,12 @@ export default function InvoiceDetail() {
             fromDateStr: from,
             toDateStr: to
         })
+            .then(_ => {
+                // dispatch(invoice.addReservationCard({ cards: data }));
+                return invoiceService.getDetail({ index: id })
+            })
             .then(data => {
-                dispatch(invoice.addReservationCard({ cards: data }));
+                dispatch(invoice.getInvoice({ invoice: data }));
             })
     }
 
@@ -56,8 +60,12 @@ export default function InvoiceDetail() {
             isActiveServiceChange: false
         }))
         invoiceService.addHotelService({ invoiceId: id, serviceId })
+            .then(_ => {
+                // dispatch(invoice.addHotelService({ services: data.hotelServices }));
+                return invoiceService.getDetail({ index: id })
+            })
             .then(data => {
-                dispatch(invoice.addHotelService({ services: data.hotelServices }));
+                dispatch(invoice.getInvoice({ invoice: data }));
             })
     }
 
