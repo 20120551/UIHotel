@@ -1,7 +1,9 @@
+// import '@assets/customDateTimeRangePicker'
 import { reservationService } from "@services/index";
 import MayEmpty from "@components/mayEmpty";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
@@ -19,11 +21,9 @@ export default function Reservation() {
     // // const handleSearch = function () {
     // //     navigate(`/invoice/${search}`);
     // // }
-
     const HandleSeachByInvoiceId = (id) => {
         setIsSeaching(true);
         inputTimeRef.current.value = '';
-        setCardId('');
         reservationService.getByInvoiceId(id)
             .then(cards => {
                 setReservationCards(cards);
@@ -40,7 +40,6 @@ export default function Reservation() {
 
     const HandleSeachByCardId = (id) => {
         setIsSeaching(true);
-        setInvoiceId('');
         reservationService.getByReservationCardId(id)
             .then(card => {
                 setReservationCards([card]);
@@ -53,8 +52,6 @@ export default function Reservation() {
 
     const HandleSeachByPeriodTime = () => {
         setIsSeaching(true);
-        setCardId('');
-        setInvoiceId('');
         //console.log(inputTimeRef.current.value);
         const timeList = inputTimeRef.current.value.split(" - ");
         if (timeList.length != 2) {
@@ -73,7 +70,6 @@ export default function Reservation() {
 
     const HandleDeleteReservationCard = (id) => {
         reservationService.deleteReservationCard({ cardId: id });
-        console.log(id);
         setReservationCards(reservationCards.filter(c => c.id !== id));
     }
 
@@ -83,6 +79,24 @@ export default function Reservation() {
 
     const HandleAddReservation = () => {
         navigate(`/hotel/reservation/booking`);
+    }
+
+    const handleLinkClick = () => {
+        window.location.href = '/hotel/reservation/booking';
+    };
+
+    const HandleReloadPage = () => {
+        reservationService.getAll({ page: page, entries: entries })
+            .then(cards => {
+                setReservationCards(cards);
+                setIsEmpty(cards.length === 0 ? true : false);
+            })
+
+        reservationService.getTotalPage({ page: page, entries: entries })
+            .then(page => {
+                setTotalPage(page);
+            })
+        setIsSeaching(false);
     }
 
     useEffect(() => {
@@ -104,9 +118,15 @@ export default function Reservation() {
                 <div className="row align-items-center">
                     <div className="col">
                         <div className="mt-5">
-                            <h4 className="card-title float-left mt-2">Reservation cards</h4>
-                            <a onClick={(e) => {HandleAddReservation()}} className="btn btn-primary float-right veiwbutton ">Add
-                                Booking</a>
+                            <h4 className="card-title float-left mt-2">Reservation cards
+                                <button className="btn btn-link text-success text-left px-3" onClick={(e) => { HandleReloadPage() }}>
+                                    cards list
+                                </button>
+                            </h4>
+                            {/* <a onClick={(e) => { HandleAddReservation() }} className="btn btn-primary float-right veiwbutton ">Add
+                                Booking</a> */}
+                                <button to="/hotel/reservation/booking" className="btn btn-primary float-right veiwbutton" onClick={handleLinkClick}>Add
+                                Booking</button>
                         </div>
                     </div>
                 </div>
@@ -167,7 +187,7 @@ export default function Reservation() {
                                                         <td>{arrivalDate}</td>
                                                         <td>{departureDate}</td>
                                                         <td>
-                                                            <button className="btn btn-link text-success text-left p-0" onClick={(e) => {HandleDetail(id)}}>
+                                                            <button className="btn btn-link text-success text-left p-0" onClick={(e) => { HandleDetail(id) }}>
                                                                 Details
                                                             </button>
                                                         </td>
@@ -179,7 +199,7 @@ export default function Reservation() {
                                                                     className="fas fa-ellipsis-v ellipse_color"></i></a>
                                                                 <div className="dropdown-menu dropdown-menu-right">
                                                                     <a className="dropdown-item"
-                                                                    onClick={() => { HandleEditReservationCard(id) }}>
+                                                                        onClick={() => { HandleEditReservationCard(id) }}>
                                                                         <i className="fas fa-pencil-alt m-r-5"></i>
                                                                         Edit
                                                                     </a>

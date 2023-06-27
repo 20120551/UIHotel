@@ -27,8 +27,7 @@ export default function SideBar() {
                         <li className="list-divider"></li>
                         <li className="submenu"> <a ><i className="fas fa-suitcase"></i> <span> Booking </span> <span className="menu-arrow"></span></a>
                             <ul className="submenu_class">
-                                <li><a href="all-booking.html"> All Booking </a></li>
-                                <li><a href="edit-booking.html"> Edit Booking </a></li>
+                                <li><a href="all-booking.html"> All Reservation card </a></li>
                                 <li><a href="add-booking.html"> Add Booking </a></li>
                             </ul>
                         </li>
