@@ -12,6 +12,11 @@ export default function Revenue() {
         }
         return color;
     }
+    const d = new Date();
+    let thisMonth = d.getMonth();
+    let thisYear = d.getFullYear();
+    const [month, setMonth] = useState(thisMonth);
+    const [year, setYear] = useState(thisYear)
     const [revenue, setRevenue] = useState();
     var Label = [];
 
@@ -20,7 +25,7 @@ export default function Revenue() {
     var color = [];
 
     useEffect(() => {
-   
+
         revenueService.getThisMonthRevenue().then(data => {
             setRevenue(setData(data));
 
@@ -93,26 +98,31 @@ export default function Revenue() {
                 <div class="col-lg-12">
                     <form>
                         <div class="row formtype">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Room Type</label>
-                                    <select class="form-control" id="sel1" name="sellist1">
-                                        <option>Select type</option>
-                                        <option>VIP 1</option>
-                                        <option>Regular 1</option>
-                                    </select>
-                                </div>
-                            </div>
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Month:</label>
                                     <div class="cal-icon">
-                                        <input type="text" data-provide="datepicker" class="form-control datepicker"
-                                            data-date-format="mm/dd/yyyy" name="datepicker" id="datepicker" />
+                                        <input
+                                            value={month}
+                                            onChange={(e) => setMonth(e.target.value)}
+                                            type="number"
+                                            class="form-control " />
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Year:</label>
+                                    <div class="cal-icon">
+                                        <input
+                                            value={year}
+                                            onChange={(e) => setYear(e.target.value)}
+                                            type="number"
+                                            class="form-control " />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-3 justify-content-end">
                                 <div class="form-group">
                                     <label>Search</label>

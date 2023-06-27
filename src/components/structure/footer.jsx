@@ -7,15 +7,15 @@ function Footer() {
                 <div className="footer-container__bg" >
                     <div className="bg-represent" ></div >
                     <div className="bg-content" >
-                        <p>Đây là website HCMUS canteen online</p>
+                        <p>Đây là website quản lý khách sạn</p>
                     </div >
                 </div >
                 <div className="author-project" >
                     <h3>Tác giả</h3>
                     <p>Trần Vĩnh Phúc</p>
-                    <p>Nguyễn Đăng Khoa</p>
-                    <p>Lương Trọng Khôi</p>
-                    <p>Nguyễn Thanh Minh</p>
+                    <p>Nguyễn Quốc Khoa</p>
+                    <p>Huỳnh Luật</p>
+                    <p>Võ Hoàng Thảo Nguyên</p>
                 </div >
                 <div className="support-equipment" >
                     <div className="footer-content-header" >

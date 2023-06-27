@@ -134,7 +134,7 @@ function EditRoomDetail() {
                         </form>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary buttonedit ml-2"><Link style={{ fontStyle: "none", color: "white" }} to="/room-detail" relative="path">Cancel</Link></button>
+                <button type="button" class="btn btn-primary buttonedit ml-2"><Link style={{ fontStyle: "none", color: "white" }} to="/hotel/room-detail" relative="path">Cancel</Link></button>
                 <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">Confirm</button>
             </div>
         </>
