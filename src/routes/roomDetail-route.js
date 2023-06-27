@@ -1,6 +1,6 @@
 import AllRoomDetails from "@pages/roomDetails/index/allRoomDetails";
 import AddRoomDetail from "@pages/roomDetails/index/addRoomDetails";
-import EditRegulation from "@pages/roomRegulations/index/editRegulation";
+import EditRoomDetail from "@pages/roomDetails/index/editRoomDetails";
 import { Route, Routes } from "react-router-dom";
 
 export default function  RoomDetailRoute() {
@@ -8,7 +8,7 @@ export default function  RoomDetailRoute() {
         <Routes>
             <Route index element={< AllRoomDetails/>} />
             <Route path='/add-room-detail' element={<AddRoomDetail/>}/>
-            <Route path='/:id' element={<EditRegulation />}/>
+            <Route path='/:id' element={<EditRoomDetail />}/>
         </Routes>
     )
 }
