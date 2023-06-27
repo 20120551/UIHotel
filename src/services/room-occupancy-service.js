@@ -7,3 +7,8 @@ export const getThisMonth = async function () {
 }
 
 
+export const getByMonth = async function ({month,year}) {
+    console.log("make request to endpoint: ", `/RoomOccupancy/${month}/${year}`);
+    const roomDetails = await privateAxios.get(`/RoomOccupancy/${month}/${year}`);
+    return roomDetails.data;
+}
