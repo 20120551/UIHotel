@@ -2,31 +2,37 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 import { roomDetailService } from "@services";
+import { roomRegulationService } from "@services";
 import { useNavigate } from "react-router-dom";
 
 function AddRoomDetail() {
+    const [state, dispatch] = React.useState();
+    const [regulationID, setRegulationID] = React.useState("");
+    const [roomType, setRoomType] = React.useState("");
     const [Price, setPrice] = React.useState("");
     const [Description, setDescription] = React.useState("");
-    const [Image, setDefaultGuets] = React.useState("");
-    const [maxSurchargeRatio, setMaxSurchargeRatio] = React.useState("");
-    const [maxOverseaSurchargeRatio, setMaxOverseaSurchagreRatio] = React.useState("");
+    const [Image, setImage] = React.useState("");
 
+    React.useEffect(() => {
+        roomRegulationService.getAll().then(roomRegulation => {
+            dispatch(setData(roomRegulation));
+            console.log(roomRegulation);
+        })
+    },[] );
     const handleSubmit = async (event) => {
         // event.preventDefault();
         await roomDetailService.addRoomDetail({
-            Price: Price,
-            maxGuest: Description,
-            maxOverseaSurchargeRatio: maxOverseaSurchargeRatio,
-            maxSurchargeRatio: maxSurchargeRatio,
-            Image: Image
+            price: Price,
+            roomType:roomType,
+            description:Description,
+            roomREgulationId:regulationID,
+            image: Image
         }).then(data => {
-
-            setDefaultGuets("");
-            setMaxOverseaSurchagreRatio("");
             setDescription("");
             setPrice("");
-            setMaxSurchargeRatio("");
-            alert("New room Room Detail successfully added");
+            setRoomType("");
+            setImage("");
+            alert("New Room Detail successfully added");
 
 
         }).catch(function (error) {
@@ -35,6 +41,16 @@ function AddRoomDetail() {
 
 
     }
+    const setData = (data) => {
+        const results = [null];
+        data.forEach((employee, index) => {
+            results.push(
+                <option key={index}>{employee.id}</option>
+            );
+        });
+        return results;
+    }
+
     return (
         <>
             <div class="content container-fluid">
@@ -65,9 +81,18 @@ function AddRoomDetail() {
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label>Room Type:</label>
+                                        <input
+                                            type="text"
+                                            value={roomType}
+                                            onChange={(e) => setRoomType(e.target.value)}
+                                            class="form-control" /> </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label>Description:</label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             value={Description}
                                             onChange={(e) => setDescription(e.target.value)}
 
@@ -80,19 +105,15 @@ function AddRoomDetail() {
                                         <input
                                             type="number"
                                             value={Image}
-                                            onChange={(e) => setDefaultGuets(e.target.value)}
+                                            onChange={(e) => setImage(e.target.value)}
 
                                             class="form-control" /> </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Image:</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <label>Reservation ID:</label>
+                                        <select class="form-control" id="exampleFormControlSelect1" value={regulationID} onChange={(e)=>setRegulationID(e.target.value)}>
+                                            {state}
                                         </select> </div>
                                 </div>
    
@@ -100,7 +121,7 @@ function AddRoomDetail() {
                         </form>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/Room Detail" relative="">Cancel</Link></button>
+                <button type="button" class="btn btn-primary buttonedit ml-2"><Link style={{fontStyle:"none", color:"white"}} to="/room-detail" relative="path">Cancel</Link></button>
                 <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">Add</button>
             </div>
         </>
