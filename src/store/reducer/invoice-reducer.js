@@ -28,30 +28,22 @@ const invoiceReducer = (state, action) => {
         case invoice.ADD_RESERVATION_CARD:
             console.log(action.payload.cards);
             console.log("handling add reservation card event");
-            const cards = state.invoice.reservationCards.map((card) => {
-                const { id } = card;
-                const _card = action.payload.cards.find(card => {
-                    const date = getVietnameseDate();
-                    const accepted = date === card.arrivalDate;
-                    return id === card.id && (accepted)
-                })
+            const index = state.invoice.reservationCards.findIndex(card => 
+                (card.id === action.payload.cards[0].id && action.payload.cards[0].departureDate === getVietnameseDate()))
 
-                if (_card) {
-                    return {
-                        ..._card
-                    }
-                }
-                return {
-                    ...card
-                }
-            });
+            if(index !== -1)
+            {
+                state.invoice.reservationCards[index].departureDate = getVietnameseDate();
+                state.invocie.reservationCards.push(action.payload.cards[1]);
+            } else {
+                state.invoice.reservationCards.push(action.payload.cards[0]);
+                const index = state.invoice.reservationCards.findIndex(card => 
+                    (card.id === action.payload.cards[1].id && action.payload.cards[1].departureDate === getVietnameseDate()))
 
+                state.invoice.reservationCards[index].departureDate = getVietnameseDate();
+            }
             return {
                 ...state,
-                invoice: {
-                    ...state.invoice,
-                    reservationCards: cards
-                }
             }
         case invoice.ADD_HOTEL_SERVICE:
             console.log("handling add hotel service");
