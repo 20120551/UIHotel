@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
-    const [entries, setEntries] = useState(2);
-    const [totalPage, setTotalPage] = useState();
+    const [entries, setEntries] = useState(8);
+    const [totalPage, setTotalPage] = useState(1);
     const [invoiceId, setInvoiceId] = useState('');
     const [cardId, setCardId] = useState('');
     const [reservationCards, setReservationCards] = useState();
@@ -34,13 +34,17 @@ export default function Reservation() {
             })
     }
 
+    const HandleDetail = function (id) {
+        navigate(`/hotel/reservation/${id}`);
+    }
+
     const HandleSeachByCardId = (id) => {
         setIsSeaching(true);
         setInvoiceId('');
         reservationService.getByReservationCardId(id)
-            .then(cards => {
-                setReservationCards(cards);
-                setIsEmpty(cards.length === 0 ? true : false);
+            .then(card => {
+                setReservationCards([card]);
+                setIsEmpty(false);
             })
             .catch(() => {
                 setIsEmpty(true);
@@ -51,14 +55,13 @@ export default function Reservation() {
         setIsSeaching(true);
         setCardId('');
         setInvoiceId('');
-        console.log(inputTimeRef.current.value);
+        //console.log(inputTimeRef.current.value);
         const timeList = inputTimeRef.current.value.split(" - ");
-        if (timeList.length != 2)
-        {
+        if (timeList.length != 2) {
             setIsEmpty(true);
             return;
         }
-        reservationService.getByReservationByPeriodTime({from: timeList[0], to: timeList[1]})
+        reservationService.getByReservationByPeriodTime({ from: timeList[0], to: timeList[1] })
             .then(cards => {
                 setReservationCards(cards);
                 setIsEmpty(cards.length === 0 ? true : false);
@@ -66,6 +69,20 @@ export default function Reservation() {
             .catch(() => {
                 setIsEmpty(true);
             })
+    }
+
+    const HandleDeleteReservationCard = (id) => {
+        reservationService.deleteReservationCard({ cardId: id });
+        console.log(id);
+        setReservationCards(reservationCards.filter(c => c.id !== id));
+    }
+
+    const HandleEditReservationCard = (id) => {
+        navigate(`/hotel/reservation/edit/${id}`);
+    }
+
+    const HandleAddReservation = () => {
+        navigate(`/hotel/reservation/booking`);
     }
 
     useEffect(() => {
@@ -78,7 +95,7 @@ export default function Reservation() {
         reservationService.getTotalPage({ page: page, entries: entries })
             .then(page => {
                 setTotalPage(page);
-        })
+            })
     }, [page, entries])
 
     return (
@@ -88,7 +105,7 @@ export default function Reservation() {
                     <div className="col">
                         <div className="mt-5">
                             <h4 className="card-title float-left mt-2">Reservation cards</h4>
-                            <a href="add-booking.html" className="btn btn-primary float-right veiwbutton ">Add
+                            <a onClick={(e) => {HandleAddReservation()}} className="btn btn-primary float-right veiwbutton ">Add
                                 Booking</a>
                         </div>
                     </div>
@@ -107,15 +124,15 @@ export default function Reservation() {
                                             type="button" onClick={() => HandleSeachByInvoiceId(invoiceId)}>&#x1F50E;</button>
                                     </div>
                                     <div className="form-inline my-2 my-lg-0">
-                                        <input className="form-control mr-sm-2" type="number" 
+                                        <input className="form-control mr-sm-2" type="number"
                                             onChange={(e) => setCardId(e.target.value)}
                                             placeholder="Reservation ID" aria-label="Search" />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
                                             type="button" onClick={() => HandleSeachByCardId(cardId)}>&#x1F50E;</button>
                                     </div>
                                     <form className="form-inline my-2 my-lg-0">
-                                        <input type="text" name="DateRangePickerReservationCard" 
-                                            className="form-control mr-sm-2" ref={inputTimeRef}/>
+                                        <input type="text" name="DateRangePickerReservationCard"
+                                            className="form-control mr-sm-2" ref={inputTimeRef} />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
                                             type="button" onClick={() => HandleSeachByPeriodTime()}>&#x1F50E;</button>
                                     </form>
@@ -131,7 +148,7 @@ export default function Reservation() {
                                             <th>Guests number</th>
                                             <th>Arrival Date</th>
                                             <th>Depature Date</th>
-                                            <th>Notes</th>
+                                            <th>Detail</th>
                                             <th>Status</th>
                                             <th className="text-right">Actions</th>
                                         </tr>
@@ -144,12 +161,16 @@ export default function Reservation() {
                                                     <tr>
                                                         <td>{id}</td>
                                                         <td>{invoiceId}</td>
-                                                        <td>{guestName}</td>
                                                         <td>{roomId}</td>
+                                                        <td>{guestName}</td>
                                                         <td>{guestsNumber}</td>
                                                         <td>{arrivalDate}</td>
                                                         <td>{departureDate}</td>
-                                                        <td>{notes}</td>
+                                                        <td>
+                                                            <button className="btn btn-link text-success text-left p-0" onClick={(e) => {HandleDetail(id)}}>
+                                                                Details
+                                                            </button>
+                                                        </td>
                                                         <td>{status}</td>
                                                         <td className="text-right">
                                                             <div className="dropdown dropdown-action"> <a href="#"
@@ -157,17 +178,14 @@ export default function Reservation() {
                                                                 aria-expanded="false"><i
                                                                     className="fas fa-ellipsis-v ellipse_color"></i></a>
                                                                 <div className="dropdown-menu dropdown-menu-right">
-                                                                    <a className="dropdown-item" href="edit-booking.html">
+                                                                    <a className="dropdown-item"
+                                                                    onClick={() => { HandleEditReservationCard(id) }}>
                                                                         <i className="fas fa-pencil-alt m-r-5"></i>
                                                                         Edit
                                                                     </a>
-                                                                    <a className="dropdown-item" href="add-ChangeRoom.html">
-                                                                        <i className="fas fa-pencil-alt m-r-5"></i>
-                                                                        Change room
-                                                                    </a>
-                                                                    <a className="dropdown-item" href="#" data-toggle="modal"
-                                                                        data-target="#delete_asset">
-                                                                        <i className="fas fa-trash-alt m-r-5"></i>
+                                                                    <a className="dropdown-item"
+                                                                        onClick={() => { HandleDeleteReservationCard(id) }}>
+                                                                        <i className="fas fa-trash-alt m-r-5" ></i>
                                                                         Delete
                                                                     </a>
                                                                 </div>
@@ -184,7 +202,7 @@ export default function Reservation() {
                     </div>
                 </div>
             </div >
-            <div id="delete_asset" className="modal fade delete-modal" role="dialog">
+            {/* <div id="delete_asset" className="modal fade delete-modal" role="dialog">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-body text-center"> <img src="assets/img/sent.png" alt="" width="50"
@@ -196,7 +214,7 @@ export default function Reservation() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {isSearching ? <></> :
                 <nav aria-label="Page navigation" className="mt-3 float-right">
                     <ul className="pagination">
@@ -204,14 +222,14 @@ export default function Reservation() {
                             className="page-item page-link"
                             onClick={() => setPage(page == 1 ? page : page - 1)}>Previous</li>
                         <li
-                            className="page-item page-link">{page}</li>
+                            className="page-item page-link">{page}/{totalPage}</li>
                         <li
                             className="page-item page-link"
                             onClick={() => {
-                                if (page == totalPage){
+                                if (page == totalPage) {
                                     setPage(page);
                                 }
-                                else{
+                                else {
                                     setPage(page + 1)
                                 }
                             }}>Next</li>
