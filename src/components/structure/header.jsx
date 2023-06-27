@@ -16,7 +16,8 @@ function Header() {
   useEffect(() => {
     authService.profile()
       .then(data => dispatch(auth.profile({ user: data })));
-  }, [])
+  }, []);
+
   return (
     <div className="header">
       <div className="header-left">
