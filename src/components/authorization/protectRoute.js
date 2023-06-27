@@ -6,13 +6,19 @@ function ProtectRoute({ allowRoles = [] }) {
     const [authState] = useAuth();
     const location = useLocation();
 
-    const authorized = allowRoles.some(role => role === authState.role);
+    let authorized = false;
+    if (allowRoles.length === 0) {
+        authorized = authState?.accessToken ? true : false;
+    } else {
+        authorized = allowRoles.some(role => role === authState.role);
+    }
+    console.log(authorized)
 
     return (
         authorized
             ? <Outlet />
             : authState?.accessToken // nếu đăng nhập với quyền staff nhưng page quyền quản lý
-                ? <Navigate to='/unauthorized' state={{ from: location }} replace />
+                ? <Navigate to='/401' state={{ from: location }} replace />
                 : <Navigate to='/login' state={{ from: location }} replace />
     )
 }

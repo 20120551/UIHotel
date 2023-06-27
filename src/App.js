@@ -1,48 +1,51 @@
 import { Routes, Route } from 'react-router-dom';
 import { ProtectRoute } from '@components/authorization';
 import { role } from '@config';
-import Login from '@pages/login';
 import { HomeLayout, UserLayout } from 'layouts';
 import InvoiceRoute from 'routes/invoice-route';
-import InvoiceDetail from '@pages/invoices/detail';
+
+import RoomRegulationRoute from 'routes/roomRegulation-route';
+
 import RoomPaying from '@pages/search/roomPaying';
 import SearchRoute from 'routes/search-route';
 import Home from '@pages/home/home';
 import ReservationRoute from 'routes/reservation-route';
 
+import RoomDetailRoute from 'routes/roomDetail-route';
+import Login from '@pages/auth/login';
+import Notfound from '@pages/error/notfound';
+import ServerInterval from '@pages/error/serverInterval';
+import Unauthorization from '@pages/error/unauthorization';
+import NotFound from '@pages/error/notfound';
 function App() {
     return (
         <>
             <Routes>
-                <Route path='/hotel' element={<HomeLayout />} >
-                    <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
-                        <Route path='invoice/*' element={<InvoiceRoute />} />
+                <Route element={<ProtectRoute />}>
+                    <Route path='/hotel' element={<HomeLayout />}>
+                        <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
+                            <Route path='invoice/*' element={<InvoiceRoute />} />
+                        </Route>
+                        <Route path='reservation/*' element={<ReservationRoute />} />
+                        <Route path='room-detail/*' element={<RoomDetailRoute />} />
+                        <Route path='regulation/*' element={<RoomRegulationRoute />} />
                     </Route>
-                    <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
-                        <Route path='create' element={<InvoiceDetail />} />
-                    </Route>
-                    <Route path='login' element={<Login />} />
-                    <Route path='unauthorized' element={<Unauthorization />} />
-                    <Route path='reservation/*' element={<ReservationRoute />} />
                 </Route>
-            </Routes>
 
-            <Routes>
                 <Route path="/" element={<UserLayout />}>
-                    <Route path='/' element={<Home />} />
+                    <Route index element={<Home />} />
                     <Route path='search/*' element={<SearchRoute />} />
                     <Route path='payment' element={<RoomPaying />} />
                 </Route>
+
+                <Route path="/login" element={<Login />} />
+                <Route path='401' element={<Unauthorization />} />
+                <Route path='404' element={<Notfound />} />
+                <Route path='500' element={<ServerInterval />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     )
-}
-
-function Create() {
-    return <h1>Create page</h1>
-}
-function Unauthorization() {
-    return <h1>Unauthorization page</h1>
 }
 
 export default App;

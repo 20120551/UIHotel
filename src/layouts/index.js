@@ -1,13 +1,8 @@
 import Header from "@components/structure/header";
-import Footer from "@components/structure/footer";
 import SideBar from "@components/structure/sidebar";
 import UserHeader from "@components/user/header";
 import UserFooter from "@components/user/foorter";
 import { Outlet } from "react-router-dom";
-import Home from "@pages/home/home";
-import RoomResult from "@pages/search/roomResult";
-import RoomDetail from "@pages/search/roomDetail";
-import RoomPaying from "@pages/search/roomPaying";
 
 export function HomeLayout() {
     return (
