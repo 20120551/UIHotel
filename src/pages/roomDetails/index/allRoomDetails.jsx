@@ -93,7 +93,7 @@ function AllRoomDetails() {
                     <div className="row align-items-center">
                         <div className="col">
                             <div className="mt-5">
-                                <h4 className="card-title float-left mt-2">Room Details</h4> <Link to="./add-regulation" relative="path" className="btn btn-primary float-right veiwbutton">Add Room Detail</Link> </div>
+                                <h4 className="card-title float-left mt-2">Room Details</h4> <Link to="./add-room-detail" relative="path" className="btn btn-primary float-right veiwbutton">Add Room Detail</Link> </div>
                         </div>
                     </div>
                 </div>

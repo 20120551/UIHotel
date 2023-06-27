@@ -1,28 +1,53 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { roomDetailService, roomService } from "@services/index";
 import { useRoom, useRoomDetail } from "@hooks/context-hooks";
 import { room, roomDetail } from "@store/actions/index";
 import { getVietnameseDate } from "@utls/date";
 import RoomTable from "./roomTable";
+import 'daterangepicker/daterangepicker.css';
+import 'daterangepicker';
+import moment from "moment";
+import $ from 'jquery';
 
 const date = new Date();
 date.setDate(date.getDate() + 1)
 export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
     const [state, dispatch] = useRoom();
     const [roomDetailState, roomDetailDispatch] = useRoomDetail();
+    const fromRef = useRef();
+    const toRef = useRef();
 
-    const [roomChanged, setRoomChanged] = useState({
-        from: getVietnameseDate(),
-        to: getVietnameseDate(date),
-        roomType: "double",
-        newRoom: ''
-    });
+    useEffect(() => {
+        $(fromRef.current).daterangepicker({
+          singleDatePicker: true,
+          minDate: moment().startOf('day'),
+          autoApply: true,
+          locale: {
+              format: 'DD/MM/YYYY'
+          }
+        });
+        $(toRef.current).daterangepicker({
+            singleDatePicker: true,
+            minDate: moment().startOf('day'),
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+          });
+      }, []);
+
+      const [roomChanged, setRoomChanged] = useState({
+          from: getVietnameseDate(),
+          to: getVietnameseDate(date),
+          roomType: "double",
+          newRoom: ''
+        });
 
     useEffect(() => {
         roomService.getFreeRooms({
             type: roomChanged.roomType,
             from: roomChanged.from,
-            to: roomChanged.to
+            to: toRef.current ? toRef.current.value : roomChanged.to
         })
             .then(data => dispatch(room.getFreeRooms({ rooms: data })));
     }, [roomChanged.roomType, roomChanged.from, roomChanged.to]);
@@ -67,11 +92,8 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             <div className="col-md-10">
                                 <div className="cal-icon">
                                     <input
-                                        onChange={(e) => setRoomChanged(prev => ({
-                                            ...prev, from: e.target.value
-                                        }))}
-                                        value={roomChanged.from}
-                                        type="text" className="form-control datetimepicker" />
+                                        disabled
+                                        type="text" ref={fromRef} className="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -80,11 +102,11 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             <div className="col-md-10">
                                 <div className="cal-icon">
                                     <input
-                                        onChange={(e) => setRoomChanged(prev => ({
-                                            ...prev, to: e.target.value
+                                        onChange={() => setRoomChanged(prev => ({
+                                            ...prev, to: toRef.current.value
                                         }))}
-                                        value={roomChanged.to}
-                                        type="text" className="form-control datetimepicker" />
+                                        value={toRef.current ? toRef.current.value : roomChanged.to}
+                                        type="text" className="form-control" ref={toRef}/>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +133,7 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             <button
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handleChangeRoom({ oldRoom, ...roomChanged })
+                                    handleChangeRoom({ oldRoom, ...roomChanged, to: toRef.current ? toRef.current.value : roomChanged.to})
                                 }}
                                 className="btn btn-primary">Submit</button>
                         </div>

@@ -7,7 +7,7 @@ export const getAll = async function () {
 }
 
 export const getByID = async function ({ index }) {
-    console.log("make request to endpoint: ", `/RoomDetail/id?id=${index}`);
+    console.log("make request to endpoint: ", `/RoomDetail/by-id?id=${index}`);
     const roomDetail = await privateAxios.get(`RoomDetail/by-id?id=${index}`);
     return roomDetail.data;
 }
@@ -23,6 +23,12 @@ export const addRoomDetail = async function (payload) {
     return roomDetail.data;
 }
 
+export const updateRoomDetail = async function (payload) {
+    const roomDetail = await privateAxios.put(`/RoomDetail`, {
+        ...payload
+    });
+    return roomDetail.data;
+}
 
 // export const addHotelService = async function ({ roomDetailId, serviceId }) {
 //     const roomDetail = await privateAxios.post(`/Detail/${roomDetailId}/service/${serviceId}`);
