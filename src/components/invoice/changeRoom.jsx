@@ -36,18 +36,18 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
           });
       }, []);
 
-    const [roomChanged, setRoomChanged] = useState({
-        from: getVietnameseDate(),
-        to: getVietnameseDate(date),
-        roomType: "double",
-        newRoom: ''
-    });
+      const [roomChanged, setRoomChanged] = useState({
+          from: getVietnameseDate(),
+          to: getVietnameseDate(date),
+          roomType: "double",
+          newRoom: ''
+        });
 
     useEffect(() => {
         roomService.getFreeRooms({
             type: roomChanged.roomType,
             from: roomChanged.from,
-            to: roomChanged.to
+            to: toRef.current ? toRef.current.value : roomChanged.to
         })
             .then(data => dispatch(room.getFreeRooms({ rooms: data })));
     }, [roomChanged.roomType, roomChanged.from, roomChanged.to]);
@@ -102,10 +102,10 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             <div className="col-md-10">
                                 <div className="cal-icon">
                                     <input
-                                        onChange={(e) => setRoomChanged(prev => ({
-                                            ...prev, to: e.target.value
+                                        onChange={() => setRoomChanged(prev => ({
+                                            ...prev, to: toRef.current.value
                                         }))}
-                                        value={roomChanged.to}
+                                        value={toRef.current ? toRef.current.value : roomChanged.to}
                                         type="text" className="form-control" ref={toRef}/>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             <button
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handleChangeRoom({ oldRoom, ...roomChanged })
+                                    handleChangeRoom({ oldRoom, ...roomChanged, to: toRef.current ? toRef.current.value : roomChanged.to})
                                 }}
                                 className="btn btn-primary">Submit</button>
                         </div>
