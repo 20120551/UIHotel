@@ -258,7 +258,7 @@ export default function InvoiceDetail() {
                             <h5>{state.invoice.totalSum} VND</h5>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <div>Has Paied</div>
+                            <div>Has Paid</div>
                             <h5>{state.invoice.downPayment} VND</h5>
                         </div>
                         <div className="d-flex justify-content-between">

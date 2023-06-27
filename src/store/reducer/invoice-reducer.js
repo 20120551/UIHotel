@@ -33,7 +33,7 @@ const invoiceReducer = (state, action) => {
                 const _card = action.payload.cards.find(card => {
                     const date = getVietnameseDate();
                     const accepted = date === card.arrivalDate;
-                    return id === card.id && (accepted)
+                    return id=== card.id && (accepted)
                 })
 
                 if (_card) {

@@ -28,3 +28,8 @@ export const updateInvoiceStatus = async function ({ invoiceId }) {
     const invoice = await privateAxios.put(`/invoice/${invoiceId}`);
     return invoice.data;
 }
+
+export const deleteInvoice = async function ({ invoiceId }) {
+    const invoice = await privateAxios.delete(`/invoice/${invoiceId}`);
+    return invoice.data;
+}
