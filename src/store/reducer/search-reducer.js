@@ -141,7 +141,7 @@ const searchReducer = (state, action) => {
             localStorage.removeItem("searchInfo");
 
             // _cardInfo = [...cardInfo];
-            _searchInfo = createDefaultCardInfo();
+            _searchInfo = createDefaultSearchInfo();
             localStorage.setItem("searchInfo", JSON.stringify(_searchInfo));
 
             return {
