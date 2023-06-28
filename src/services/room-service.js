@@ -8,6 +8,7 @@ export const getFreeRooms = async ({ type, from, to }) => {
 };
 
 export const getRoomDetail = async ({ id }) => {
+  console.log(`/room/detail?id=${id}`);
   const response = await axios.get(`/room/detail?id=${id}`);
   return response?.data;
 };

@@ -1,6 +1,6 @@
 import PayInfo from "@components/search/payInfo";
 import { useRoom, useSearch } from "@hooks/context-hooks";
-import { roomService } from "@services/index";
+import { revenueService, roomService } from "@services/index";
 import { room, search } from "@store/actions";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -11,9 +11,12 @@ export default function RoomDetail() {
     const [searchState, searchDispatch] = useSearch();
     const navigate = useNavigate();
 
+    console.log(state.room);
     useEffect(() => {
         roomService.getRoomDetail({ id })
-            .then(data => dispatch(room.getRoomDetail({ room: data })));
+            .then(data => {
+                dispatch(room.getRoomDetail({ room: data }))
+            });
     }, []);
 
     const handleBooking = function (room) {
@@ -40,7 +43,7 @@ export default function RoomDetail() {
                             <div className="breadcrumb-text">
                                 <h2>Our Rooms</h2>
                                 <div className="bt-option">
-                                    <Link to="/">Home</Link>
+                                    <Link to="/search">Search</Link>
                                     <span>Rooms</span>
                                 </div>
                             </div>
@@ -53,10 +56,10 @@ export default function RoomDetail() {
                     <div className="row">
                         <div className="col-8 col-md-8">
                             <div className="room-details-item">
-                                <img src="/assets/img/room/room-details.jpg" alt="" />
+                                <img src={state.room.detail?.image || "/assets/img/room/room-details.jpg"} alt="" />
                                 <div className="rd-text">
                                     <div className="rd-title">
-                                        <h3>Premium King Room</h3>
+                                        <h3>Room {state.room.id}</h3>
                                         <div className="rdt-right">
                                             <div className="rating">
                                                 <i className="icon_star"></i>
@@ -70,41 +73,45 @@ export default function RoomDetail() {
                                                 className="btn btn-info">Booking Now</button>
                                         </div>
                                     </div>
-                                    <h2>159$<span>/Pernight</span></h2>
+                                    <h2>{state.room.detail?.price}$<span>/Pernight</span></h2>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td className="r-o">Size:</td>
-                                                <td>30 ft</td>
+                                                <td className="r-o">Status:</td>
+                                                <td>{state.room.status}</td>
                                             </tr>
                                             <tr>
-                                                <td className="r-o">Capacity:</td>
-                                                <td>Max persion 5</td>
+                                                <td className="r-o">Room Type:</td>
+                                                <td>{state.room.detail?.roomType}</td>
                                             </tr>
                                             <tr>
-                                                <td className="r-o">Bed:</td>
-                                                <td>King Beds</td>
+                                                <td className="r-o">Default Guest:</td>
+                                                <td>Default persion {state.room.detail?.roomRegulation?.defaultGuest}</td>
                                             </tr>
                                             <tr>
-                                                <td className="r-o">Services:</td>
-                                                <td>Wifi, Television, Bathroom,...</td>
+                                                <td className="r-o">Max Guest:</td>
+                                                <td>Max persion {state.room.detail?.roomRegulation?.maxGuest}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="r-o">Description:</td>
+                                                <td>{state.room.detail?.description}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <p className="f-para">
-
+                                        {state.room.note}
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div className="col-4 col-md-4">
+
                             <PayInfo
                                 searchInfo={searchState.searchInfo}
                                 cardInfo={
                                     searchState.cardInfo.find(
                                         card => (
-                                            card.from === (searchState.searchInfo.from
-                                                && card.to === searchState.searchInfo.to)
+                                            card.from === searchState.searchInfo.from && card.to === searchState.searchInfo.to
                                         ))?.items}
                                 handleBookingRemove={handleBookingRemove}
                                 handleCreateCard={handleCreateCard}

@@ -18,7 +18,7 @@ const roomReducer = (state, action) => {
       };
     case room.GET_ROOM_DETAIL:
       console.log("handing event get detail room");
-      console.log(action.payload.rooms);
+      console.log(action.payload.room);
       return {
         ...state,
         room: action.payload.room,

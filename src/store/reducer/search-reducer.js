@@ -67,7 +67,9 @@ const searchReducer = (state, action) => {
             let isRenew = false;
             if (index !== -1) {
                 if (!isExpire(cardInfo[index].ttl)) {
-                    cardInfo[index].items.push(action.payload);
+                    const index2 = cardInfo[index].items.findIndex(c => c.id === action.payload.id)
+                    if (index2 === -1)
+                        cardInfo[index].items.push(action.payload);
                 } else { //expire
                     cardInfo.splice(index);
                     isRenew = true;

@@ -1,17 +1,16 @@
-import $ from 'jquery';
+import $ from "jquery";
 import { useEffect } from "react";
-import { Link, redirect  } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 export default function SideBar() {
-    
-    const HandleReservationLinkClick = () => {
-        redirect("/hotel/reservation");
-        //window.location.href = '/hotel/reservation';
-    };
+  const HandleReservationLinkClick = () => {
+    redirect("/hotel/reservation");
+    //window.location.href = '/hotel/reservation';
+  };
 
-    const HandleBookingLinkClick = () => {
-        window.location.href = '/hotel/reservation/booking';
-    };
+  const HandleBookingLinkClick = () => {
+    window.location.href = "/hotel/reservation/booking";
+  };
 
     useEffect(() => {
         var Sidemenu = function () { this.$menuItem = $('#sidebar-menu a'); };
@@ -33,7 +32,7 @@ export default function SideBar() {
             <div className="sidebar-inner slimscroll">
                 <div id="sidebar-menu" className="sidebar-menu">
                     <ul>
-                        <li> <Link to="/hotel/dashboard"><i className="fas fa-tachometer-alt"></i> <span>Dashboard</span></Link> </li>
+                        <li> <Link to="/"><i className="fas fa-tachometer-alt"></i> <span>Dashboard</span></Link> </li>
                         <li className="list-divider"></li>
                         <li className="submenu"> <a ><i className="fas fa-suitcase"></i> <span> Booking </span> <span className="menu-arrow"></span></a>
                             <ul className="submenu_class">
