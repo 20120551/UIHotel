@@ -6,6 +6,7 @@ import { cardService, paymentService } from "@services/index";
 import { search } from "@store/actions";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { substractDate } from '@utls/date';
 
 const payMethod = [{
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRX2g_WceO55Wfx_NcaHXidw2VUVa7Ga83oA&usqp=CAU",
@@ -52,11 +53,17 @@ export default function RoomPaying() {
             const card = cardInfo.find(
                 card => card.from === searchInfo.from && card.to === searchInfo.to)?.items || [];
 
+            // calculate totalsum
+            const totalSum = card.reduce(
+                (init, card) =>
+                    init + (card?.price || 0) * (substractDate(searchInfo.from, searchInfo.to) + 1), 0)
+
             const { invoiceId } = await cardService.createCard({
                 email: guest.email,
                 nameCus: guest.firstname + " " + guest.lastname,
                 arrivalDateStr: searchInfo.from,
                 departureDateStr: searchInfo.to,
+                totalSum,
                 reservationCards: card.map(card => ({ roomId: card.id }))
             })
 
@@ -69,6 +76,8 @@ export default function RoomPaying() {
             };
         }
 
+        if (activeModel.url)
+            return;
         _useFetch()
             .then(payload => {
                 let {
