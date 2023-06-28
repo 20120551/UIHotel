@@ -97,7 +97,7 @@ export default function RoomOccupancy() {
                     <td>{index}</td>
                     <td>{revenue.id}</td>
                     <td>{revenue.freq}</td>
-                    <td>{revenue.percentage}</td>
+                    <td>{revenue.percentage.toFixed(2)} </td>
 
                 </tr>
             );

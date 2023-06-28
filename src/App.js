@@ -12,6 +12,7 @@ import RoomRoute from "routes/room-route";
 import ReservationRoute from 'routes/reservation-route';
 import RoomOccupancyRoute from 'routes/room-occupancy-route';
 import RoomDetailRoute from 'routes/roomDetail-route';
+import DashBoardRoute from "routes/dashboard-route";
 import Login from '@pages/auth/login';
 import Notfound from '@pages/error/notfound';
 import ServerInterval from '@pages/error/serverInterval';
@@ -32,6 +33,7 @@ function App() {
                         <Route path='reservation/*' element={<ReservationRoute />} />
                         <Route path='room-detail/*' element={<RoomDetailRoute />} />
                         <Route path='regulation/*' element={<RoomRegulationRoute />} />
+                        <Route path='dashboard/' element={<DashBoardRoute/>} />
                     </Route>
                 </Route>
 
