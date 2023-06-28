@@ -72,6 +72,8 @@ const searchReducer = (state, action) => {
                     cardInfo.splice(index);
                     isRenew = true;
                 }
+            } else {
+                isRenew = true
             }
 
             if (isRenew === true) {
