@@ -83,13 +83,7 @@ function StaffList() {
   const [end, setEnd] = useState(1);
 
   useEffect(() => {
-    // StaffService.GetAllStaffs({ page: index, pageSize: 5 }).then((data) => {
-    //   setStaffs(data.values);
-    //   setEnd(data.totalPage);
-    // });
-
-    staffService.GetAllStaffs().then((data) => {
-      console.log(data);
+    staffService.GetAllStaffs({ page: index, pageSize: 5 }).then((data) => {
       setStaffs(data.values);
       setEnd(data.totalPage);
     });

@@ -7,7 +7,6 @@ import {
   SearchProvider,
   ServiceProvider,
   UserProvider,
-  StaffProvider,
 } from "./provider";
 
 export default function Provider({ children }) {
@@ -16,7 +15,6 @@ export default function Provider({ children }) {
       providers={[
         provider(AuthProvider),
         provider(UserProvider),
-        provider(StaffProvider),
         provider(InvoiceProvider),
         provider(ServiceProvider),
         provider(RoomProvider),

@@ -1,7 +1,7 @@
 import AllStaff from "@pages/staff/allStaff";
 import { Route, Routes } from "react-router-dom";
 
-export default function RoomRoute() {
+export default function StaffRoute() {
   return (
     <Routes>
       <Route index element={<AllStaff />} />

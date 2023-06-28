@@ -12,5 +12,5 @@ export const getRoomDetail = (payload) => ({
 
 export const paginationRooms = (payload) => ({
   type: room.PAGINATION_ROOMS,
-  payload
-})
+  payload,
+});

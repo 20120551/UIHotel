@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 const ListStaff = (props) => {
-  const Staffs = props.staffs;
-  if (!Staffs) {
+  const staffs = props.staffs;
+  if (!staffs) {
     return <></>;
   }
+  console.log(staffs);
   return (
     <div className="card card-table">
       <div className="card-body booking_card">
@@ -14,13 +15,13 @@ const ListStaff = (props) => {
                 <th>Name</th>
                 <th>Staff ID</th>
                 <th>Email</th>
-                <th>Ph.Number</th>
+                <th>Tel</th>
                 <th>Role</th>
                 <th className="text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {/* {Staffs.map((staff) => {
+              {staffs.map((staff) => {
                 return (
                   <tr key={staff.id}>
                     <td className="text-left">
@@ -29,18 +30,20 @@ const ListStaff = (props) => {
                           <img
                             className="avatar-img rounded-circle"
                             src={
-                              "assets/img/profiles/" +
-                              (staff.role == "staff"
+                              "/assets/img/" +
+                              (staff.roles === "staff"
                                 ? "staff.png"
                                 : "manager.png")
                             }
                             alt="User Image"
                           />
                         </div>
-                        <div style="font-size: large;">{staff.name}</div>
+                        <div style={{ fontSize: "large" }}>
+                          {staff.fullName}
+                        </div>
                       </h2>
                     </td>
-                    <td>ST-001</td>
+                    <td>{staff.id}</td>
                     <td>
                       <a
                         href="/cdn-cgi/l/email-protection"
@@ -50,21 +53,20 @@ const ListStaff = (props) => {
                         [email&#160;protected]
                       </a>
                     </td>
-                    <td>631-254-6480</td>
-                    <td>21-04-2020</td>
+                    <td>{staff.telephoneNumber}</td>
+
                     <td>
                       <div className="actions">
-                        {" "}
                         <a
                           href="#"
                           className={
                             "btn btn-sm mr-2 " +
-                            (staff.roll == "staff"
+                            (staff.roles == "staff"
                               ? "bg-success-light"
                               : "bg-warning-light")
                           }
                         >
-                          {staff.role}
+                          {staff.roles}
                         </a>
                       </div>
                     </td>
@@ -99,7 +101,7 @@ const ListStaff = (props) => {
                     </td>
                   </tr>
                 );
-              })} */}
+              })}
             </tbody>
           </table>
         </div>

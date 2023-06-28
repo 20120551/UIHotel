@@ -9,4 +9,3 @@ export const ServiceContext = createContext();
 export const SearchContext = createContext();
 export const ReservationCardContext = createContext();
 export const RoomDetailContext = createContext();
-export const StaffContext = createContext();

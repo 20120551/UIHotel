@@ -119,7 +119,7 @@ function RoomList() {
             {[...Array(end)].map((x, i) => {
               if (i + 1 === index) {
                 return (
-                  <li className="page-item active">
+                  <li key={i + 1} className="page-item active">
                     <a className="page-link" href="#">
                       {i + 1}
                     </a>
@@ -127,7 +127,7 @@ function RoomList() {
                 );
               } else {
                 return (
-                  <li className="page-item">
+                  <li key={i + 1} className="page-item">
                     <a className="page-link" href="#">
                       {i + 1}
                     </a>

@@ -9,8 +9,10 @@ export const getStaffInfo = async ({ id }) => {
 //   return response?.data;
 // };
 
-export const GetAllStaffs = async () => {
-  const response = await privateAxios.get(`/user`);
+export const GetAllStaffs = async ({ page, pageSize }) => {
+  const response = await privateAxios.get(
+    `/user?page=${page}&pageSize=${pageSize}`
+  );
   return response?.data;
 };
 
