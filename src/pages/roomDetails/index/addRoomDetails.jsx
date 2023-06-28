@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { roomDetailService } from "@services";
 import { roomRegulationService } from "@services";
 import { useNavigate } from "react-router-dom";
+import UploadImgComponent from "@components/image/uploadImg";
+import UploadImage from "@lib/uploadImage";
 
 function AddRoomDetail() {
   const [state, dispatch] = React.useState();
@@ -11,29 +13,36 @@ function AddRoomDetail() {
   const [roomType, setRoomType] = React.useState("");
   const [Price, setPrice] = React.useState("");
   const [Description, setDescription] = React.useState("");
-  const [Image, setImage] = React.useState("");
+  const [Image, setImage] = React.useState(null);
+  const [previewImage, setPreviewImage] = React.useState(null);
 
   React.useEffect(() => {
     roomRegulationService.getAll().then((roomRegulation) => {
       dispatch(setData(roomRegulation));
-      console.log(roomRegulation);
     });
   }, []);
   const handleSubmit = async (event) => {
     // event.preventDefault();
+    let imgUrl = await UploadImage(Image);
+    if (regulationID === undefined || regulationID === null || regulationID === "")
+    {
+      alert("Regulation id is required");
+    }
+
     await roomDetailService
       .addRoomDetail({
         price: Price,
         roomType: roomType,
         description: Description,
         roomREgulationId: regulationID,
-        image: Image,
+        image: imgUrl
       })
       .then((data) => {
         setDescription("");
         setPrice("");
         setRoomType("");
-        setImage("");
+        setImage(null);
+        setPreviewImage(null);
         alert("New Room Detail successfully added");
       })
       .catch(function (error) {
@@ -50,77 +59,79 @@ function AddRoomDetail() {
 
   return (
     <>
-      <div class="content container-fluid">
-        <div class="page-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h3 class="page-title mt-5">Add Room Detail</h3>{" "}
+      <div className="content container-fluid">
+        <div className="page-header">
+          <div className="row align-items-center">
+            <div className="col">
+              <h3 className="page-title mt-5">Add Room Detail</h3>{" "}
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-12">
+        <div className="row">
+          <div className="col-lg-12">
             <form>
-              <div class="row formtype">
-                {/* <div class="col-md-4">
-                                    <div class="form-group ">
+              <div className="row formtype">
+                {/* <div className="col-md-4">
+                                    <div className="form-group ">
                                         <label>Room </label>
-                                        <input class="form-control" type="number" value="200000" /> </div>
+                                        <input className="form-control" type="number" value="200000" /> </div>
                                 </div> */}
-                <div class="col-md-4">
-                  <div class="form-group">
+                <div className="col-md-4">
+                  <div className="form-group">
                     <label>Price:</label>
                     <input
                       type="number"
                       value={Price}
                       onChange={(e) => setPrice(e.target.value)}
-                      class="form-control"
+                      className="form-control"
                     />{" "}
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
+                <div className="col-md-4">
+                  <div className="form-group">
                     <label>Room Type:</label>
                     <input
                       type="text"
                       value={roomType}
                       onChange={(e) => setRoomType(e.target.value)}
-                      class="form-control"
+                      className="form-control"
                     />{" "}
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
+                <div className="col-md-4">
+                  <div className="form-group">
                     <label>Description:</label>
                     <input
                       type="text"
                       value={Description}
                       onChange={(e) => setDescription(e.target.value)}
-                      class="form-control"
+                      className="form-control"
                     />{" "}
                   </div>
                 </div>
 
-                <div class="col-md-4">
-                  <div class="form-group">
+                <div className="col-md-4">
+                  <div className="form-group">
                     <label>Image:</label>
-                    <input
+                    {/* <input
                       type="number"
                       value={Image}
                       onChange={(e) => setImage(e.target.value)}
-                      class="form-control"
-                    />{" "}
+                      className="form-control"
+                    />{" "} */}
+                    <UploadImgComponent img={[Image, setImage]} previewImg={[previewImage, setPreviewImage]}></UploadImgComponent>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Reservation ID:</label>
+                <div className="col-md-4">
+                  <div className="form-group">
+                    <label>Regulation ID:</label>
                     <select
-                      class="form-control"
+                      className="form-control"
                       id="exampleFormControlSelect1"
                       value={regulationID}
                       onChange={(e) => setRegulationID(e.target.value)}
                     >
+                      <option>Select</option>
                       {state}
                     </select>{" "}
                   </div>
@@ -129,7 +140,7 @@ function AddRoomDetail() {
             </form>
           </div>
         </div>
-        <button type="button" class="btn btn-primary buttonedit ml-2">
+        <button type="button" className="btn btn-primary buttonedit ml-2">
           <Link
             style={{ fontStyle: "none", color: "white" }}
             to="/hotel/room-detail"
@@ -141,7 +152,7 @@ function AddRoomDetail() {
         <button
           type="button"
           onClick={() => handleSubmit()}
-          class="btn btn-primary buttonedit"
+          className="btn btn-primary buttonedit"
         >
           Add
         </button>

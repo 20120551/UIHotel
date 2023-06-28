@@ -102,7 +102,11 @@ export default function AddRoom() {
                     onChange={(e) => handleSelectedDetail(e)}
                   >
                     {details.map((x) => {
-                      return (<option value={x.id} key={x.id}>{x.roomType}</option>)
+                      return (
+                        <option value={x.id} key={x.id}>
+                          {x.roomType}
+                        </option>
+                      );
                     })}
                   </select>
                 </div>

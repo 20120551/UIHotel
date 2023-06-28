@@ -5,6 +5,8 @@ import { roomDetailService } from "@services";
 import { roomRegulationService } from "@services";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import UploadImgComponent from "@components/image/uploadImg";
+import UploadImage from "@lib/uploadImage";
 
 function EditRoomDetail() {
     let { id } = useParams();
@@ -16,10 +18,11 @@ function EditRoomDetail() {
     const [Price, setPrice] = React.useState("");
     const [Description, setDescription] = React.useState("");
     const [Image, setImage] = React.useState("");
+    const [newImage, setNewImage] = React.useState(null);
+    const [previewImage, setPreviewImage] = React.useState(null);
 
     React.useEffect(() => {
         roomDetailService.getByID({ index: id }).then(roomDetail => {
-            console.log("id " + id)
             setRegulationID(roomDetail.roomRegulation.id);
             setRoomDetailID(roomDetail.id)
             setPrice(roomDetail.price)
@@ -34,17 +37,23 @@ function EditRoomDetail() {
     }, []);
     const handleSubmit = async (event) => {
         // event.preventDefault();
+        let imgUrl = await UploadImage(newImage);
+        let img = Image;
+        if (imgUrl != null)
+        {
+            img = imgUrl;
+        }
+
         await roomDetailService.updateRoomDetail({
             id: roomDetailID,
             price: Price,
             roomType: roomType,
             description: Description,
-            image: Image,
+            image: img,
             roomRegulationID: regulationID
-            
-        }).then(roomDetail=>{
-            alert("room detail was successfully updated");
 
+        }).then(roomDetail => {
+            alert("room detail was successfully updated");
         })
 
 
@@ -73,8 +82,8 @@ function EditRoomDetail() {
                         <form>
                             <div class="row formtype">
 
-                                
-                                <div class="col-md-4">
+
+                                <div class="col-md-3">
                                     <div class="form-group ">
                                         <label>Room Detail ID: </label>
                                         <input
@@ -84,7 +93,7 @@ function EditRoomDetail() {
                                             onChange={(e) => setRoomDetailID(e.target.value)}
                                             class="form-control" /> </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Price:</label>
                                         <input
@@ -93,7 +102,7 @@ function EditRoomDetail() {
                                             onChange={(e) => setPrice(e.target.value)}
                                             class="form-control" /> </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Room Type:</label>
                                         <input
@@ -102,7 +111,7 @@ function EditRoomDetail() {
                                             onChange={(e) => setRoomType(e.target.value)}
                                             class="form-control" /> </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Description:</label>
                                         <input
@@ -113,20 +122,22 @@ function EditRoomDetail() {
                                             class="form-control" /> </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Image:</label>
-                                        <input
-                                            type="text"
-                                            value={Image}
-                                            onChange={(e) => setImage(e.target.value)}
-
-                                            class="form-control" /> </div>
+                                        <label>Old image</label>
+                                        <img src={Image} class="rounded" alt={roomDetailID} style={{ maxHeight: '400px' }} />
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label>Image:</label>
+                                        <UploadImgComponent img={[newImage, setNewImage]} previewImg={[previewImage, setPreviewImage]}></UploadImgComponent>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Reservation ID:</label>
-                                        <select class="form-control" id="exampleFormControlSelect1" value={regulationID} onChange={(e)=>setRegulationID(e.target.value)}>
+                                        <label>Regulation ID:</label>
+                                        <select class="form-control" id="exampleFormControlSelect1" value={regulationID} onChange={(e) => setRegulationID(e.target.value)}>
                                             {state}
                                         </select> </div>
                                 </div>

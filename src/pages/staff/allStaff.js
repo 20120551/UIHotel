@@ -1,29 +1,29 @@
-import ListRoom from "@components/room/tableRoom";
+import ListStaff from "@components/staff/tableStaff";
 import { useEffect, useState } from "react";
-import { roomService } from "@services/index";
+import { staffService } from "@services/index";
 import { NavLink } from "react-router-dom";
-export default function AllRooms() {
+export default function AllStaffs() {
   return (
     <>
       <Header />
       <SearchBar />
-      <RoomList />
+      <StaffList />
     </>
   );
 }
 
 function Header() {
   return (
-    <div className="page-header mt-5">
+    <div className="page-header">
       <div className="row align-items-center">
         <div className="col">
-          <div>
-            <h4 className="card-title float-left mt-2">All Rooms</h4>{" "}
+          <div className="mt-5">
+            <h4 className="card-title float-left mt-2">All Staffs</h4>{" "}
             <NavLink
-              to="./add-room"
+              to="/hotel/staff/add-staff"
               className="btn btn-primary float-right veiwbutton"
             >
-              Add Room
+              Add Staff
             </NavLink>
           </div>
         </div>
@@ -38,43 +38,28 @@ function SearchBar() {
       <div className="col-lg-12">
         <form>
           <div className="row formtype">
-            <div className="col-md-4">
+            <div className="col-md-5">
               <div className="form-group">
                 <input
                   className="form-control"
                   type="text"
-                  placeholder="search service..."
+                  placeholder="search staff..."
                 />
               </div>
             </div>
 
-            <div className="col-md-2">
+            <div className="col-md-3">
               <div className="form-group">
                 <select className="form-control" id="sel1" name="sellist1">
-                  <option>All room</option>
-                  <option>Room ID</option>
+                  <option>Search option</option>
+                  <option>Staff ID</option>
+                  <option>Staff Name</option>
+                  <option>Phone number</option>
+                  <option>Email</option>
                 </select>
               </div>
             </div>
-            <div className="col-md-2">
-              <div className="form-group">
-                <select className="form-control" id="sel1" name="catlist1">
-                  <option>Room type</option>
-                  <option>Single</option>
-                  <option>Double</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-md-2">
-              <div className="form-group">
-                <select className="form-control" id="sel1" name="status">
-                  <option>Status</option>
-                  <option>Active</option>
-                  <option>Inactive</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-md-2">
+            <div className="col-md-4">
               <div className="form-group">
                 <a
                   href="#"
@@ -92,14 +77,14 @@ function SearchBar() {
   );
 }
 
-function RoomList() {
-  const [rooms, setRooms] = useState([]);
+function StaffList() {
+  const [staffs, setStaffs] = useState([]);
   const [index, setIndex] = useState(1);
   const [end, setEnd] = useState(1);
 
   useEffect(() => {
-    roomService.GetAllRooms({ page: index, pageSize: 5 }).then((data) => {
-      setRooms(data.values);
+    staffService.GetAllStaffs({ page: index, pageSize: 5 }).then((data) => {
+      setStaffs(data.values);
       setEnd(data.totalPage);
     });
   }, [index]);
@@ -107,7 +92,7 @@ function RoomList() {
   return (
     <div className="row">
       <div className="col-sm-12">
-        <ListRoom rooms={rooms} />
+        <ListStaff staffs={staffs} />
         <nav aria-label="..." className="mt-3 float-right">
           <ul className="pagination">
             <li
