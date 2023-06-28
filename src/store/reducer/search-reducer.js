@@ -11,7 +11,6 @@ const verify = verifyState({
     searchInfo: searchInfo ? JSON.parse(searchInfo) : { ttl: 0 }
 });
 
-console.log(verify);
 localStorage.setItem("cardInfo", JSON.stringify(verify.cardInfo));
 localStorage.setItem("searchInfo", JSON.stringify(verify.searchInfo));
 
@@ -73,6 +72,8 @@ const searchReducer = (state, action) => {
                     cardInfo.splice(index);
                     isRenew = true;
                 }
+            } else {
+                isRenew = true
             }
 
             if (isRenew === true) {
@@ -142,7 +143,7 @@ const searchReducer = (state, action) => {
             localStorage.removeItem("searchInfo");
 
             // _cardInfo = [...cardInfo];
-            _searchInfo = createDefaultCardInfo();
+            _searchInfo = createDefaultSearchInfo();
             localStorage.setItem("searchInfo", JSON.stringify(_searchInfo));
 
             return {

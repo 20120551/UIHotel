@@ -96,7 +96,9 @@ export default function Invoice() {
                                         {state.invoices && state.invoices.map((invoice, index) => {
                                             const { id, date, status, totalSum, nameCus } = invoice;
                                             return (
-                                                <tr key={id}>
+                                                <tr
+                                                    onClick={() => navigate(`/hotel/invoice/${id}`)}
+                                                    key={id}>
                                                     <td>
                                                         {index + 1}
                                                     </td>

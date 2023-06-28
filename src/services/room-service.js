@@ -1,4 +1,4 @@
-import axios, { privateAxios } from "@lib/axios";
+import axios, { createPrivateAxios } from "@lib/axios";
 
 export const getFreeRooms = async ({ type, from, to }) => {
   const response = await axios.get(
@@ -12,7 +12,7 @@ export const getRoomDetail = async ({ id }) => {
   return response?.data;
 };
 export const GetAllRooms = async ({ page, pageSize }) => {
-  const response = await privateAxios.get(
+  const response = await createPrivateAxios().get(
     `/room?page=${page}&pageSize=${pageSize}`
   );
   return response?.data;
@@ -20,7 +20,7 @@ export const GetAllRooms = async ({ page, pageSize }) => {
 
 export const addRoom = async function (payload) {
   console.log(payload);
-  const roomDetail = await privateAxios.post(`/room`, {
+  const roomDetail = await createPrivateAxios().post(`/room`, {
     ...payload,
   });
   return roomDetail.data;

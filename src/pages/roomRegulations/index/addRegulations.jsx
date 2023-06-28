@@ -117,7 +117,7 @@ function AddRegulation() {
                         </form>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/regulation" relative="">Cancel</Link></button>
+                <button type="button" class="btn btn-primary buttonedit ml-2"><Link style={{ fontStyle: "none", color: "white" }} to="/hotel/regulation" relative="">Cancel</Link></button>
                 <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">Add</button>
             </div>
         </>

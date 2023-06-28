@@ -2,8 +2,14 @@
 import Chart from 'chart.js/auto';
 import React, { useEffect, useState } from 'react';
 import { revenueService } from "@services";
-import { roomDetailService } from "@services";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 export default function Revenue() {
+    var chart = null;
+    const search = useLocation().search;
+    const qMonth = new URLSearchParams(search).get('month');
+    const qYear = new URLSearchParams(search).get('year');
+    console.log(qMonth + qYear);
     function generateRandomColor(length) {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -12,27 +18,71 @@ export default function Revenue() {
         }
         return color;
     }
+    const d = new Date();
+    let thisMonth = d.getMonth() + 1;
+    let thisYear = d.getFullYear();
+    const [month, setMonth] = useState(thisMonth);
+    const [year, setYear] = useState(thisYear)
+    // if(qMonth!==null&& qYear!==null){
+    //     setMonth(qMonth)
+    //     setYear(qYear)
+    // }
     const [revenue, setRevenue] = useState();
     var Label = [];
 
     var percentage = [];
     var length;
     var color = [];
+    const handleSearch = () => {
+        revenueService.getRevenueByMonth({
+            month: month,
+            year: year
+        }).then(data => {
+            setRevenue(setData(data));
+        })
+        var chart= document.querySelector("#myChart");
+        console.log(chart);
+        chart.remove();
+        var chartContainer=document.querySelector(".chartReport");
+        var newLink = document.createElement('canvas');
+        newLink.id="myChart";
+        newLink.className="mx-auto w-25";
+        chartContainer.append(newLink);
+        const ctx = document.getElementById('myChart').getContext('2d');
+        chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Label,
+                datasets: [
+                    {
+                        label: 'Revenue report',
+                        data: percentage,
+                        backgroundColor: ["red", "green", "blue"],
 
+                    },
+                ],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Revenue report "
+                }
+            },
+        });
+    }
     useEffect(() => {
-   
-        revenueService.getThisMonthRevenue().then(data => {
+        console.log("rerender");
+        revenueService.getRevenueByMonth({
+            month: month,
+            year: year
+        }).then(data => {
             setRevenue(setData(data));
 
 
         })
-        console.log("array", percentage)
 
-        console.log("length" + length + color)
         const ctx = document.getElementById('myChart').getContext('2d');
-
-
-        new Chart(ctx, {
+        chart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: Label,
@@ -66,7 +116,7 @@ export default function Revenue() {
                     <td>{index}</td>
                     <td>{revenue.id}</td>
                     <td>{revenue.totalSum}</td>
-                    <td>{revenue.percentage}</td>
+                    <td>{Math.round(revenue.percentage)}</td>
 
                 </tr>
             );
@@ -80,43 +130,53 @@ export default function Revenue() {
         <>
             <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
             <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-            <div class="page-header">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="mt-5">
-                            <h4 class="card-title float-left mt-2">Revenue Report</h4>
+            <div className="page-header">
+                <div className="row align-items-center">
+                    <div className="col">
+                        <div className="mt-5">
+                            <h4 className="card-title float-left mt-2">Revenue Report</h4>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
+            <div className="row">
+                <div className="col-lg-12">
                     <form>
-                        <div class="row formtype">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Room Type</label>
-                                    <select class="form-control" id="sel1" name="sellist1">
-                                        <option>Select type</option>
-                                        <option>VIP 1</option>
-                                        <option>Regular 1</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
+                        <div className="row formtype">
+
+                            <div className="col-md-3">
+                                <div className="form-group">
                                     <label>Month:</label>
-                                    <div class="cal-icon">
-                                        <input type="text" data-provide="datepicker" class="form-control datepicker"
-                                            data-date-format="mm/dd/yyyy" name="datepicker" id="datepicker" />
+                                    <div className="cal-icon">
+                                        <input
+                                            value={month}
+                                            onChange={(e) => setMonth(e.target.value)}
+                                            type="number"
+                                            className="form-control " />
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-3 justify-content-end">
-                                <div class="form-group">
+                            <div className="col-md-3">
+                                <div className="form-group">
+                                    <label>Year:</label>
+                                    <div className="cal-icon">
+                                        <input
+                                            value={year}
+                                            onChange={(e) => setYear(e.target.value)}
+                                            type="number"
+                                            className="form-control " />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-3 justify-content-end">
+                                <div className="form-group">
                                     <label>Search</label>
-                                    <a href="#" class="btn btn-success btn-block mt-0 search_button"> Search </a>
+                                    <a href="#" className="btn btn-success btn-block mt-0 search_button"
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleSearch()
+
+                                        }}> Search </a>
 
                                 </div>
                             </div>
@@ -124,12 +184,12 @@ export default function Revenue() {
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="datatable table table-stripped">
+            <div className="row">
+                <div className="col-sm-12">
+                    <div className="card">
+                        <div className="card-body">
+                            <div className="table-responsive">
+                                <table className="datatable table table-stripped">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -148,8 +208,8 @@ export default function Revenue() {
                     </div>
                 </div>
             </div>
-            <div class="row w-100" >
-                <canvas id="myChart" class="mx-auto w-25"  ></canvas>;
+            <div className="row w-100 chartReport" >
+                <canvas id="myChart" className="mx-auto w-25"  ></canvas>
 
             </div>
             <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>

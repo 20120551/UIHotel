@@ -5,8 +5,6 @@ import { HomeLayout, UserLayout } from "layouts";
 import InvoiceRoute from "routes/invoice-route";
 import RoomRegulationRoute from "routes/roomRegulation-route";
 import RevenueRoute from "routes/revenue-route";
-import RoomRoute from "routes/room-route";
-import StaffRoute from "routes/staff-route";
 import RoomPaying from "@pages/search/roomPaying";
 import SearchRoute from "routes/search-route";
 import Home from "@pages/home/home";
@@ -28,8 +26,6 @@ function App() {
               <Route path="invoice/*" element={<InvoiceRoute />} />
             </Route>
             <Route path="revenue/*" element={<RevenueRoute />} />
-            <Route path="room/*" element={<RoomRoute />} />
-            <Route path="staff/*" element={<StaffRoute />} />
             <Route path="room-occupancy/*" element={<RoomOccupancyRoute />} />
             <Route path="reservation/*" element={<ReservationRoute />} />
             <Route path="room-detail/*" element={<RoomDetailRoute />} />

@@ -151,7 +151,7 @@ function EditRegulation() {
                         </form>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/hotel/regulation" >Cancel</Link></button>
+                <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/hotel/regulation"  style={{ fontStyle: "none", color: "white" }}>Cancel</Link></button>
                 <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">submit</button>
             </div>
         </>

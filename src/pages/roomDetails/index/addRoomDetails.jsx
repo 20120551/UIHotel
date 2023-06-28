@@ -132,7 +132,7 @@ function AddRoomDetail() {
         <button type="button" class="btn btn-primary buttonedit ml-2">
           <Link
             style={{ fontStyle: "none", color: "white" }}
-            to="/room-detail"
+            to="/hotel/room-detail"
             relative="path"
           >
             Cancel

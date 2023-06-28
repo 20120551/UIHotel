@@ -99,11 +99,11 @@ export default function AddRoom() {
                     className="form-control"
                     id="detail_id"
                     name="detail_id"
-                    onChange={handleSelectedDetail}
+                    onChange={(e) => handleSelectedDetail(e)}
                   >
-                    {details.map((x) => (
-                      <option key={x.id}>{x.id}</option>
-                    ))}
+                    {details.map((x) => {
+                      return (<option value={x.id} key={x.id}>{x.roomType}</option>)
+                    })}
                   </select>
                 </div>
               </div>

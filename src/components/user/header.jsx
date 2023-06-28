@@ -1,6 +1,9 @@
+import { useAuth } from "@hooks/context-hooks";
+import { isExpire } from "@utls/ttl";
 import { Link } from "react-router-dom"
 
 export default function Header() {
+    const [auth, _] = useAuth();
     return (
         <header className="header-section">
             <div className="menu-item">
@@ -25,7 +28,8 @@ export default function Header() {
                                     </ul>
                                 </nav>
                                 <div className="nav-right search-switch float-right">
-                                    <Link to="/login">Login</Link>
+                                    <Link to="/login">
+                                        {isExpire(auth.accessToken?.ttl || 0) ? "login" : "Go to hotel"}</Link>
                                 </div>
                             </div>
                         </div>
