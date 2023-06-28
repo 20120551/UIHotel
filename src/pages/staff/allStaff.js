@@ -14,17 +14,17 @@ export default function AllStaffs() {
 
 function Header() {
   return (
-    <div className="page-header mt-5">
+    <div className="page-header">
       <div className="row align-items-center">
         <div className="col">
           <div className="mt-5">
-            <h4 className="card-title float-left mt-2">All Staff</h4>{" "}
-            <a
-              href="add-staff.html"
+            <h4 className="card-title float-left mt-2">All Staffs</h4>{" "}
+            <NavLink
+              to="/hotel/staff/add-staff"
               className="btn btn-primary float-right veiwbutton"
             >
               Add Staff
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

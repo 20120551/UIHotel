@@ -36,8 +36,14 @@ const ListRoom = (props) => {
                       </NavLink>
                     </td>
                     <td>
-                      <div className="bg-success-light mr-2">
-                        {" "}
+                      <div
+                        className={
+                          "mr-2 " +
+                          (room.status.toLowerCase() == "active"
+                            ? "bg-success-light"
+                            : "bg-warning-light")
+                        }
+                      >
                         {room.status}
                       </div>
                     </td>

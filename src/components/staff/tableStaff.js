@@ -12,8 +12,8 @@ const ListStaff = (props) => {
           <table className=" table table-stripped table table-hover table-center mb-0 text-center">
             <thead>
               <tr>
-                <th>Name</th>
                 <th>Staff ID</th>
+                <th>Name</th>
                 <th>Email</th>
                 <th>Tel</th>
                 <th>Role</th>
@@ -24,6 +24,7 @@ const ListStaff = (props) => {
               {staffs.map((staff) => {
                 return (
                   <tr key={staff.id}>
+                    <td>{staff.id}</td>
                     <td className="text-left">
                       <h2 className="table-avatar">
                         <div className="avatar avatar-sm mr-4">
@@ -43,7 +44,6 @@ const ListStaff = (props) => {
                         </div>
                       </h2>
                     </td>
-                    <td>{staff.id}</td>
                     <td>
                       <a
                         href="/cdn-cgi/l/email-protection"
