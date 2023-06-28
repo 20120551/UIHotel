@@ -21,8 +21,8 @@ export default function RoomDetail() {
     const handleBooking = function (room) {
         const { detail, ...payload } = room;
         searchDispatch(search.cacheCard({
-            ...payload,
             ...detail,
+            ...payload,
             type: searchState.searchInfo.type
         }))
     }
