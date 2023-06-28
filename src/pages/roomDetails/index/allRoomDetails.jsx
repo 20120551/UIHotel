@@ -11,7 +11,7 @@ function AllRoomDetails() {
     const [idToDelete, setIdToDelete] = useState("");
     const [isDelete, setIsDelete] = useState(false);
     const [state, dispatch] = useState();
-    const [reload,setReload]=useState(false);
+    const [reload, setReload] = useState(false);
     React.useEffect(() => {
         roomDetailService.getAll().then(roomRegulation => {
             dispatch(setData(roomRegulation));
@@ -30,7 +30,7 @@ function AllRoomDetails() {
 
         // }).catch(function (error) {
         //     alert("foreign key conflicted. Please remove old relevents data before delete");
-        
+
         // })
 
 
@@ -51,9 +51,9 @@ function AllRoomDetails() {
                         {roomDetail.description}
                     </td>
                     <td>
-                        {roomDetail.image}
+                        <img src={roomDetail.image} class="rounded" alt={roomDetail.id} style={{maxHeight:'200px'}}/>
                     </td>
-    
+
 
                     <td className="text-right">
                         <div className="dropdown dropdown-action"> <a href="/" className="action-icon dropdown-toggle" data-toggle="dropdown" ><i className="fas fa-ellipsis-v ellipse_color"></i></a>
@@ -62,10 +62,8 @@ function AllRoomDetails() {
                                     <i className="fas fa-pencil-alt m-r-5"></i> Edit</Link>
                                 <a
                                     onClick={(e) => {
-                                        console.log(isDelete);
                                         e.preventDefault();
                                         setIsDelete(true);
-                                        console.log(isDelete);
                                         setIdToDelete(roomDetail.id);
                                     }}
                                     className="dropdown-item " type="button" data-toggle="modal" data-target="#exampleModal" href="/"  >
