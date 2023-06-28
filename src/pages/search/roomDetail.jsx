@@ -11,7 +11,6 @@ export default function RoomDetail() {
     const [searchState, searchDispatch] = useSearch();
     const navigate = useNavigate();
 
-    console.log(state.room);
     useEffect(() => {
         roomService.getRoomDetail({ id })
             .then(data => {
@@ -20,8 +19,10 @@ export default function RoomDetail() {
     }, []);
 
     const handleBooking = function (room) {
+        const { detail, ...payload } = room;
         searchDispatch(search.cacheCard({
-            ...room,
+            ...payload,
+            ...detail,
             type: searchState.searchInfo.type
         }))
     }

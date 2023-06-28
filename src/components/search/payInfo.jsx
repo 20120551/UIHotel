@@ -38,7 +38,7 @@ export default function PayInfo({
             <div className="d-flex justify-content-between">
                 <div>Total Amount</div>
                 <h4 className="font-weight-bold">{
-                    cardInfo.reduce((init, card) => init + (card.detail?.price || card?.price || 0), 0)} VND</h4>
+                    cardInfo.reduce((init, card) => init + (card?.price || 0), 0)} VND</h4>
             </div>
             <button
                 data-toggle="modal" data-target="#exampleModal"
