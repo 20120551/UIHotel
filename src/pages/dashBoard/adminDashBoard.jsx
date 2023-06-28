@@ -2,10 +2,13 @@ import { useEffect, useState } from "react"
 import { revenueService, reservationService } from "@services";
 import dateFormat, { masks } from "dateformat";
 import Chart from 'chart.js/auto';
+import { max } from "moment";
 
 export default function AdminDashBoard() {
     const [revenue, setRevenue] = useState();
-    const [booked,setBooked]=useState();
+    const [booked, setBooked] = useState();
+    const [totalRevenue, setTotalRevenue] = useState(0);
+    const [highestMonth, setHighestMonth] = useState();
     var RevenueList = [];
     var Label = [];
     var percentage = [];
@@ -14,12 +17,12 @@ export default function AdminDashBoard() {
     let year = d.getFullYear();
     var date = new Date();
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    const fDay=dateFormat(firstDay,"dd/mm/yyyy")
-    console.log(fDay)
+    const fDay = dateFormat(firstDay, "dd/mm/yyyy")
+    // console.log(fDay)
 
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    const lDay=dateFormat(lastDay,"dd/mm/yyyy")
-    console.log(fDay,lDay)
+    const lDay = dateFormat(lastDay, "dd/mm/yyyy")
+    // console.log(fDay, lDay)
     useEffect(() => {
 
         revenueService.getRevenueByMonth({
@@ -36,25 +39,42 @@ export default function AdminDashBoard() {
             setRevenue(totalSum);
         })
 
-
-        // var monthList=[]
-        // for(let m=1;m<=month;m++){
-        //     monthList.push(m);
-        // }
+        reservationService.getByReservationByPeriodTime(
+            {
+                from: fDay,
+                to: lDay
+            }
+        ).then(data => {
+            setBooked(data.length)
+        })
+        var monthList = []
+        for (let m = 1; m <= month; m++) {
+            monthList.push(m);
+        }
         // console.log(monthList)
-        // Promise.all(monthList.map(  (month)=>{
-        //         console.log(month,year);
-        //         return revenueService.getRevenueByMonth({
-        //         month: month,
-        //         year: year
-        //     })
+        RevenueList = []
+        Promise.all(monthList.map((month) => {
 
-        // }))
+            revenueService.getRevenueByMonth({
+                month: month,
+                year: year
+            }).then(data => {
+                var totalSum = 0;
+                data.forEach((revenue, index) => {
+                    totalSum = totalSum + revenue.totalSum;
+                })
+                RevenueList.push(totalSum)
+                setTotalRevenue(totalRevenue + totalSum)
 
-        console.log("list"+RevenueList);
+            })
+
+        }))
+        // console.log(RevenueList)
+
+
         var chart = document.querySelector("#myChart");
         if (chart) {
-            console.log(chart);
+            // console.log(chart);
             chart.remove();
             var chartContainer = document.querySelector(".chartReport");
             var newLink = document.createElement('canvas');
@@ -67,11 +87,11 @@ export default function AdminDashBoard() {
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: Label,
+                labels: monthList,
                 datasets: [
                     {
-                        label: 'Revenue report by RoomType',
-                        data: percentage,
+                        label: 'Revenue monthly report',
+                        data: RevenueList,
                         backgroundColor: ["rgb(75, 192, 192)"],
                         borderColor: 'rgb(75, 192, 192)',
                         tension: 0.1
@@ -85,7 +105,41 @@ export default function AdminDashBoard() {
                 }
             },
         });
-    })
+
+
+        var chart = document.querySelector("#PieChart");
+        if (chart) {
+            // console.log(chart);
+            chart.remove();
+            var chartContainer = document.querySelector(".PieChartReport");
+            var newLink = document.createElement('canvas');
+            newLink.id = "PieChart";
+            newLink.className = "mx-auto w-50";
+            chartContainer.append(newLink);
+
+        }
+        const ct = document.getElementById('PieChart').getContext('2d');
+        new Chart(ct, {
+            type: 'pie',
+            data: {
+                labels: Label,
+                datasets: [
+                    {
+                        label: 'Revenue report by room type',
+                        data: percentage,
+                        backgroundColor: ["#F1C27B", "#A2CDB0", "#C2DEDC", "#F2D8D8"],
+
+                    },
+                ],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Revenue report "
+                }
+            },
+        });
+    }, [])
 
     return (
         <>
@@ -129,15 +183,9 @@ export default function AdminDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">1538</h3>
-                                    <h6 className="text-muted">Enquiry</h6> </div>
-                                <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round"  className="feather feather-file-plus">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
-                                    </path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                                    <line x1="9" y1="15" x2="15" y2="15"></line>
-                                </svg></span> </div>
+                                    <h3 className="card_widget_header">{parseFloat(totalRevenue).toLocaleString('en')} VND</h3>
+                                    <h6 className="text-muted">Revenue this year</h6> </div>
+
                             </div>
                         </div>
                     </div>
@@ -147,9 +195,9 @@ export default function AdminDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">364</h3>
-                                    <h6 className="text-muted">Collections</h6> </div>
-                                <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round"  className="feather feather-globe">
+                                    <h3 className="card_widget_header">{(revenue/totalRevenue)*100} %</h3>
+                                    <h6 className="text-muted">This month' revenue percentage</h6> </div>
+                                <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" className="feather feather-globe">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <line x1="2" y1="12" x2="22" y2="12"></line>
                                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
@@ -170,20 +218,22 @@ export default function AdminDashBoard() {
                                 <canvas id="myChart" className="mx-auto w-75"  ></canvas>
 
                             </div>
+
                         </div>
                     </div>
                 </div>
                 <div className="col-md-12 col-lg-6">
                     <div className="card card-chart">
                         <div className="card-header">
-                            <h4 className="card-title">ROOMS BOOKED</h4> </div>
-                        <div className="card-body">
-                            <div id="donut-chart"></div>
+                            <h4 className="card-title">Revenue by room type</h4> </div>
+                        <div className="row w-100 PieChartReport" >
+                            <canvas id="PieChart" className="mx-auto w-50"  ></canvas>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
                 <div className="col-md-12 d-flex">
                     <div className="card card-table flex-fill">
                         <div className="card-header">
@@ -276,7 +326,7 @@ export default function AdminDashBoard() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     )
 
