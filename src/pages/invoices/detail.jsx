@@ -6,7 +6,7 @@ import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services";
 import { invoice } from "@store/actions";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function InvoiceDetail() {
     const [roomChanged, setRoomchanged] = useState({
@@ -14,15 +14,25 @@ export default function InvoiceDetail() {
         isActiveRoomChange: false,
         isActiveServiceChange: false
     });
+    const navigate = useNavigate();
     const [state, dispatch] = useInvoice();
-    const isEmptyCard = state.invoice.reservationCards.length === 0 ? true : false;
-    const isEmptyService = state.invoice.hotelServices.length === 0 ? true : false;
+    const isEmptyCard = state.invoice.reservationCards ?
+        (state.invoice.reservationCards.length === 0 ? true : false) : true;
+    const isEmptyService = state.invoice.hotelServices ?
+        (state.invoice.hotelServices.length === 0 ? true : false) : true;
+
     const { id } = useParams();
 
     useEffect(() => {
         invoiceService.getDetail({ index: id })
             .then(data => {
                 dispatch(invoice.getInvoice({ invoice: data }));
+            })
+            .catch(err => {
+                console.log('error', err);
+                setTimeout(() => {
+                    navigate("/hotel/invoice")
+                }, 1000);
             })
     }, []);
 
@@ -45,8 +55,12 @@ export default function InvoiceDetail() {
             fromDateStr: from,
             toDateStr: to
         })
+            .then(_ => {
+                // dispatch(invoice.addReservationCard({ cards: data }));
+                return invoiceService.getDetail({ index: id })
+            })
             .then(data => {
-                dispatch(invoice.addReservationCard({ cards: data }));
+                dispatch(invoice.getInvoice({ invoice: data }));
             })
     }
 
@@ -56,8 +70,12 @@ export default function InvoiceDetail() {
             isActiveServiceChange: false
         }))
         invoiceService.addHotelService({ invoiceId: id, serviceId })
+            .then(_ => {
+                // dispatch(invoice.addHotelService({ services: data.hotelServices }));
+                return invoiceService.getDetail({ index: id })
+            })
             .then(data => {
-                dispatch(invoice.addHotelService({ services: data.hotelServices }));
+                dispatch(invoice.getInvoice({ invoice: data }));
             })
     }
 
@@ -95,8 +113,8 @@ export default function InvoiceDetail() {
                             <div
                                 className={!roomChanged.isActiveRoomChange ? "tab-pane show active" : "tab-pane show"}
                                 id="solid-tab1">
-                                <MayEmpty isEmpty={isEmptyCard} name="reservation card">
-                                    <div className="table-responsive">
+                                <div className="table-responsive">
+                                    <MayEmpty isEmpty={isEmptyCard} name="reservation card">
                                         <table className="table-stripped table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
@@ -111,7 +129,7 @@ export default function InvoiceDetail() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {state.invoice.reservationCards.map((card, index) => {
+                                                {state.invoice.reservationCards?.map((card, index) => {
                                                     const { id, price, arrivalDate, departureDate, roomId } = card;
                                                     return (
                                                         <tr
@@ -137,8 +155,8 @@ export default function InvoiceDetail() {
                                                 })}
                                             </tbody>
                                         </table>
-                                    </div>
-                                </MayEmpty>
+                                    </MayEmpty>
+                                </div>
                             </div>
                             <div
                                 className={roomChanged.isActiveRoomChange ? "tab-pane active" : "tab-pane"}
@@ -165,8 +183,8 @@ export default function InvoiceDetail() {
                             <div
                                 className={!roomChanged.isActiveServiceChange ? "tab-pane show active" : "tab-pane show"}
                                 id="solid-tab3">
-                                <MayEmpty name="hotel service" isEmpty={isEmptyService}>
-                                    <div className="table-responsive">
+                                <div className="table-responsive">
+                                    <MayEmpty name="hotel service" isEmpty={isEmptyService}>
                                         <table className="table-stripped table table-hover table-center mb-0">
                                             <thead>
                                                 <tr>
@@ -178,7 +196,8 @@ export default function InvoiceDetail() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {state.invoice.hotelServices.map((service, index) => {
+
+                                                {state.invoice.hotelServices?.map((service, index) => {
                                                     const { id, price, createOn, name } = service;
                                                     return (
                                                         <tr key={id}>
@@ -194,8 +213,8 @@ export default function InvoiceDetail() {
                                                 })}
                                             </tbody>
                                         </table>
-                                    </div>
-                                </MayEmpty>
+                                    </MayEmpty>
+                                </div>
                             </div>
                             <div
                                 className={roomChanged.isActiveServiceChange ? "tab-pane active" : "tab-pane"}
@@ -223,7 +242,7 @@ export default function InvoiceDetail() {
                         <div className="my-3">Price Details</div>
 
                         <div style={{ overflowX: "hidden", overflowY: "auto", maxHeight: "420px" }}>
-                            {state.invoice.hotelServices.map((service, index) => {
+                            {state.invoice.hotelServices?.map((service, index) => {
                                 const { id, price, createOn, name } = service;
                                 return (
                                     <div key={id}>
@@ -237,7 +256,7 @@ export default function InvoiceDetail() {
                                 )
                             })}
 
-                            {state.invoice.reservationCards.map((card, index) => {
+                            {state.invoice.reservationCards?.map((card, index) => {
                                 const { id, price, roomType } = card;
                                 return (
                                     <div key={id}>
@@ -271,6 +290,6 @@ export default function InvoiceDetail() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

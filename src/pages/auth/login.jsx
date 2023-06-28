@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { auth as authAction } from "@store/actions";
 import { authService } from "@services/index";
+import { isExpire } from "@utls/ttl";
 
 export default function Login() {
     const navigator = useNavigate();
@@ -13,7 +14,7 @@ export default function Login() {
     });
 
     useEffect(() => {
-        if (state.accessToken) {
+        if (!isExpire(state.accessToken.ttl || 0)) {
             navigator("/hotel");
         }
     }, []);
@@ -61,7 +62,7 @@ export default function Login() {
                                     <span>Login with</span>
                                     <Link to="/login" className="facebook"><i className="fab fa-facebook-f"></i></Link>
                                     <Link to="/login" className="google"><i className="fab fa-google"></i></Link> </div>
-                                <div class="text-center dont-have">Do you want to book some rooms?
+                                <div className="text-center dont-have">Do you want to book some rooms?
                                     <Link to="/">Booking</Link></div>
                             </div>
                         </div>

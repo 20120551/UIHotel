@@ -6,19 +6,84 @@ export default function RoomOccupancy() {
 
     const [revenue, setRevenue] = useState();
     var Label = [];
-
+    const d = new Date();
+    let thisMonth = d.getMonth() + 1;
+    let thisYear = d.getFullYear();
+    const [month, setMonth] = useState(thisMonth);
+    const [year, setYear] = useState(thisYear)
     var percentage = [];
+    const handleSearch = () => {
+        roomOccupancyService.getByMonth({
+            month: month,
+            year: year
+        }).then(data => {
+            console.log(data);
+            setRevenue(setData(data));
 
+        })
+        var chart = document.querySelector("#myChart");
+        console.log(chart);
+        chart.remove();
+        var chartContainer = document.querySelector(".chartReport");
+        var newLink = document.createElement('canvas');
+        newLink.id = "myChart";
+        newLink.className = "mx-auto w-25";
+        chartContainer.append(newLink);
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Label,
+                datasets: [
+                    {
+                        label: 'Room occupancy report',
+                        data: percentage,
+                        backgroundColor: ["red", "green", "blue","purple","pink"],
+
+                    },
+                ],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Revenue report "
+                }
+            },
+        });
+    }
     useEffect(() => {
 
-        roomOccupancyService.getThisMonth().then(data => {
+        roomOccupancyService.getByMonth({
+            month: month,
+            year: year
+        }).then(data => {
             console.log(data);
             setRevenue(setData(data));
 
 
         })
 
+        const ctx = document.getElementById('myChart').getContext('2d');
+         new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Label,
+                datasets: [
+                    {
+                        label: 'Room occupancy report',
+                        data: percentage,
+                        backgroundColor: ["red", "green", "blue","purple","pink"],
 
+                    },
+                ],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Revenue report "
+                }
+            },
+        });
     }, []);
 
     const setData = (data) => {
@@ -57,32 +122,29 @@ export default function RoomOccupancy() {
                 <div class="col-lg-12">
                     <form>
                         <div class="row formtype">
-                            {/* <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Room Type</label>
-                                    <select class="form-control" id="sel1" name="sellist1">
-                                        <option>Select type</option>
-                                        <option>VIP 1</option>
-                                        <option>Regular 1</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Room ID</label>
-                                    <select class="form-control" id="sel2" name="sellist2">
-                                        <option>Select ID</option>
-                                        <option>V001</option>
-                                        <option>V002</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Month:</label>
                                     <div class="cal-icon">
-                                        <input type="text" data-provide="datepicker" class="form-control datepicker"
-                                            data-date-format="mm/dd/yyyy" name="datepicker" id="datepicker" />
+                                        <input
+                                            value={month}
+                                            onChange={(e) => setMonth(e.target.value)}
+                                            type="number"
+                                            data-provide="datepicker" class="form-control datepicker"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Year:</label>
+                                    <div class="cal-icon">
+                                        <input
+                                            value={year}
+                                            onChange={(e) => setYear(e.target.value)}
+                                            type="number"
+                                            data-provide="datepicker" class="form-control datepicker"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -90,10 +152,16 @@ export default function RoomOccupancy() {
                             <div class="col-md-3 justify-content-end">
                                 <div class="form-group">
                                     <label>Search</label>
-                                    <a href="#" class="btn btn-success btn-block mt-0 search_button"> Search </a>
+                                    <a href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleSearch()
+
+                                        }}
+                                        class="btn btn-success btn-block mt-0 search_button"> Search </a>
 
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -122,7 +190,10 @@ export default function RoomOccupancy() {
                     </div>
                 </div>
             </div>
+            <div className="row w-100 chartReport" >
+                <canvas id="myChart" className="mx-auto w-25"  ></canvas>
 
+            </div>
         </>
     )
 }

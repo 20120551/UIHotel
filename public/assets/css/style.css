@@ -9055,6 +9055,10 @@ ol {
     }
 }
 
+.page_active {
+    background-color: #dfa974;
+}
+
 @media only screen and (max-width: 991px) {
     .top-nav {
         display: none;
