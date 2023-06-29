@@ -153,7 +153,7 @@ export default function InvoiceDetail() {
                                                             onClick={() => navigate(`/hotel/reservation/${id}`)}
                                                             key={id}>
                                                             <td>{index + 1}</td>
-                                                            <td>
+                                                            <td className="text-success">
                                                                 {id}
                                                             </td>
                                                             <td>{roomId}</td>
