@@ -1,6 +1,7 @@
 export default function Footer() {
     return (
         <footer className="footer-section">
+            <link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous"></link>
             <div className="container">
                 <div className="footer-text">
                     <div className="row">
@@ -8,26 +9,26 @@ export default function Footer() {
                             <div className="ft-about">
                                 <div className="logo">
                                     <a href="#">
-                                        <img src="/assets/img/footer-logo.png" alt="" />
+                                        <img src="/assets/img/footer-logo.png" className="w-50" alt="" />
                                     </a>
                                 </div>
                                 <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>
-                                <div className="fa-social">
-                                    <a href="#"><i className="fa fa-facebook"></i></a>
-                                    <a href="#"><i className="fa fa-twitter"></i></a>
-                                    <a href="#"><i className="fa fa-tripadvisor"></i></a>
-                                    <a href="#"><i className="fa fa-instagram"></i></a>
-                                    <a href="#"><i className="fa fa-youtube-play"></i></a>
-                                </div>
+                                {/* <div className="fa-social">
+                                    <a href="https://www.facebook.com/phuc.tranvinh.9003"><i className="fa fa-facebook-f" aria-hidden="true"></i></a>
+                                    <a href="https://www.facebook.com/khoaterminator/"><i className="fa fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100009389821771"><i className="fa fa-tripadvisor"></i></a>
+                                    <a href="https://www.facebook.com/oct29thr"><i className="fa fa-instagram"></i></a>
+
+                                </div> */}
                             </div>
                         </div>
                         <div className="col-lg-3 offset-lg-1">
                             <div className="ft-contact">
                                 <h6>Contact Us</h6>
                                 <ul>
-                                    <li>(12) 345 67890</li>
-                                    <li>info.colorlib@gmail.com</li>
-                                    <li>856 Cordia Extension Apt. 356, Lake, United State</li>
+                                    <li>(84) 969 486 906</li>
+                                    <li>Roomee@hcmus.edu.com</li>
+                                    <li>Linh Trung Ward Đông Hòa, dĩ an,bình dương, Thu Duc District, Linh Trung, Khu Phố 6 .</li>
                                 </ul>
                             </div>
                         </div>
