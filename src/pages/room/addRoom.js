@@ -27,7 +27,6 @@ export default function AddRoom() {
   useState(() => {
     roomDetailService.getAll().then((data) => {
       setDetails(data);
-      console.log(data[0]);
       setSelectedDetail(data[0]);
     });
   }, []);

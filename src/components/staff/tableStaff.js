@@ -1,10 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { staffService } from "@services/index";
 const ListStaff = (props) => {
   const staffs = props.staffs;
-  if (!staffs) {
-    return <></>;
-  }
-  console.log(staffs);
+  const handelDelete = async (id) => {
+    //  e.preventDefault();
+    let warning = `Are you sure deactive account id ${id}`;
+    if (confirm(warning) != true) {
+      return;
+    }
+    await staffService
+      .deleteStaff(id)
+      .then(() => {
+        alert(`Successfully deactive account id ${id}`);
+        window.location.reload();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <div className="card card-table">
       <div className="card-body booking_card">
@@ -82,20 +95,26 @@ const ListStaff = (props) => {
                         >
                           <i className="fas fa-ellipsis-v ellipse_color"></i>
                         </a>
-                        <div className="dropdown-menu dropdown-menu-right">
+                        <div className="dropdown-menu dropdown-menu-right ">
                           {" "}
-                          <a className="dropdown-item" href="edit-staff.html">
+                          <Link
+                            to={"/hotel/staff/edit-staff/" + staff.id}
+                            className="dropdown-item"
+                          >
                             <i className="fas fa-pencil-alt m-r-5"></i> Edit
-                          </a>{" "}
-                          <a
+                          </Link>
+                          <div
                             className="dropdown-item"
                             href="#"
                             data-toggle="modal"
                             data-target="#delete_asset"
+                            onClick={async (e) => {
+                              await handelDelete(staff.id);
+                            }}
                           >
-                            <i className="fa-solid fa-user-xmark"></i>
-                            Deactivate
-                          </a>
+                            <i className="bi bi-trash m-r-5"></i>
+                            Remove
+                          </div>
                         </div>
                       </div>
                     </td>
