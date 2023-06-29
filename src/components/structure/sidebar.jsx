@@ -1,3 +1,5 @@
+import { ProtectComponent } from "@components/authorization";
+import { role } from "@config/index";
 import $ from "jquery";
 import { useEffect } from "react";
 import { Link, redirect } from "react-router-dom";
@@ -71,7 +73,7 @@ export default function SideBar() {
             <li className="submenu">
               {" "}
               <a href="#">
-                <i className="fas fa-key"></i> <span> Invoice </span>{" "}
+                <i className="fas fa-file-invoice"></i> <span> Invoice </span>{" "}
                 <span className="menu-arrow"></span>
               </a>
               <ul className="submenu_class">
@@ -90,11 +92,13 @@ export default function SideBar() {
                 <li>
                   <Link to="/hotel/regulation">All regulations</Link>
                 </li>
-                <li>
-                  <Link to="/hotel/regulation/add-regulation">
-                    Add regulation
-                  </Link>
-                </li>
+                <ProtectComponent allowRoles={[role.MANAGER]}>
+                  <li>
+                    <Link to="/hotel/regulation/add-regulation">
+                      Add regulation
+                    </Link>
+                  </li>
+                </ProtectComponent>
               </ul>
             </li>
             <li className="submenu">
@@ -107,11 +111,13 @@ export default function SideBar() {
                 <li>
                   <Link to="/hotel/room-detail">All room details</Link>
                 </li>
-                <li>
-                  <Link to="/hotel/room-detail/add-room-detail">
-                    Add room detail
-                  </Link>
-                </li>
+                <ProtectComponent allowRoles={[role.MANAGER]}>
+                  <li>
+                    <Link to="/hotel/room-detail/add-room-detail">
+                      Add room detail
+                    </Link>
+                  </li>
+                </ProtectComponent>
               </ul>
             </li>
             <li className="submenu">
@@ -125,42 +131,48 @@ export default function SideBar() {
                   <Link to="/hotel/room">All Rooms </Link>
                 </li>
 
-                <li>
-                  <Link to="/hotel/room/add-room"> Add Room </Link>
-                </li>
+                <ProtectComponent allowRoles={[role.MANAGER]}>
+                  <li>
+                    <Link to="/hotel/room/add-room"> Add Room </Link>
+                  </li>
+                </ProtectComponent>
               </ul>
             </li>
-            <li className="submenu">
-              {" "}
-              <a href="#">
-                <i className="fas fa-key"></i> <span> Report </span>{" "}
-                <span className="menu-arrow"></span>
-              </a>
-              <ul className="submenu_class">
-                <li>
-                  <Link to="/hotel/revenue">Room Revenue </Link>
-                </li>
+            <ProtectComponent allowRoles={[role.MANAGER]}>
+              <li className="submenu">
+                {" "}
+                <a href="#">
+                  <i className="fas fa-key"></i> <span> Report </span>{" "}
+                  <span className="menu-arrow"></span>
+                </a>
+                <ul className="submenu_class">
+                  <li>
+                    <Link to="/hotel/revenue">Room Revenue </Link>
+                  </li>
 
-                <li>
-                  <Link to="/hotel/room-occupancy"> Room Occupancy</Link>
-                </li>
-              </ul>
-            </li>
-            <li className="submenu">
-              {" "}
-              <a href="#">
-                <i className="fas fa-user"></i> <span> Staff </span>{" "}
-                <span className="menu-arrow"></span>
-              </a>
-              <ul className="submenu_class">
-                <li>
-                  <Link to="/hotel/staff">All Staffs </Link>
-                </li>
-                <li>
-                  <Link to="/hotel/staff/add-staff"> Add Staff </Link>
-                </li>
-              </ul>
-            </li>
+                  <li>
+                    <Link to="/hotel/room-occupancy"> Room Occupancy</Link>
+                  </li>
+                </ul>
+              </li>
+            </ProtectComponent>
+            <ProtectComponent allowRoles={[role.MANAGER]}>
+              <li className="submenu">
+                {" "}
+                <a href="#">
+                  <i className="fas fa-user"></i> <span> Staff </span>{" "}
+                  <span className="menu-arrow"></span>
+                </a>
+                <ul className="submenu_class">
+                  <li>
+                    <Link to="/hotel/staff">All Staffs </Link>
+                  </li>
+                  <li>
+                    <Link to="/hotel/staff/add-staff"> Add Staff </Link>
+                  </li>
+                </ul>
+              </li>
+            </ProtectComponent>
           </ul>
         </div>
       </div>

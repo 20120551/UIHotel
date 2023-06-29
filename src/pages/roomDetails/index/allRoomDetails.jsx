@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PopUpDecision from "@components/popUpDecision";
 import { createNotification } from "@utls/notification";
+import { ProtectComponent } from "@components/authorization";
+import { role } from "@config/index";
 
 function AllRoomDetails() {
     const navigate = useNavigate();
@@ -62,18 +64,21 @@ function AllRoomDetails() {
                     <td className="text-right">
                         <div className="dropdown dropdown-action"> <a href="/" className="action-icon dropdown-toggle" data-toggle="dropdown" ><i className="fas fa-ellipsis-v ellipse_color"></i></a>
                             <div className="dropdown-menu dropdown-menu-right">
-                                <Link className="dropdown-item" to={"./" + roomDetail.id} relative="path" >
-                                    <i className="fas fa-pencil-alt m-r-5"></i> Edit</Link>
-                                <a
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setIsDelete(true);
-                                        setIdToDelete(roomDetail.id);
-                                    }}
-                                    className="dropdown-item " type="button" data-toggle="modal" data-target="#exampleModal" href="/"  >
-                                    <i className="fas fa-trash-alt m-r-5"></i>
+                                <ProtectComponent allowRoles={[role.MANAGER]}>
+                                    <Link className="dropdown-item" to={"./" + roomDetail.id} relative="path" >
+                                        <i className="fas fa-pencil-alt m-r-5"></i> Edit</Link>
+                                    <a
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setIsDelete(true);
+                                            setIdToDelete(roomDetail.id);
+                                        }}
+                                        className="dropdown-item " type="button" data-toggle="modal" data-target="#exampleModal" href="/"  >
+                                        <i className="fas fa-trash-alt m-r-5"></i>
 
-                                    Delete</a> </div>
+                                        Delete</a>
+                                </ProtectComponent>
+                            </div>
                         </div>
                     </td>
 
@@ -95,7 +100,11 @@ function AllRoomDetails() {
                     <div className="row align-items-center">
                         <div className="col">
                             <div className="mt-5">
-                                <h4 className="card-title float-left mt-2">Room Details</h4> <Link to="./add-room-detail" relative="path" className="btn btn-primary float-right veiwbutton">Add Room Detail</Link> </div>
+                                <h4 className="card-title float-left mt-2">Room Details</h4>
+                                <ProtectComponent allowRoles={[role.MANAGER]}>
+                                    <Link to="./add-room-detail" relative="path" className="btn btn-primary float-right veiwbutton">Add Room Detail</Link>
+                                </ProtectComponent>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +134,7 @@ function AllRoomDetails() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
             <div id="delete_asset" className="modal fade delete-modal" role="dialog">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">

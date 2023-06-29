@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { roomService } from "@services/index";
 import { NavLink } from "react-router-dom";
 import { createNotification } from "@utls/notification";
+import { ProtectComponent } from "@components/authorization";
+import { role } from "@config/index";
 export default function AllRooms() {
   return (
     <>
@@ -20,12 +22,14 @@ function Header() {
         <div className="col">
           <div>
             <h4 className="card-title float-left mt-2">All Rooms</h4>{" "}
-            <NavLink
-              to="./add-room"
-              className="btn btn-primary float-right veiwbutton"
-            >
-              Add Room
-            </NavLink>
+            <ProtectComponent allowRoles={[role.MANAGER]}>
+              <NavLink
+                to="./add-room"
+                className="btn btn-primary float-right veiwbutton"
+              >
+                Add Room
+              </NavLink>
+            </ProtectComponent>
           </div>
         </div>
       </div>

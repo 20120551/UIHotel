@@ -26,13 +26,12 @@ function App() {
         <Route element={<ProtectRoute />}>
           <Route path="/hotel" element={<HomeLayout />}>
             <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
-              <Route path="room/*" element={<RoomRoute />} />
               <Route path="staff/*" element={<StaffRoute />} />
+              <Route path="room-occupancy/*" element={<RoomOccupancyRoute />} />
+              <Route path="revenue/*" element={<RevenueRoute />} />
             </Route>
+            <Route path="room/*" element={<RoomRoute />} />
             <Route path="invoice/*" element={<InvoiceRoute />} />
-            <Route path="revenue/*" element={<RevenueRoute />} />
-
-            <Route path="room-occupancy/*" element={<RoomOccupancyRoute />} />
             <Route path="reservation/*" element={<ReservationRoute />} />
             <Route path="room-detail/*" element={<RoomDetailRoute />} />
             <Route path="regulation/*" element={<RoomRegulationRoute />} />

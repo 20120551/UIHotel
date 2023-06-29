@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { roomService } from "@services/index";
+import { ProtectComponent } from "@components/authorization";
+import { role } from "@config/index";
 const ListRoom = (props) => {
   const rooms = props.rooms;
   const handelDelete = async (id) => {
@@ -74,22 +76,24 @@ const ListRoom = (props) => {
                           <i className="fas fa-ellipsis-v ellipse_color"></i>
                         </div>
                         <div className="dropdown-menu dropdown-menu-right">
-                          <NavLink
-                            className="dropdown-item"
-                            to={`/hotel/room/edit-room/${room.id}`}
-                          >
-                            <i className="fas fa-pencil-alt m-r-5"></i> Edit
-                          </NavLink>
-                          <div
-                            className="dropdown-item"
-                            data-toggle="modal"
-                            data-target="#delete_asset"
-                            onClick={async (e) => {
-                              await handelDelete(room.id);
-                            }}
-                          >
-                            <i className="fas fa-trash-alt m-r-5"></i> Delete
-                          </div>
+                          <ProtectComponent allowRoles={[role.MANAGER]}>
+                            <NavLink
+                              className="dropdown-item"
+                              to={`/hotel/room/edit-room/${room.id}`}
+                            >
+                              <i className="fas fa-pencil-alt m-r-5"></i> Edit
+                            </NavLink>
+                            <div
+                              className="dropdown-item"
+                              data-toggle="modal"
+                              data-target="#delete_asset"
+                              onClick={async (e) => {
+                                await handelDelete(room.id);
+                              }}
+                            >
+                              <i className="fas fa-trash-alt m-r-5"></i> Delete
+                            </div>
+                          </ProtectComponent>
                         </div>
                       </div>
                     </td>

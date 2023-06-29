@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PopUpDecision from "@components/popUpDecision";
 import { createNotification } from "@utls/notification";
+import { ProtectComponent } from "@components/authorization";
+import { role } from "@config/index";
 
 function AllRegulations() {
     const navigate = useNavigate();
@@ -99,7 +101,11 @@ function AllRegulations() {
                     <div className="row align-items-center">
                         <div className="col">
                             <div className="mt-5">
-                                <h4 className="card-title float-left mt-2">Regulations</h4> <Link to="./add-regulation" relative="path" className="btn btn-primary float-right veiwbutton">Add Regulation</Link> </div>
+                                <h4 className="card-title float-left mt-2">Regulations</h4>
+                                <ProtectComponent allowRoles={[role.MANAGER]}>
+                                    <Link to="./add-regulation" relative="path" className="btn btn-primary float-right veiwbutton">Add Regulation</Link>
+                                </ProtectComponent>
+                            </div>
                         </div>
                     </div>
                 </div>
