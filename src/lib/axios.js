@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://roomee.eastasia.cloudapp.azure.com/api";
 // const API_URL = "http://localhost:5000/api";
 export const privateAxios = axios.create({
   baseURL: API_URL,
