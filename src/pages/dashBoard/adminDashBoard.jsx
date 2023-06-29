@@ -60,9 +60,9 @@ export default function AdminDashBoard() {
         }
         // console.log(monthList)
         RevenueList = []
-        Promise.all(monthList.map((month) => {
+        Promise.all(monthList.map(async (month) => {
 
-            revenueService.getRevenueByMonth({
+            await revenueService.getRevenueByMonth({
                 month: month,
                 year: year
             }).then(data => {
@@ -94,7 +94,7 @@ export default function AdminDashBoard() {
 
         }
         const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
+       var myLineChart=  new Chart(ctx, {
             type: 'line',
             data: {
                 labels: monthList,
@@ -129,7 +129,7 @@ export default function AdminDashBoard() {
 
         }
         const ct = document.getElementById('PieChart').getContext('2d');
-        new Chart(ct, {
+        var myChart= new Chart(ct, {
             type: 'pie',
             data: {
                 labels: Label,
@@ -149,6 +149,8 @@ export default function AdminDashBoard() {
                 }
             },
         });
+        setTimeout(function() { myChart.update(); },1000);
+        setTimeout(function() { myLineChart.update(); },1000);
     }, [])
 
     return (
@@ -236,8 +238,8 @@ export default function AdminDashBoard() {
                     <div className="card card-chart">
                         <div className="card-header">
                             <h4 className="card-title">Revenue by room type</h4> </div>
-                        <div className="row w-100 PieChartReport" >
-                            <canvas id="PieChart" className="mx-auto w-50"  ></canvas>
+                        <div className="row w-100 PieChartReport"   >
+                            <canvas id="PieChart" className="mx-auto w-50"   ></canvas>
 
                         </div>
                     </div>

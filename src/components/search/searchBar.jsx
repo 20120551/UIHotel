@@ -1,12 +1,17 @@
 import { useRoomDetail } from "@hooks/context-hooks";
 import { roomDetailService } from "@services/index";
 import { roomDetail } from "@store/actions";
-import { createNotification } from "@utls/notification";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import 'daterangepicker/daterangepicker.css';
+import 'daterangepicker';
+import moment from "moment";
+import $ from 'jquery';
 
 export default function SearchBar({ handleSearch, info }) {
     const [search, setSearch] = useState({ ...info });
     const [roomDetailState, roomDetailDispatch] = useRoomDetail();
+    const fromRef = useRef();
+    const toRef = useRef();
 
     useEffect(() => {
         roomDetailService.getAll()
@@ -17,6 +22,25 @@ export default function SearchBar({ handleSearch, info }) {
             });
     }, [])
 
+    useEffect(() => {
+        $(fromRef.current).daterangepicker({
+            singleDatePicker: true,
+            minDate: moment().startOf('day'),
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+        $(toRef.current).daterangepicker({
+            singleDatePicker: true,
+            minDate: moment().startOf('day'),
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
+        });
+    }, []);
+
     return (
         <div className="bg-white shadow" style={{ padding: "35px" }}>
             <div className="row g-2">
@@ -24,21 +48,21 @@ export default function SearchBar({ handleSearch, info }) {
                     <div className="row g-2">
                         <div className="col-md-4">
                             <label>Are you sure</label>
-                            <div className="date" id="date1" data-target-input="nearest">
+                            <div className="date cal-icon" id="date1" data-target-input="nearest">
                                 <input
                                     onChange={(e) => setSearch(prev => ({ ...prev, from: e.target.value }))}
                                     value={search.from}
-                                    type="text" className="form-control datetimepicker-input" placeholder="Check in"
+                                    type="text" ref={fromRef} className="form-control" placeholder="Check in"
                                     data-target="#date1" data-toggle="datetimepicker" />
                             </div>
                         </div>
                         <div className="col-md-4">
                             <label>Are you sure</label>
-                            <div className="date" id="date2" data-target-input="nearest">
+                            <div className="date cal-icon" id="date2" data-target-input="nearest">
                                 <input
                                     onChange={(e) => setSearch(prev => ({ ...prev, to: e.target.value }))}
                                     value={search.to}
-                                    type="text" className="form-control datetimepicker-input" placeholder="Check out"
+                                    type="text" ref={toRef} className="form-control" placeholder="Check out"
                                     data-target="#date2" data-toggle="datetimepicker" />
                             </div>
                         </div>

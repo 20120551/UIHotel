@@ -58,7 +58,7 @@ function AllRegulations() {
                         {employee.maxSurchargeRatio}
                     </td>
                     <td>
-                        {employee.roomExchangeFee}
+                        {parseFloat(employee.roomExchangeFee).toLocaleString('en')} VND
                     </td>
 
                     <td className="text-right">

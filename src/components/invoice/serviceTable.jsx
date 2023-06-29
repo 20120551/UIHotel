@@ -24,7 +24,7 @@ export default function ServiceTable({ services, handleServiceChange }) {
                                         <td>{index + 1}</td>
                                         <td>{id}</td>
                                         <td>{serviceName}</td>
-                                        <td>{unitPrice}</td>
+                                        <td>{parseFloat(unitPrice).toLocaleString('en')} VND</td>
                                         <td>
                                             <button
                                                 onClick={() => handleServiceChange({ id })}

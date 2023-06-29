@@ -34,7 +34,7 @@ export default function RoomOccupancy() {
         newLink.className = "mx-auto w-50";
         chartContainer.append(newLink);
         const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
+        let myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: Label,
@@ -54,6 +54,7 @@ export default function RoomOccupancy() {
                 }
             },
         });
+        setTimeout(function () { myChart.update(); }, 1000);
     }
     useEffect(() => {
 
@@ -71,7 +72,7 @@ export default function RoomOccupancy() {
         })
 
         const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
+        let myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: Label,
@@ -91,6 +92,7 @@ export default function RoomOccupancy() {
                 }
             },
         });
+        setTimeout(function () { myChart.update(); }, 1000);
     }, []);
 
     const setData = (data) => {

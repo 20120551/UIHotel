@@ -8,7 +8,7 @@ export default function Room({ room, handleBooking }) {
                 <img src={room.image || "/assets/img/room/room-1.jpg"} alt={`Room ${room.id}`} />
                 <div className="ri-text">
                     <h4>Room {room.id}</h4>
-                    <h3>{room.price}<span>/night</span></h3>
+                    <h3>{parseFloat(room.price).toLocaleString('en')} VND<span> / night</span></h3>
                     <table>
                         <tbody>
                             <tr>

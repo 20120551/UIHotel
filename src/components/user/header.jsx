@@ -9,14 +9,14 @@ export default function Header() {
             <div className="menu-item">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-2">
+                        <div className="col-lg-2 d-flex align-items-center justify-content-end">
                             <div className="logo">
                                 <Link to="/">
-                                    <img src="/assets/img/logomain.png" alt="" />
+                                    <img src="/assets/img/myRoomee.png" className="w-75"  alt="" />
                                 </Link>
                             </div>
                         </div>
-                        <div className="col-lg-10">
+                        <div className="col-lg-10  d-flex align-items-center justify-content-end">
                             <div className="nav-menu">
                                 <nav className="mainmenu">
                                     <ul>

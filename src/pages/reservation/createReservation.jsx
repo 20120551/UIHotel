@@ -240,7 +240,7 @@ export default function Reservation() {
                                                                                     <td>&#128719; {room.description}</td>
                                                                                     <td><div >{room.defaultGuest}</div></td>
                                                                                     <td><div >{room.maxGuest}</div></td>
-                                                                                    <td><b>{room.price}</b> VND / night</td>
+                                                                                    <td><b>{parseFloat(room.price).toLocaleString('en')}</b> VND / night</td>
                                                                                     <td className="text-right">
                                                                                         <button type="button" className="btn btn-primary"
                                                                                             onClick={() => { HandleSelectedRoom(room) }}>
@@ -421,7 +421,7 @@ export default function Reservation() {
                                                     <b>Room: {room.id}</b> | {room.roomType} Room
                                                 </div>
                                                 <div className="d-flex justify-content-between align-items-center">
-                                                    <b>{room.price} VND / night</b>
+                                                    <b>{parseFloat(room.price).toLocaleString('en')} VND / night</b>
                                                     <button className="btn btn-outline-success" onClick={() => { HandleRemoveSelectedRoom(room) }}>Remove</button>
                                                 </div>
                                             </div>
@@ -433,7 +433,7 @@ export default function Reservation() {
                         <div className="border my-3"></div>
                         <div className="d-flex justify-content-between">
                             <div>Total Amount</div>
-                            <h3 className="font-weight-bold">{totalAmount} VND</h3>
+                            <h3 className="font-weight-bold"> {parseFloat(totalAmount).toLocaleString('en')} VND</h3>
                         </div>
                         {
                             isGuestInfoShow

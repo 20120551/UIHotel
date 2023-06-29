@@ -171,21 +171,21 @@ export default function Reservation() {
                     <div className="card card-table">
                         <div className="card-body booking_card">
                             <div className="table-responsive">
-                                <div className="mb-3 d-flex justify-content-between col-lg-8">
-                                    <div className="form-inline my-2 my-lg-0">
+                                <div className="mb-3 row col-lg-12">
+                                    <div className="form-inline m-2 my-lg-0 px-2">
                                         <input className="form-control mr-sm-2" type="number" placeholder="Invoice ID"
                                             aria-label="Search" onChange={(e) => setInvoiceId(e.target.value)} />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
                                             type="button" onClick={() => HandleSeachByInvoiceId(invoiceId)}>&#x1F50E;</button>
                                     </div>
-                                    <div className="form-inline my-2 my-lg-0">
+                                    <div className="form-inline m-2 my-lg-0 px-2">
                                         <input className="form-control mr-sm-2" type="number"
                                             onChange={(e) => setCardId(e.target.value)}
                                             placeholder="Reservation ID" aria-label="Search" />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
                                             type="button" onClick={() => HandleSeachByCardId(cardId)}>&#x1F50E;</button>
                                     </div>
-                                    <form className="form-inline my-2 my-lg-0">
+                                    <form className="form-inline m-2 my-lg-0 px-2">
                                         <input type="text" name="DateRangePickerReservationCard"
                                             className="form-control mr-sm-2" ref={inputTimeRef} />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"

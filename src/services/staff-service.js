@@ -1,13 +1,4 @@
-import axios, { privateAxios } from "@lib/axios";
-
-export const getStaffInfo = async ({ id }) => {
-  const response = await axios.get(`/room/detail?id=${id}`);
-  return response?.data;
-};
-// export const GetAllStaffs = async ({ page, pageSize }) => {
-//   const response = await privateAxios.get(`/user`);
-//   return response?.data;
-// };
+import axios, { privateAxios, createPrivateAxios } from "@lib/axios";
 
 export const GetAllStaffs = async ({ page, pageSize }) => {
   const response = await privateAxios.get(
@@ -17,9 +8,27 @@ export const GetAllStaffs = async ({ page, pageSize }) => {
 };
 
 export const createStaff = async function (payload) {
-  console.log(payload);
-  const roomDetail = await privateAxios.post(`/room`, {
+  const response = await privateAxios.post(`/user`, {
     ...payload,
   });
-  return roomDetail.data;
+  return response?.data;
+};
+
+export const getStaffInfo = async (id) => {
+  const response = await privateAxios.get(`/user/${id}`);
+  return response?.data;
+};
+
+export const changePassWord = async (id, pwd) => {
+  console.log(id + " " + pwd);
+  const response = await privateAxios.put(`/user/admin`, {
+    id: id,
+    newPassword: pwd,
+  });
+  return response?.data;
+};
+
+export const deleteStaff = async (id) => {
+  const response = await privateAxios.delete(`/user?id=${id}`);
+  return response?.data;
 };

@@ -1,12 +1,12 @@
-// import ListRoom from "@components/room/tableRoom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { roomService } from "@services/index";
 import { roomDetailService } from "@services/index";
-import { createNotification } from "@utls/notification";
-export default function AddRoom() {
+export default function EditRoom() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [details, setDetails] = useState([]);
-  const [id, setID] = useState(0);
-  const [status, setStatus] = useState("Active");
+  const [status, setStatus] = useState("");
   const [note, setNote] = useState("");
   const [detailID, setDetailID] = useState(0);
   const [SelectedDetail, setSelectedDetail] = useState({
@@ -25,24 +25,29 @@ export default function AddRoom() {
     },
   });
 
-  useState(() => {
-    roomDetailService.getAll().then((data) => {
-      setDetails(data);
-      setSelectedDetail(data[0]);
-    })
-      .catch(err => {
-        const { message = "", code = err.response?.data } = err.response?.data;
-        createNotification({ type: "error", title: message, message: code });
-      })
-  }, []);
-
   useEffect(() => {
-    setSelectedDetail(SelectedDetail);
-  }, [SelectedDetail]);
+    roomDetailService
+      .getAll()
+      .then((detailList) => {
+        setDetails(detailList);
+      })
+      .then(() => {
+        roomService.getRoomDetail({ id }).then((thisRoom) => {
+          //   console.log(thisRoom);
+
+          setDetailID(parseInt(thisRoom.detail.id));
+          setSelectedDetail(thisRoom.detail);
+          setStatus(thisRoom.status);
+          setNote(thisRoom.note);
+        });
+      });
+  }, []);
 
   const handleSelectedDetail = (e) => {
     if (e.target.value) {
-      var selected_detail = details.find((x) => x.id == e.target.value);
+      var selected_detail = details.find(
+        (x) => x.id == parseInt(e.target.value)
+      );
       if (selected_detail) {
         setSelectedDetail(selected_detail);
         setDetailID(e.target.value);
@@ -53,30 +58,42 @@ export default function AddRoom() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await roomService
-      .addRoom({
+      .editRoom({
         id: id,
         status: status,
         note: note,
         roomDetailID: detailID,
       })
       .then((data) => {
-        setID("");
-        setStatus("");
-        setNote("");
-        alert("New Room successfully added");
+        alert("Changed successfully");
+        window.location.reload();
       })
-      .catch(err => {
-        const { message = "", code = err.response?.data } = err.response?.data;
-        createNotification({ type: "error", title: message, message: code });
-      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
-
+  const handelDelete = async (e) => {
+    //  e.preventDefault();
+    let warning = `Are you sure remove room id ${id}`;
+    if (confirm(warning) != true) {
+      return;
+    }
+    await roomService
+      .deleteRoom(id)
+      .then(() => {
+        alert(`Successfully remove room id ${id}`);
+        navigate(`/hotel/room`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <>
       <div className="page-header">
         <div className="row align-items-center">
           <div className="col">
-            <h3 className="page-title mt-5">Add Room</h3>
+            <h3 className="page-title mt-5">Edit Room #{id}</h3>
           </div>
         </div>
       </div>
@@ -91,7 +108,8 @@ export default function AddRoom() {
                     type="text"
                     className="form-control"
                     name="id"
-                    onChange={(e) => setID(e.target.value)}
+                    readOnly
+                    value={id}
                   />
                 </div>
               </div>
@@ -122,6 +140,7 @@ export default function AddRoom() {
                   <select
                     className="form-control"
                     name="status"
+                    value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option>Active</option>
@@ -249,6 +268,7 @@ export default function AddRoom() {
                     className="form-control"
                     rows="4"
                     name="note"
+                    defaultValue={note}
                     onChange={(e) => setNote(e.target.value)}
                   ></textarea>
                 </div>
@@ -257,13 +277,22 @@ export default function AddRoom() {
           </form>
         </div>
       </div>
+
       <button
         type="submit"
-        className="btn btn-primary buttonedit ml-2"
+        className="ml-2 btn btn-primary buttonedit"
         id="btn-sendform"
         onClick={handleSubmit}
       >
-        Create
+        Save
+      </button>
+      <button
+        type="submit"
+        className="mr-2  btn btn-danger float-right"
+        style={{ height: "45px" }}
+        onClick={handelDelete}
+      >
+        Deactivate
       </button>
     </>
   );

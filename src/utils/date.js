@@ -3,7 +3,7 @@ export const getVietnameseDate = (date) => {
     const options = {
         year: "numeric",
         month: "2-digit",
-        day: "numeric",
+        day: "2-digit",
         timeZone: 'Asia/Ho_Chi_Minh',
         hour12: false,
     };

@@ -5,8 +5,9 @@ export const privateAxios = axios.create({
   baseURL: API_URL,
   // withCredentials: true,
   headers: {
-    Authorization: `Bearer ${JSON.parse(localStorage.getItem("accessToken") || "{}").accessToken || ""
-      }`,
+    Authorization: `Bearer ${
+      JSON.parse(localStorage.getItem("accessToken") || "{}").accessToken || ""
+    }`,
   },
 });
 
@@ -15,9 +16,10 @@ export const createPrivateAxios = () => {
     baseURL: API_URL,
     // withCredentials: true,
     headers: {
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem("accessToken") || "{}").accessToken ||
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("accessToken") || "{}").accessToken ||
         ""
-        }`,
+      }`,
     },
   });
 };
