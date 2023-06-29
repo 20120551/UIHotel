@@ -24,8 +24,9 @@ export default function ChangeService({ handleChangeService }) {
                 <select
                     onChange={(e) => setCategoryId(e.target.value)}
                     className="form-control" id="sel1" name="sellist1">
-                    <option value="1">Category 1</option>
-                    <option value="2">Category 2</option>
+                    <option value="1">Room Service</option>
+                    <option value="2">Drink</option>
+                    <option value="3">Food</option>
                 </select>
             </div>
             <ServiceTable services={state.services} handleServiceChange={handleChangeService} />
