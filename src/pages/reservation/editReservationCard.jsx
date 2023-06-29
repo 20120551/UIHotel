@@ -11,28 +11,64 @@ export default function EditReservation() {
         guestName: "",
         roomId: -1,
         guestsNumber: -1,
+        oldGuestsNumber: -1,
         roomType: "",
         notes: "",
+        maxGuests: -1,
+        guests: []
     }));
     const { id } = useParams();
     const navigate = useNavigate();
 
     const HandleOnSubmitEditReservation = () => {
-        if (isEmpty == false){
+        if (isEmpty == false) {
             reservationService.editReservationCard(({
                 id: card.id,
                 notes: card.notes,
                 guests: card.guests
             }))
-            .then(res => {
-                navigate(`/hotel/reservation/${card.id}`);
-            })
+                .then(res => {
+                    navigate(`/hotel/reservation/${card.id}`);
+                })
         }
     }
 
+    const HandleRemoveGuest = (index) => {
+        if (card.guestsNumber == 1) return;
+        let updatedGuests = [...card.guests];
+        updatedGuests.splice(index, 1);
+        card.guestsNumber = updatedGuests.length;
+        setReservationCard({ ...card, guests: updatedGuests });
+    }
+
+    const HandeOnChangeGuestsNumber = (e) => {
+        const newGuestsNum = e.target.value;
+        if (newGuestsNum > card.guestsNumber){
+            let updatedGuests = [...card.guests];
+            for (let i = 0; i < newGuestsNum - card.guestsNumber; i++){
+                updatedGuests.push({
+                    name: "",
+                    telephoneNumber : "",
+                    address: "",
+                    type: "domestic guest",
+                    personIdentification: ""
+                })
+            }
+            card.guestsNumber = updatedGuests.length;
+            setReservationCard({ ...card, guests: updatedGuests });
+        }
+        else{
+            let updatedGuests = [...card.guests];
+            updatedGuests = updatedGuests.slice(0, newGuestsNum);
+            card.guestsNumber = updatedGuests.length;
+            setReservationCard({ ...card, guests: updatedGuests });
+        }
+    }
+    
     useEffect(() => {
         reservationService.getByReservationCardId(id)
             .then(card => {
+                card["oldGuestsNumber"] = card.guestsNumber;
                 setReservationCard(card);
                 setIsEmpty(false);
             })
@@ -40,7 +76,7 @@ export default function EditReservation() {
                 setIsEmpty(true);
             })
     }, [])
-
+    console.log(card.guestsNumber)
     return (
         <>
             <div className="row mt-4">
@@ -68,9 +104,17 @@ export default function EditReservation() {
                                             <div className="col-md-4">
                                                 <div className="form-group">
                                                     <label>Total Members</label>
-                                                    <div className="form-control" id="sel3" name="sellist1">
+                                                    {/* <div className="form-control" id="sel3" name="sellist1">
                                                         {card.guestsNumber}
-                                                    </div>
+                                                    </div> */}
+                                                    <select className="form-control" defaultValue={card.guestsNumber} onChange={(e) => HandeOnChangeGuestsNumber(e)}>
+                                                        <option>0</option>
+                                                        {
+                                                            Array.from({ length: card.maxGuests }, (_, index) => (
+                                                                <option key={index}>{index + 1}</option>
+                                                            ))
+                                                        }
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div className="col-md-4">
@@ -83,49 +127,67 @@ export default function EditReservation() {
 
                                             {Array.from({ length: card.guestsNumber }, (_, index) => (
                                                 <>
-                                                    <h4 className="col-md-12 mb-3">Guest number {index + 1}</h4>
+                                                    <h4 className="col-md-12 mb-3">Guest number {index + 1}
+                                                        <button type="button" className="btn btn-link text-danger text-left px-3" onClick={(e) => { HandleRemoveGuest(index) }}>
+                                                            remove
+                                                        </button>
+                                                    </h4>
                                                     <div className="col-md-4">
                                                         <div className="form-group">
                                                             <label>Full Name</label>
                                                             <input type="text" className="form-control" value={card.guests[index].name}
-                                                                onChange={(e) => {const updatedGuests = [...card.guests];
+                                                                onChange={(e) => {
+                                                                    const updatedGuests = [...card.guests];
                                                                     updatedGuests[index].name = e.target.value;
-                                                                    setReservationCard({ ...card, guests: updatedGuests });}} />
+                                                                    setReservationCard({ ...card, guests: updatedGuests });
+                                                                }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4">
                                                         <div className="form-group">
                                                             <label>Phone number</label>
                                                             <input type="text" className="form-control" value={card.guests[index].telephoneNumber}
-                                                                onChange={(e) => { const updatedGuests = [...card.guests];
+                                                                onChange={(e) => {
+                                                                    const updatedGuests = [...card.guests];
                                                                     updatedGuests[index].telephoneNumber = e.target.value;
-                                                                    setReservationCard({ ...card, guests: updatedGuests }); }} />
+                                                                    setReservationCard({ ...card, guests: updatedGuests });
+                                                                }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4">
                                                         <div className="form-group">
                                                             <label>Identity card</label>
                                                             <input type="text" className="form-control" value={card.guests[index].personIdentification}
-                                                                onChange={(e) => { const updatedGuests = [...card.guests];
+                                                                onChange={(e) => {
+                                                                    const updatedGuests = [...card.guests];
                                                                     updatedGuests[index].personIdentification = e.target.value;
-                                                                    setReservationCard({ ...card, guests: updatedGuests }); }} />
+                                                                    setReservationCard({ ...card, guests: updatedGuests });
+                                                                }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4">
                                                         <div className="form-group">
                                                             <label>Address</label>
                                                             <input type="text" className="form-control" value={card.guests[index].address}
-                                                                onChange={(e) => { const updatedGuests = [...card.guests];
+                                                                onChange={(e) => {
+                                                                    const updatedGuests = [...card.guests];
                                                                     updatedGuests[index].address = e.target.value;
-                                                                    setReservationCard({ ...card, guests: updatedGuests }); }} />
+                                                                    setReservationCard({ ...card, guests: updatedGuests });
+                                                                }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4">
                                                         <div className="form-group">
                                                             <label>Type of guest</label>
-                                                            <div className="form-control" id="sel3" name="sellist2">
-                                                                {card.guests[index].type}
-                                                            </div>
+                                                            <select className="form-control" id="sel3" name="sellist2" defaultValue={card.guests[index].type}
+                                                                onChange={(e) => {
+                                                                    const updatedGuests = [...card.guests];
+                                                                    updatedGuests[index].type = e.target.value;
+                                                                    setReservationCard({ ...card, guests: updatedGuests });
+                                                                }}>
+                                                                <option>domestic guest</option>
+                                                                <option>foreigner</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </>
@@ -133,8 +195,8 @@ export default function EditReservation() {
 
                                         </div>
                                         <div className="btn btn-primary btn-block my-3 col-2" onClick={() => { HandleOnSubmitEditReservation() }}>
-                                                submit
-                                            </div>
+                                            submit
+                                        </div>
                                     </form>
                                 </div>
                             </div>

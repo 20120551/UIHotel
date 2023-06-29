@@ -57,7 +57,7 @@ export default function Revenue() {
                     {
                         label: 'Revenue report',
                         data: percentage,
-                        backgroundColor: ["red", "green", "blue"],
+                        backgroundColor: ["#F1C27B", "#A2CDB0", "#C2DEDC", "#F2D8D8"],
 
                     },
                 ],
@@ -65,8 +65,29 @@ export default function Revenue() {
             options: {
                 title: {
                     display: true,
-                    text: "Revenue report "
-                }
+                    text: "Revenue report ",
+                    color: 'navy',
+                    position: 'bottom',
+                    align: 'center',
+                    font: {
+                       weight: 'bold'
+                    },
+                    padding: 8,
+                    fullSize: true,
+                },
+                plugins: {
+                    title: {
+                       display: true,
+                       text: 'Revenue report',
+                       color: 'navy',
+                       position: 'bottom',
+                       align: 'center',
+                       font: {
+                          weight: 'bold'
+                       },
+                       padding: 8,
+                       fullSize: true,
+                    }}
             },
         });
     }
@@ -80,7 +101,17 @@ export default function Revenue() {
 
 
         })
+        var chart = document.querySelector("#myChart");
+        if (chart) {
+            // console.log(chart);
+            chart.remove();
+            var chartContainer = document.querySelector(".chartReport");
+            var newLink = document.createElement('canvas');
+            newLink.id = "myChart";
+            newLink.className = "mx-auto w-25";
+            chartContainer.append(newLink);
 
+        }
         const ctx = document.getElementById('myChart').getContext('2d');
         chart = new Chart(ctx, {
             type: 'pie',
@@ -90,7 +121,7 @@ export default function Revenue() {
                     {
                         label: 'Revenue report',
                         data: percentage,
-                        backgroundColor: ["red", "green", "blue"],
+                        backgroundColor: ["#F1C27B", "#A2CDB0", "#C2DEDC", "#F2D8D8"],
 
                     },
                 ],
@@ -98,8 +129,29 @@ export default function Revenue() {
             options: {
                 title: {
                     display: true,
-                    text: "Revenue report "
-                }
+                    text: "Revenue report ",
+                    color: 'navy',
+                    position: 'bottom',
+                    align: 'center',
+                    font: {
+                       weight: 'bold'
+                    },
+                    padding: 8,
+                    fullSize: true,
+                },
+                plugins: {
+                    title: {
+                       display: true,
+                       text: 'Revenue report',
+                       color: 'navy',
+                       position: 'bottom',
+                       align: 'center',
+                       font: {
+                          weight: 'bold'
+                       },
+                       padding: 8,
+                       fullSize: true,
+                    }}
             },
         });
     }, []);
@@ -116,7 +168,7 @@ export default function Revenue() {
                     <td>{index}</td>
                     <td>{revenue.id}</td>
                     <td>{revenue.totalSum}</td>
-                    <td>{Math.round(revenue.percentage)}</td>
+                    <td>{revenue.percentage.toFixed(2)} %</td>
 
                 </tr>
             );

@@ -209,8 +209,8 @@ export default function Reservation() {
                                                                 <tr>
                                                                     <th>Room ID</th>
                                                                     <th>Description</th>
+                                                                    <th>Default Guests</th>
                                                                     <th>Maximum Guests</th>
-                                                                    <th>Details</th>
                                                                     <th>From</th>
                                                                     <th className="text-right">Actions</th>
                                                                 </tr>
@@ -223,12 +223,8 @@ export default function Reservation() {
                                                                                 <tr>
                                                                                     <td>{room.id}</td>
                                                                                     <td>&#128719; {room.description}</td>
+                                                                                    <td><div >{room.defaultGuest}</div></td>
                                                                                     <td><div >{room.maxGuest}</div></td>
-                                                                                    <td>
-                                                                                        <button className="btn btn-link text-success text-left p-0">
-                                                                                            Details
-                                                                                        </button>
-                                                                                    </td>
                                                                                     <td><b>{room.price}</b> VND / night</td>
                                                                                     <td className="text-right">
                                                                                         <button type="button" className="btn btn-primary"

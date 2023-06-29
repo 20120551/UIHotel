@@ -27,7 +27,7 @@ export default function RoomOccupancy() {
         var chartContainer = document.querySelector(".chartReport");
         var newLink = document.createElement('canvas');
         newLink.id = "myChart";
-        newLink.className = "mx-auto w-25";
+        newLink.className = "mx-auto w-50";
         chartContainer.append(newLink);
         const ctx = document.getElementById('myChart').getContext('2d');
         new Chart(ctx, {
@@ -38,7 +38,7 @@ export default function RoomOccupancy() {
                     {
                         label: 'Room occupancy report',
                         data: percentage,
-                        backgroundColor: ["red", "green", "blue","purple","pink"],
+                        backgroundColor: ["#F1C27B", "#A2CDB0", "#C2DEDC", "#F2D8D8"],
 
                     },
                 ],
@@ -72,7 +72,7 @@ export default function RoomOccupancy() {
                     {
                         label: 'Room occupancy report',
                         data: percentage,
-                        backgroundColor: ["red", "green", "blue","purple","pink"],
+                        backgroundColor: ["#F1C27B", "#A2CDB0", "#C2DEDC", "#F2D8D8"],
 
                     },
                 ],
@@ -97,7 +97,7 @@ export default function RoomOccupancy() {
                     <td>{index}</td>
                     <td>{revenue.id}</td>
                     <td>{revenue.freq}</td>
-                    <td>{revenue.percentage}</td>
+                    <td>{revenue.percentage.toFixed(2)} %</td>
 
                 </tr>
             );
@@ -190,8 +190,8 @@ export default function RoomOccupancy() {
                     </div>
                 </div>
             </div>
-            <div className="row w-100 chartReport" >
-                <canvas id="myChart" className="mx-auto w-25"  ></canvas>
+            <div className="row w-100 chartReport"  >
+                <canvas id="myChart" className="mx-auto w-50"  ></canvas>
 
             </div>
         </>
