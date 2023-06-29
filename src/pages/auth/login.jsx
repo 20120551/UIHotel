@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth as authAction } from "@store/actions";
 import { authService } from "@services/index";
 import { isExpire } from "@utls/ttl";
+import { createNotification } from "@utls/notification";
 
 export default function Login() {
     const navigator = useNavigate();
@@ -28,6 +29,10 @@ export default function Login() {
                 }))
 
                 navigator("/hotel");
+            })
+            .catch(err => {
+                const { message = "", code = err.response.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
     }
 

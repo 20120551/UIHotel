@@ -6,6 +6,7 @@ import 'daterangepicker/daterangepicker.css';
 import 'daterangepicker';
 import moment from "moment";
 import $ from 'jquery';
+import { createNotification } from "@utls/notification";
 
 export default function Reservation() {
     const [roomDetail, setRoomDetail] = useState();
@@ -42,7 +43,9 @@ export default function Reservation() {
                 setIsEmpty(rooms.length === 0 ? true : false);
                 setCurListRoomsDisplay(rooms);
             })
-            .catch(() => {
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setIsEmpty(true);
             })
     }
@@ -112,6 +115,10 @@ export default function Reservation() {
                 .then(res => {
                     setInvoiceId(res.invoiceId);
                 })
+                .catch(err => {
+                    const { message = "", code = err.response?.data } = err.response?.data;
+                    createNotification({ type: "error", title: message, message: code });
+                })
             setGuestInfoShow(true);
         }
     }
@@ -143,6 +150,10 @@ export default function Reservation() {
                 .then(res => {
                     navigate(`/hotel/invoice/${res.id}`);
                 })
+                .catch(err => {
+                    const { message = "", code = err.response?.data } = err.response?.data;
+                    createNotification({ type: "error", title: message, message: code });
+                })
         }
     }
 
@@ -157,6 +168,10 @@ export default function Reservation() {
         roomDetailService.getAll()
             .then(roomDetails => {
                 setRoomDetail(roomDetails);
+            })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
     }, [from, to])
 

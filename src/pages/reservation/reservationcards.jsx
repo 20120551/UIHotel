@@ -7,6 +7,7 @@ import 'daterangepicker/daterangepicker.css';
 import 'daterangepicker';
 import $ from 'jquery';
 import InvoiceStatus from "@components/invoice/invoiceStatus";
+import { createNotification } from "@utls/notification";
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
@@ -32,7 +33,9 @@ export default function Reservation() {
                 setReservationCards(cards);
                 setIsEmpty(cards.length === 0 ? true : false);
             })
-            .catch(() => {
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setIsEmpty(true);
             })
     }
@@ -57,7 +60,9 @@ export default function Reservation() {
                 setReservationCards([card]);
                 setIsEmpty(false);
             })
-            .catch(() => {
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setIsEmpty(true);
             })
     }
@@ -75,7 +80,9 @@ export default function Reservation() {
                 setReservationCards(cards);
                 setIsEmpty(cards.length === 0 ? true : false);
             })
-            .catch(() => {
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setIsEmpty(true);
             })
     }
@@ -103,10 +110,18 @@ export default function Reservation() {
                 setReservationCards(cards);
                 setIsEmpty(cards.length === 0 ? true : false);
             })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
 
         reservationService.getTotalPage({ page: page, entries: entries })
             .then(page => {
                 setTotalPage(page);
+            })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
         setIsSeaching(false);
     }
@@ -117,10 +132,18 @@ export default function Reservation() {
                 setReservationCards(cards);
                 setIsEmpty(cards.length === 0 ? true : false);
             })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
 
         reservationService.getTotalPage({ page: page, entries: entries })
             .then(page => {
                 setTotalPage(page);
+            })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
     }, [page, entries])
 

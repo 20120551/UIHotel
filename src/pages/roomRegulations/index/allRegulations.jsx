@@ -5,17 +5,21 @@ import { useRoomRegulation } from "@hooks/context-hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PopUpDecision from "@components/popUpDecision";
+import { createNotification } from "@utls/notification";
 
 function AllRegulations() {
     const navigate = useNavigate();
     const [idToDelete, setIdToDelete] = useState("");
     const [isDelete, setIsDelete] = useState(false);
     const [state, dispatch] = useState();
-    const [reload,setReload]=useState(false);
+    const [reload, setReload] = useState(false);
     React.useEffect(() => {
         roomRegulationService.getAll().then(roomRegulation => {
             dispatch(setData(roomRegulation));
             console.log(roomRegulation);
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
     }, [reload]);
     const deleteData = async (id) => {
@@ -28,9 +32,9 @@ function AllRegulations() {
             setReload(!reload);
             // navigate("/regulation");
 
-        }).catch(function (error) {
-            alert("foreign key conflicted. Please remove old relevents data before delete");
-        
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
 
 

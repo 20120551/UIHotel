@@ -5,6 +5,7 @@ import { roomRegulationService } from "@services";
 import { useRoomRegulation } from "@hooks/context-hooks";
 
 import { useNavigate } from "react-router-dom";
+import { createNotification } from "@utls/notification";
 
 function AddRegulation() {
     const [roomExchangeFee, setRoomExchangeFee] = React.useState("");
@@ -18,7 +19,7 @@ function AddRegulation() {
         await roomRegulationService.addRoomRegulation({
             roomExchangeFee: roomExchangeFee,
             maxGuest: maximumGuests,
-            maxOverseaSurchargeRatio:maxOverseaSurchargeRatio,
+            maxOverseaSurchargeRatio: maxOverseaSurchargeRatio,
             maxSurchargeRatio: maxSurchargeRatio,
             defaultGuest: defaultGuest
         }).then(data => {
@@ -31,10 +32,11 @@ function AddRegulation() {
             alert("New room regulation successfully added");
 
 
-        }).catch(function (error) {
-            console.log(error);
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
- 
+
 
     }
     return (

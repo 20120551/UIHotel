@@ -2,6 +2,7 @@
 import Chart from 'chart.js/auto';
 import React, { useEffect, useState } from 'react';
 import { roomOccupancyService } from "@services";
+import { createNotification } from '@utls/notification';
 export default function RoomOccupancy() {
 
     const [revenue, setRevenue] = useState();
@@ -20,6 +21,9 @@ export default function RoomOccupancy() {
             console.log(data);
             setRevenue(setData(data));
 
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
         var chart = document.querySelector("#myChart");
         console.log(chart);
@@ -61,10 +65,13 @@ export default function RoomOccupancy() {
             setRevenue(setData(data));
 
 
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
 
         const ctx = document.getElementById('myChart').getContext('2d');
-         new Chart(ctx, {
+        new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: Label,

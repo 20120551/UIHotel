@@ -5,6 +5,7 @@ import SearchBar from "@components/search/searchBar";
 import { useRoom, useSearch } from "@hooks/context-hooks";
 import { cardService, roomService } from "@services/index";
 import { room, search } from "@store/actions";
+import { createNotification } from "@utls/notification";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +22,10 @@ export default function RoomResult() {
                 const rooms = fillRoom(data);
                 roomDispatch(room.getFreeRooms({ rooms: rooms }));
                 roomDispatch(room.paginationRooms({ take, page }));
-            });
+            }).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }, []);
 
     const fillRoom = function (data) {
@@ -91,7 +95,10 @@ export default function RoomResult() {
                 const { page } = payload;
                 setPage(page);
                 roomDispatch(room.paginationRooms({ page, take }));
-            });
+            }).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }
 
     const handleSearch = function (info) {
@@ -101,7 +108,10 @@ export default function RoomResult() {
                 const rooms = fillRoom(data);
                 roomDispatch(room.getFreeRooms({ rooms: rooms }));
                 roomDispatch(room.paginationRooms({ take, page: 1 }));
-            });
+            }).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }
 
     const handleCreateCard = function () {

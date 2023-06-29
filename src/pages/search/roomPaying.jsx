@@ -7,6 +7,7 @@ import { search } from "@store/actions";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { substractDate } from '@utls/date';
+import { createNotification } from '@utls/notification';
 
 const payMethod = [{
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRX2g_WceO55Wfx_NcaHXidw2VUVa7Ga83oA&usqp=CAU",
@@ -123,8 +124,14 @@ export default function RoomPaying() {
                                     navigator("/");
                                 }, 1000 * timeout);
                             }
+                        }).catch(err => {
+                            const { message = "", code = err.response?.data } = err.response?.data;
+                            createNotification({ type: "error", title: message, message: code });
                         })
                 }, 1000 * 10) // 30s
+            }).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
     }
 

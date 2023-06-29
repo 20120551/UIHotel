@@ -1,6 +1,7 @@
 import { useAuth } from "@hooks/context-hooks";
 import { authService } from "@services/index";
 import { auth } from "@store/actions";
+import { createNotification } from "@utls/notification";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,7 +16,11 @@ function Header() {
 
   useEffect(() => {
     authService.profile()
-      .then(data => dispatch(auth.profile({ user: data })));
+      .then(data => dispatch(auth.profile({ user: data })))
+      .catch(err => {
+        const { message = "", code = err.response?.data } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
+      });
   }, []);
 
   return (

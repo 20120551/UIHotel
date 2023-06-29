@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { roomService } from "@services/index";
 import { roomDetailService } from "@services/index";
+import { createNotification } from "@utls/notification";
 export default function AddRoom() {
   const [details, setDetails] = useState([]);
   const [id, setID] = useState(0);
@@ -29,7 +30,11 @@ export default function AddRoom() {
       setDetails(data);
       console.log(data[0]);
       setSelectedDetail(data[0]);
-    });
+    })
+      .catch(err => {
+        const { message = "", code = err.response?.data } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
+      })
   }, []);
 
   useEffect(() => {
@@ -61,9 +66,10 @@ export default function AddRoom() {
         setNote("");
         alert("New Room successfully added");
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(err => {
+        const { message = "", code = err.response?.data } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
+      })
   };
 
   return (

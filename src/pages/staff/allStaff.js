@@ -2,6 +2,7 @@ import ListStaff from "@components/staff/tableStaff";
 import { useEffect, useState } from "react";
 import { staffService } from "@services/index";
 import { NavLink } from "react-router-dom";
+import { createNotification } from "@utls/notification";
 export default function AllStaffs() {
   return (
     <>
@@ -86,7 +87,10 @@ function StaffList() {
     staffService.GetAllStaffs({ page: index, pageSize: 5 }).then((data) => {
       setStaffs(data.values);
       setEnd(data.totalPage);
-    });
+    }).catch(err => {
+      const { message = "", code = err.response?.data } = err.response?.data;
+      createNotification({ type: "error", title: message, message: code });
+    })
   }, [index]);
 
   return (

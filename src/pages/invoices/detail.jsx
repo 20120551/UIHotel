@@ -6,6 +6,7 @@ import MayEmpty from "@components/mayEmpty";
 import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services";
 import { invoice } from "@store/actions";
+import { createNotification } from "@utls/notification";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
@@ -33,10 +34,11 @@ export default function InvoiceDetail() {
                 dispatch(invoice.getInvoice({ invoice: data }));
             })
             .catch(err => {
-                console.log('error', err);
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setTimeout(() => {
                     navigate("/hotel/invoice")
-                }, 1000);
+                }, 2000);
             })
     }, []);
 
@@ -44,6 +46,10 @@ export default function InvoiceDetail() {
         invoiceService.updateInvoiceStatus({ invoiceId: id })
             .then(data => {
                 dispatch(invoice.updateInvoiceStatus({ invoice: data }));
+            })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
     }
 

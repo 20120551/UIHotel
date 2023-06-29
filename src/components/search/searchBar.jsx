@@ -1,6 +1,7 @@
 import { useRoomDetail } from "@hooks/context-hooks";
 import { roomDetailService } from "@services/index";
 import { roomDetail } from "@store/actions";
+import { createNotification } from "@utls/notification";
 import { useEffect, useState } from "react";
 
 export default function SearchBar({ handleSearch, info }) {
@@ -9,7 +10,11 @@ export default function SearchBar({ handleSearch, info }) {
 
     useEffect(() => {
         roomDetailService.getAll()
-            .then(data => roomDetailDispatch(roomDetail.getAll({ rooms: data })));
+            .then(data => roomDetailDispatch(roomDetail.getAll({ rooms: data })))
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            });
     }, [])
 
     return (

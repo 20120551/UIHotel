@@ -5,6 +5,7 @@ import { useRoomRegulation } from "@hooks/context-hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PopUpDecision from "@components/popUpDecision";
+import { createNotification } from "@utls/notification";
 
 function AllRoomDetails() {
     const navigate = useNavigate();
@@ -16,6 +17,9 @@ function AllRoomDetails() {
         roomDetailService.getAll().then(roomRegulation => {
             dispatch(setData(roomRegulation));
             console.log(roomRegulation);
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
     }, [reload]);
     const deleteData = async (id) => {
@@ -51,7 +55,7 @@ function AllRoomDetails() {
                         {roomDetail.description}
                     </td>
                     <td>
-                        <img src={roomDetail.image} class="rounded" alt={roomDetail.id} style={{maxHeight:'200px'}}/>
+                        <img src={roomDetail.image} class="rounded" alt={roomDetail.id} style={{ maxHeight: '200px' }} />
                     </td>
 
 

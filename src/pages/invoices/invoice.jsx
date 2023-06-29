@@ -3,6 +3,7 @@ import MayEmpty from "@components/mayEmpty";
 import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services/index";
 import { invoice } from "@store/actions";
+import { createNotification } from "@utls/notification";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +24,10 @@ export default function Invoice() {
         invoiceService.getAll({ page: index, take: 3, status })
             .then(invoices => {
                 dispatch(invoice.getAllInvoice({ invoices }));
+            })
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
     }, [index, status])
 

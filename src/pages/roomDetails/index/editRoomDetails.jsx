@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import UploadImgComponent from "@components/image/uploadImg";
 import UploadImage from "@lib/uploadImage";
+import { createNotification } from "@utls/notification";
 
 function EditRoomDetail() {
     let { id } = useParams();
@@ -29,18 +30,23 @@ function EditRoomDetail() {
             setDescription(roomDetail.description)
             setImage(roomDetail.image)
             setRoomType(roomDetail.roomType)
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
         roomRegulationService.getAll().then(roomRegulation => {
             dispatch(setData(roomRegulation));
             console.log(roomRegulation);
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
     }, []);
     const handleSubmit = async (event) => {
         // event.preventDefault();
         let imgUrl = await UploadImage(newImage);
         let img = Image;
-        if (imgUrl != null)
-        {
+        if (imgUrl != null) {
             img = imgUrl;
         }
 
@@ -54,6 +60,9 @@ function EditRoomDetail() {
 
         }).then(roomDetail => {
             alert("room detail was successfully updated");
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
 
 

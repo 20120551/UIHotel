@@ -6,6 +6,7 @@ import { roomRegulationService } from "@services";
 import { useNavigate } from "react-router-dom";
 import UploadImgComponent from "@components/image/uploadImg";
 import UploadImage from "@lib/uploadImage";
+import { createNotification } from "@utls/notification";
 
 function AddRoomDetail() {
   const [state, dispatch] = React.useState();
@@ -19,13 +20,15 @@ function AddRoomDetail() {
   React.useEffect(() => {
     roomRegulationService.getAll().then((roomRegulation) => {
       dispatch(setData(roomRegulation));
+    }).catch(err => {
+      const { message = "", code = err.response?.data } = err.response?.data;
+      createNotification({ type: "error", title: message, message: code });
     });
   }, []);
   const handleSubmit = async (event) => {
     // event.preventDefault();
     let imgUrl = await UploadImage(Image);
-    if (regulationID === undefined || regulationID === null || regulationID === "")
-    {
+    if (regulationID === undefined || regulationID === null || regulationID === "") {
       alert("Regulation id is required");
     }
 
@@ -45,9 +48,10 @@ function AddRoomDetail() {
         setPreviewImage(null);
         alert("New Room Detail successfully added");
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(err => {
+        const { message = "", code = err.response?.data } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
+      })
   };
   const setData = (data) => {
     const results = [null];

@@ -6,6 +6,7 @@ import { useRoomRegulation } from "@hooks/context-hooks";
 
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { createNotification } from "@utls/notification";
 
 function EditRegulation() {
 
@@ -36,18 +37,20 @@ function EditRegulation() {
                 alert("Invalid room regulation id");
                 navigate("/regulation");
             }
-        }).catch(error => {
-            alert("Invalid room regulation id")
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
             navigate("/regulation")
         });
+
     }, [idr]);
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
         // event.preventDefault();
-        await roomRegulationService.updateRoomRegulation({ roomRegulationId:idr },{
+        await roomRegulationService.updateRoomRegulation({ roomRegulationId: idr }, {
             roomExchangeFee: roomExchangeFee,
             maxGuest: maximumGuests,
-            maxOverseaSurchargeRatio:maxOverseaSurchargeRatio,
+            maxOverseaSurchargeRatio: maxOverseaSurchargeRatio,
             maxSurchargeRatio: maxSurchargeRatio,
             defaultGuest: defaultGuest
         }).then(data => {
@@ -61,10 +64,10 @@ function EditRegulation() {
             alert("New room regulation successfully added");
 
 
-        }).catch(function (error) {
-            console.log(error);
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
-        console.log("haha");
 
     }
     return (
@@ -151,7 +154,7 @@ function EditRegulation() {
                         </form>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/hotel/regulation"  style={{ fontStyle: "none", color: "white" }}>Cancel</Link></button>
+                <button type="button" class="btn btn-primary buttonedit ml-2"><Link to="/hotel/regulation" style={{ fontStyle: "none", color: "white" }}>Cancel</Link></button>
                 <button type="button" onClick={() => handleSubmit()} class="btn btn-primary buttonedit">submit</button>
             </div>
         </>

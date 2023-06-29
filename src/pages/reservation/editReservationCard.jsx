@@ -1,5 +1,6 @@
 import { reservationService, roomDetailService, roomService, invoiceService } from "../../services";
 import MayEmpty from "@components/mayEmpty";
+import { createNotification } from "@utls/notification";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -30,6 +31,10 @@ export default function EditReservation() {
                 .then(res => {
                     navigate(`/hotel/reservation/${card.id}`);
                 })
+                .catch(err => {
+                    const { message = "", code = err.response?.data } = err.response?.data;
+                    createNotification({ type: "error", title: message, message: code });
+                })
         }
     }
 
@@ -43,12 +48,12 @@ export default function EditReservation() {
 
     const HandeOnChangeGuestsNumber = (e) => {
         const newGuestsNum = e.target.value;
-        if (newGuestsNum > card.guestsNumber){
+        if (newGuestsNum > card.guestsNumber) {
             let updatedGuests = [...card.guests];
-            for (let i = 0; i < newGuestsNum - card.guestsNumber; i++){
+            for (let i = 0; i < newGuestsNum - card.guestsNumber; i++) {
                 updatedGuests.push({
                     name: "",
-                    telephoneNumber : "",
+                    telephoneNumber: "",
                     address: "",
                     type: "domestic guest",
                     personIdentification: ""
@@ -57,14 +62,14 @@ export default function EditReservation() {
             card.guestsNumber = updatedGuests.length;
             setReservationCard({ ...card, guests: updatedGuests });
         }
-        else{
+        else {
             let updatedGuests = [...card.guests];
             updatedGuests = updatedGuests.slice(0, newGuestsNum);
             card.guestsNumber = updatedGuests.length;
             setReservationCard({ ...card, guests: updatedGuests });
         }
     }
-    
+
     useEffect(() => {
         reservationService.getByReservationCardId(id)
             .then(card => {
@@ -72,7 +77,9 @@ export default function EditReservation() {
                 setReservationCard(card);
                 setIsEmpty(false);
             })
-            .catch(() => {
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setIsEmpty(true);
             })
     }, [])

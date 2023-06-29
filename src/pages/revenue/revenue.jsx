@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { revenueService } from "@services";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { createNotification } from '@utls/notification';
 export default function Revenue() {
     var chart = null;
     const search = useLocation().search;
@@ -39,14 +40,17 @@ export default function Revenue() {
             year: year
         }).then(data => {
             setRevenue(setData(data));
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
-        var chart= document.querySelector("#myChart");
+        var chart = document.querySelector("#myChart");
         console.log(chart);
         chart.remove();
-        var chartContainer=document.querySelector(".chartReport");
+        var chartContainer = document.querySelector(".chartReport");
         var newLink = document.createElement('canvas');
-        newLink.id="myChart";
-        newLink.className="mx-auto w-25";
+        newLink.id = "myChart";
+        newLink.className = "mx-auto w-25";
         chartContainer.append(newLink);
         const ctx = document.getElementById('myChart').getContext('2d');
         chart = new Chart(ctx, {
@@ -70,24 +74,25 @@ export default function Revenue() {
                     position: 'bottom',
                     align: 'center',
                     font: {
-                       weight: 'bold'
+                        weight: 'bold'
                     },
                     padding: 8,
                     fullSize: true,
                 },
                 plugins: {
                     title: {
-                       display: true,
-                       text: 'Revenue report',
-                       color: 'navy',
-                       position: 'bottom',
-                       align: 'center',
-                       font: {
-                          weight: 'bold'
-                       },
-                       padding: 8,
-                       fullSize: true,
-                    }}
+                        display: true,
+                        text: 'Revenue report',
+                        color: 'navy',
+                        position: 'bottom',
+                        align: 'center',
+                        font: {
+                            weight: 'bold'
+                        },
+                        padding: 8,
+                        fullSize: true,
+                    }
+                }
             },
         });
     }
@@ -97,7 +102,11 @@ export default function Revenue() {
             month: month,
             year: year
         }).then(data => {
-            setRevenue(setData(data));
+            setRevenue(setData(data)
+            ).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
 
 
         })
@@ -134,24 +143,25 @@ export default function Revenue() {
                     position: 'bottom',
                     align: 'center',
                     font: {
-                       weight: 'bold'
+                        weight: 'bold'
                     },
                     padding: 8,
                     fullSize: true,
                 },
                 plugins: {
                     title: {
-                       display: true,
-                       text: 'Revenue report',
-                       color: 'navy',
-                       position: 'bottom',
-                       align: 'center',
-                       font: {
-                          weight: 'bold'
-                       },
-                       padding: 8,
-                       fullSize: true,
-                    }}
+                        display: true,
+                        text: 'Revenue report',
+                        color: 'navy',
+                        position: 'bottom',
+                        align: 'center',
+                        font: {
+                            weight: 'bold'
+                        },
+                        padding: 8,
+                        fullSize: true,
+                    }
+                }
             },
         });
     }, []);

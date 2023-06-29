@@ -3,6 +3,7 @@ import ServiceTable from "./serviceTable";
 import { useEffect, useState } from "react";
 import { hotelServiceService } from "@services/index";
 import { service } from "@store/actions";
+import { createNotification } from "@utls/notification";
 
 export default function ChangeService({ handleChangeService }) {
     const [categoryId, setCategoryId] = useState("1");
@@ -10,7 +11,11 @@ export default function ChangeService({ handleChangeService }) {
 
     useEffect(() => {
         hotelServiceService.getServiceByCategory({ categoryId })
-            .then(data => dispatch(service.getServiceByCategory({ services: data })));
+            .then(data => dispatch(service.getServiceByCategory({ services: data })))
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }, [categoryId]);
     return (
         <>

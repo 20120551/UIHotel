@@ -3,6 +3,7 @@ import { revenueService, reservationService } from "@services";
 import dateFormat, { masks } from "dateformat";
 import Chart from 'chart.js/auto';
 import { max } from "moment";
+import { createNotification } from "@utls/notification";
 
 export default function AdminDashBoard() {
     const [revenue, setRevenue] = useState();
@@ -37,6 +38,9 @@ export default function AdminDashBoard() {
                 totalSum = totalSum + revenue.totalSum
             })
             setRevenue(totalSum);
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
 
         reservationService.getByReservationByPeriodTime(
@@ -46,6 +50,9 @@ export default function AdminDashBoard() {
             }
         ).then(data => {
             setBooked(data.length)
+        }).catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
         })
         var monthList = []
         for (let m = 1; m <= month; m++) {
@@ -66,6 +73,9 @@ export default function AdminDashBoard() {
                 RevenueList.push(totalSum)
                 setTotalRevenue(totalRevenue + totalSum)
 
+            }).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
             })
 
         }))
@@ -195,7 +205,7 @@ export default function AdminDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">{(revenue/totalRevenue)*100} %</h3>
+                                    <h3 className="card_widget_header">{(revenue / totalRevenue) * 100} %</h3>
                                     <h6 className="text-muted">This month' revenue percentage</h6> </div>
                                 <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" className="feather feather-globe">
                                     <circle cx="12" cy="12" r="10"></circle>

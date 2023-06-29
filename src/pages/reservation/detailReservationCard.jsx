@@ -1,5 +1,6 @@
 import { reservationService, roomDetailService, roomService, invoiceService } from "../../services";
 import MayEmpty from "@components/mayEmpty";
+import { createNotification } from "@utls/notification";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
@@ -27,7 +28,9 @@ export default function DetailReservation() {
                 setReservationCard(card);
                 setIsEmpty(false);
             })
-            .catch(() => {
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
                 setIsEmpty(true);
             })
     }, [])
@@ -41,8 +44,8 @@ export default function DetailReservation() {
                             <div className="page-header">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        <h3 className="page-title mt-3">Reservation id {card.id} - 
-                                            <Link className="text-success" to={`/hotel/invoice/${card.invoiceId}`}> Invoice id {card.invoiceId}</Link>  - 
+                                        <h3 className="page-title mt-3">Reservation id {card.id} -
+                                            <Link className="text-success" to={`/hotel/invoice/${card.invoiceId}`}> Invoice id {card.invoiceId}</Link>  -
                                             Guests infomation
                                             <button className="btn btn-link text-success text-left px-3" onClick={(e) => { HandleEditReservationCard(id) }}>
                                                 Edit

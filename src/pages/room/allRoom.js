@@ -2,6 +2,7 @@ import ListRoom from "@components/room/tableRoom";
 import { useEffect, useState } from "react";
 import { roomService } from "@services/index";
 import { NavLink } from "react-router-dom";
+import { createNotification } from "@utls/notification";
 export default function AllRooms() {
   return (
     <>
@@ -101,7 +102,11 @@ function RoomList() {
     roomService.GetAllRooms({ page: index, pageSize: 5 }).then((data) => {
       setRooms(data.values);
       setEnd(data.totalPage);
+    }).catch(err => {
+      const { message = "", code = "" } = err.response?.data;
+      createNotification({ type: "error", title: message, message: code });
     });
+
   }, [index]);
 
   return (

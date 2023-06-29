@@ -2,6 +2,7 @@ import PayInfo from "@components/search/payInfo";
 import { useRoom, useSearch } from "@hooks/context-hooks";
 import { revenueService, roomService } from "@services/index";
 import { room, search } from "@store/actions";
+import { createNotification } from "@utls/notification";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -15,7 +16,10 @@ export default function RoomDetail() {
         roomService.getRoomDetail({ id })
             .then(data => {
                 dispatch(room.getRoomDetail({ room: data }))
-            });
+            }).catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }, []);
 
     const handleBooking = function (room) {

@@ -8,6 +8,7 @@ import 'daterangepicker/daterangepicker.css';
 import 'daterangepicker';
 import moment from "moment";
 import $ from 'jquery';
+import { createNotification } from "@utls/notification";
 
 const date = new Date();
 date.setDate(date.getDate() + 1)
@@ -19,12 +20,12 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
 
     useEffect(() => {
         $(fromRef.current).daterangepicker({
-          singleDatePicker: true,
-          minDate: moment().startOf('day'),
-          autoApply: true,
-          locale: {
-              format: 'DD/MM/YYYY'
-          }
+            singleDatePicker: true,
+            minDate: moment().startOf('day'),
+            autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
         });
         $(toRef.current).daterangepicker({
             singleDatePicker: true,
@@ -33,15 +34,15 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
             locale: {
                 format: 'DD/MM/YYYY'
             }
-          });
-      }, []);
-
-      const [roomChanged, setRoomChanged] = useState({
-          from: getVietnameseDate(),
-          to: getVietnameseDate(date),
-          roomType: "double",
-          newRoom: ''
         });
+    }, []);
+
+    const [roomChanged, setRoomChanged] = useState({
+        from: getVietnameseDate(),
+        to: getVietnameseDate(date),
+        roomType: "double",
+        newRoom: ''
+    });
 
     useEffect(() => {
         roomService.getFreeRooms({
@@ -49,13 +50,21 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
             from: roomChanged.from,
             to: toRef.current ? toRef.current.value : roomChanged.to
         })
-            .then(data => dispatch(room.getFreeRooms({ rooms: data })));
+            .then(data => dispatch(room.getFreeRooms({ rooms: data })))
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }, [roomChanged.roomType, roomChanged.from, roomChanged.to]);
 
 
     useEffect(() => {
         roomDetailService.getAll()
             .then(data => roomDetailDispatch(roomDetail.getAll({ rooms: data })))
+            .catch(err => {
+                const { message = "", code = err.response?.data } = err.response?.data;
+                createNotification({ type: "error", title: message, message: code });
+            })
     }, []);
 
     return (
@@ -106,7 +115,7 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                                             ...prev, to: toRef.current.value
                                         }))}
                                         value={toRef.current ? toRef.current.value : roomChanged.to}
-                                        type="text" className="form-control" ref={toRef}/>
+                                        type="text" className="form-control" ref={toRef} />
                                 </div>
                             </div>
                         </div>
@@ -133,7 +142,7 @@ export default function ChangeRoom({ oldRoom, handleChangeRoom }) {
                             <button
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handleChangeRoom({ oldRoom, ...roomChanged, to: toRef.current ? toRef.current.value : roomChanged.to})
+                                    handleChangeRoom({ oldRoom, ...roomChanged, to: toRef.current ? toRef.current.value : roomChanged.to })
                                 }}
                                 className="btn btn-primary">Submit</button>
                         </div>
