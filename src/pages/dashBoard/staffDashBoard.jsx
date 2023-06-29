@@ -60,7 +60,7 @@ export default function StaffDashBoard() {
     
             }
             const ct = document.getElementById('PieChart').getContext('2d');
-            new Chart(ct, {
+            var mychart=new Chart(ct, {
                 type: 'pie',
                 data: {
                     labels: ["Checkout","Partly Deposited","Pending"],
@@ -80,6 +80,8 @@ export default function StaffDashBoard() {
                     }
                 },
             });
+            setTimeout(function() { myChart.update(); },1000);
+          
         })
 
 

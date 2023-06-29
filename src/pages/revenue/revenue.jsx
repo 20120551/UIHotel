@@ -49,7 +49,7 @@ export default function Revenue() {
         newLink.className="mx-auto w-25";
         chartContainer.append(newLink);
         const ctx = document.getElementById('myChart').getContext('2d');
-        chart = new Chart(ctx, {
+        var  Piechart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: Label,
@@ -90,6 +90,8 @@ export default function Revenue() {
                     }}
             },
         });
+        setTimeout(function() { Piechart.update(); },1000);
+        
     }
     useEffect(() => {
         console.log("rerender");
@@ -113,7 +115,7 @@ export default function Revenue() {
 
         }
         const ctx = document.getElementById('myChart').getContext('2d');
-        chart = new Chart(ctx, {
+        var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: Label,
@@ -154,6 +156,8 @@ export default function Revenue() {
                     }}
             },
         });
+        setTimeout(function() { myChart.update(); },1000);
+   
     }, []);
 
     const setData = (data) => {
