@@ -27,7 +27,8 @@ export default function Home() {
                     <div className="row">
                         <div className="col-lg-6">
                             <div className="hero-text">
-                                <h1>Sona A Luxury Hotel</h1>
+                                <h1>Roomee </h1>
+                                <h1>Luxury Hotel</h1>
                                 <p>Here are the best hotel booking sites, including recommendations for international
                                     travel and for finding low-priced hotel rooms.</p>
                                 <a href="#" className="primary-btn">Discover Now</a>
@@ -62,9 +63,8 @@ export default function Home() {
                                     <span>About Us</span>
                                     <h2>Intercontinental LA <br />Westlake Hotel</h2>
                                 </div>
-                                <p className="f-para">Sona.com is a leading online accommodation site. We’re passionate about
-                                    travel. Every day, we inspire and reach millions of travelers across 90 local websites in 41
-                                    languages.</p>
+                                <p className="f-para">Roomee.com is a leading online accommodation site. We’re passionate about
+                                    travel. Every day, we inspire and reach millions of travelers across 90 contries.</p>
                                 <p className="s-para">So when it comes to booking the perfect hotel, vacation rental, resort,
                                     apartment, guest house, or tree house, we’ve got you covered.</p>
                                 <a href="#" className="primary-btn about-btn">Read More</a>
@@ -99,49 +99,43 @@ export default function Home() {
                         <div className="col-lg-4 col-sm-6">
                             <div className="service-item">
                                 <i className="flaticon-036-parking"></i>
-                                <h4>Travel Plan</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <h4>Our Vision</h4>
+                                <p> We prioritize your comfort and convenience, offering a range of exceptional services designed to enhance your travel experience. From exquisite catering options to reliable transportation and attentive childcare, we strive to exceed your expectations and create cherished memories during your stay with us.</p>
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-6">
                             <div className="service-item">
                                 <i className="flaticon-033-dinner"></i>
                                 <h4>Catering Service</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <p>Indulge in a culinary journey with our exceptional catering service. Our skilled chefs prepare a diverse range of delectable dishes, combining local flavors with international cuisine. Whether you're hosting a private event or simply seeking a memorable dining experience, our catering service will exceed your expectations.</p>
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-6">
                             <div className="service-item">
                                 <i className="flaticon-026-bed"></i>
                                 <h4>Babysitting</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <p>Traveling with little ones? Rest assured knowing that our professional and experienced babysitters are available to provide attentive care for your children. Enjoy some well-deserved relaxation or explore the city's attractions with peace of mind, knowing your kids are in safe hands.</p>
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-6">
                             <div className="service-item">
                                 <i className="flaticon-024-towel"></i>
                                 <h4>Laundry</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <p>We understand the importance of keeping your wardrobe fresh and clean during your stay. Our efficient laundry service ensures your garments are promptly laundered, pressed, and returned to you in pristine condition. Simply drop off your items, and we'll take care of the rest, so you can focus on enjoying your time with us.</p>
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-6">
                             <div className="service-item">
                                 <i className="flaticon-044-clock-1"></i>
                                 <h4>Hire Driver</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <p> Discover the wonders of the city with ease by availing our hire driver service. Our skilled and knowledgeable drivers will navigate you through the streets, ensuring you reach your desired destinations efficiently and comfortably. Sit back, relax, and let us take care of the transportation logistics for you.</p>
                             </div>
                         </div>
                         <div className="col-lg-4 col-sm-6">
                             <div className="service-item">
                                 <i className="flaticon-012-cocktail"></i>
                                 <h4>Bar & Drink</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna.</p>
+                                <p>Unwind and socialize at our stylish bar, offering a wide selection of refreshing beverages, expertly crafted cocktails, and a curated wine list. Whether you're looking to kick-start your evening or wind down after a day of exploration, our bar provides the perfect ambiance to enjoy a drink and engage in lively conversations with fellow travelers.</p>
                             </div>
                         </div>
                     </div>
