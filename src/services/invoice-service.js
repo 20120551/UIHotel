@@ -12,6 +12,12 @@ export const getDetail = async function ({ index }) {
     return invoice.data;
 }
 
+export const getPayDetail = async function ({ index }) {
+    console.log("make request to endpoint: ", `invoice/calculate/${index}`);
+    const invoice = await createPrivateAxios().get(`invoice/calculate/${index}`);
+    return invoice.data;
+}
+
 export const addReservationCard = async function (payload) {
     const invoice = await createPrivateAxios().post(`reservation/change-room`, {
         ...payload

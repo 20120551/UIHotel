@@ -44,7 +44,7 @@ export default function Reservation() {
                 format: 'DD/MM/YYYY'
             }
         });
-      }, []);
+    }, []);
 
     const HandleDetail = function (id) {
         navigate(`/hotel/reservation/${id}`);
@@ -137,7 +137,7 @@ export default function Reservation() {
                             </h4>
                             {/* <a onClick={(e) => { HandleAddReservation() }} className="btn btn-primary float-right veiwbutton ">Add
                                 Booking</a> */}
-                                <button to="/hotel/reservation/booking" className="btn btn-primary float-right veiwbutton" onClick={handleLinkClick}>Add
+                            <button to="/hotel/reservation/booking" className="btn btn-primary float-right veiwbutton" onClick={handleLinkClick}>Add
                                 Booking</button>
                         </div>
                     </div>
@@ -203,7 +203,7 @@ export default function Reservation() {
                                                                 Details
                                                             </button>
                                                         </td>
-                                                        <td><InvoiceStatus status={status}></InvoiceStatus></td>
+                                                        <td><InvoiceStatus status={status} /></td>
                                                         <td className="text-right">
                                                             <div className="dropdown dropdown-action"> <a href="#"
                                                                 className="action-icon dropdown-toggle" data-toggle="dropdown"

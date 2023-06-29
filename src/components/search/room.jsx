@@ -24,7 +24,7 @@ export default function Room({ room, handleBooking }) {
                                 <td>{room.maxSurchargeRatio}</td>
                             </tr>
                             <tr>
-                                <td className="r-o">Max Oversea Surcharge:</td>
+                                <td className="r-o">Max Oversea:</td>
                                 <td>{room.maxOverseaSurchargeRatio}</td>
                             </tr>
                         </tbody>
