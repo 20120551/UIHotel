@@ -162,11 +162,14 @@ export default function InvoiceDetail() {
                                                             <td>${price}</td>
                                                             <td>
                                                                 <button
-                                                                    onClick={() => setRoomchanged(prev => ({
-                                                                        ...prev,
-                                                                        oldRoom: roomId,
-                                                                        isActiveRoomChange: true
-                                                                    }))}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setRoomchanged(prev => ({
+                                                                            ...prev,
+                                                                            oldRoom: roomId,
+                                                                            isActiveRoomChange: true
+                                                                        }))
+                                                                    }}
                                                                     className="btn btn-info">Change</button>
                                                             </td>
                                                         </tr>
