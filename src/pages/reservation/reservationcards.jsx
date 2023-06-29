@@ -192,7 +192,7 @@ export default function Reservation() {
                                                 return (
                                                     <tr>
                                                         <td>{id}</td>
-                                                        <td>{invoiceId}</td>
+                                                        <td><Link className="text-success" to={`/hotel/invoice/${invoiceId}`}>{invoiceId}</Link></td>
                                                         <td>{roomId}</td>
                                                         <td>{guestName}</td>
                                                         <td>{guestsNumber}</td>

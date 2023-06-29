@@ -7,7 +7,7 @@ import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services";
 import { invoice } from "@store/actions";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function InvoiceDetail() {
     const [roomChanged, setRoomchanged] = useState({
@@ -135,6 +135,7 @@ export default function InvoiceDetail() {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Card</th>
                                                     <th>Room</th>
                                                     <th>Arrival Date</th>
                                                     <th>Departure Date</th>
@@ -149,10 +150,11 @@ export default function InvoiceDetail() {
                                                     const { id, price, arrivalDate, departureDate, roomId } = card;
                                                     return (
                                                         <tr
-                                                            onClick={() => navigate(`/hotel/reservation/edit/${id}`)}
+                                                            onClick={() => navigate(`/hotel/reservation/${id}`)}
                                                             key={id}>
+                                                            <td>{index + 1}</td>
                                                             <td>
-                                                                {index + 1}
+                                                                {id}
                                                             </td>
                                                             <td>{roomId}</td>
                                                             <td>{arrivalDate}</td>
