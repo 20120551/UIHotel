@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import 'daterangepicker/daterangepicker.css';
 import 'daterangepicker';
 import $ from 'jquery';
+import InvoiceStatus from "@components/invoice/invoiceStatus";
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
@@ -191,7 +192,7 @@ export default function Reservation() {
                                                 return (
                                                     <tr>
                                                         <td>{id}</td>
-                                                        <td>{invoiceId}</td>
+                                                        <td><Link className="text-success" to={`/hotel/invoice/${invoiceId}`}>{invoiceId}</Link></td>
                                                         <td>{roomId}</td>
                                                         <td>{guestName}</td>
                                                         <td>{guestsNumber}</td>
@@ -202,7 +203,7 @@ export default function Reservation() {
                                                                 Details
                                                             </button>
                                                         </td>
-                                                        <td>{status}</td>
+                                                        <td><InvoiceStatus status={status}></InvoiceStatus></td>
                                                         <td className="text-right">
                                                             <div className="dropdown dropdown-action"> <a href="#"
                                                                 className="action-icon dropdown-toggle" data-toggle="dropdown"

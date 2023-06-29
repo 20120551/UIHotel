@@ -6,7 +6,7 @@ import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services";
 import { invoice } from "@store/actions";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function InvoiceDetail() {
     const [roomChanged, setRoomchanged] = useState({
@@ -119,6 +119,7 @@ export default function InvoiceDetail() {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>ID</th>
                                                     <th>Room</th>
                                                     <th>Arrival Date</th>
                                                     <th>Departure Date</th>
@@ -134,8 +135,9 @@ export default function InvoiceDetail() {
                                                     return (
                                                         <tr
                                                             key={id}>
+                                                            <td>{index + 1}</td>
                                                             <td>
-                                                                {index}
+                                                                <Link className="text-success" to={`/hotel/reservation/${id}`}>{id}</Link>
                                                             </td>
                                                             <td>{roomId}</td>
                                                             <td>{arrivalDate}</td>
@@ -261,7 +263,7 @@ export default function InvoiceDetail() {
                                 return (
                                     <div key={id}>
                                         <div className="mb-2">
-                                            <b>Room {index}: G{id}</b> | {roomType}
+                                            <b>Room {index + 1}: G{id}</b> | {roomType}
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center">
                                             Price <b>{price} VND</b>
