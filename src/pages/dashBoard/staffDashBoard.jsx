@@ -11,6 +11,9 @@ export default function StaffDashBoard() {
     const navigate = useNavigate();
     const [isEmpty, setIsEmpty] = useState(true);
     const [booked, setBooked] = useState([]);
+    const [pending,setPending]=useState([]);
+    const [partlyDeposited, setPartlyDeposited]=useState([]);
+    const [checkout, setcheckout]=useState([]);
     let pendingList= []
     let partlyDepositedList= [];
     let checkoutList= []
@@ -36,8 +39,11 @@ export default function StaffDashBoard() {
         ).then(data => {
             console.log(data);
             pendingList=data.filter(x=>x.status=="pending")
+            setPending(pendingList)
             partlyDepositedList=data.filter(x=>x.status=="partly_deposited")
+            setPartlyDeposited(partlyDepositedList)
             checkoutList=data.filter(x=>x.status=="checkout")
+            setcheckout(checkoutList)
             setNotCheckin(data.filter(x=>x.status=="pending"||x.status=="partly_deposited"))
             setBooked(data)
             setIsEmpty(false);
@@ -142,6 +148,9 @@ export default function StaffDashBoard() {
     const HandleEditReservationCard = (id) => {
         navigate(`/hotel/reservation/edit/${id}`);
     }
+    const HandleDetail = function (id) {
+        navigate(`/hotel/reservation/${id}`);
+    }
     return (
         <>
             <div className="page-header">
@@ -160,7 +169,7 @@ export default function StaffDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">{checkoutList.length}</h3>
+                                    <h3 className="card_widget_header">{checkout.length}</h3>
                                     <h6 className="text-muted">Total Checkout </h6> </div>
                                     <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" className="feather feather-globe">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -177,7 +186,7 @@ export default function StaffDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">{partlyDepositedList.length}</h3>
+                                    <h3 className="card_widget_header">{partlyDeposited.length}</h3>
                                     <h6 className="text-muted">Total partly deposited</h6> </div>
                                     <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" className="feather feather-globe">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -194,7 +203,7 @@ export default function StaffDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">{pendingList.length}</h3>
+                                    <h3 className="card_widget_header">{pending.length}</h3>
                                     <h6 className="text-muted">Total Pending </h6> </div>
                                     <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" className="feather feather-globe">
                                     <circle cx="12" cy="12" r="10"></circle>
