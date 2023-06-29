@@ -22,7 +22,7 @@ export default function RoomTable({ rooms, setRoomChanged }) {
                 const { id, status, price, maxGuest } = room;
                 return (
                   <tr key={id}>
-                    <td>{index}</td>
+                    <td>{index + 1}</td>
                     <td>{id}</td>
                     <td>{maxGuest}</td>
                     <td>{status}</td>

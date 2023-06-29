@@ -21,7 +21,7 @@ export default function ServiceTable({ services, handleServiceChange }) {
                                 const { id, serviceName, unitPrice } = service;
                                 return (
                                     <tr key={id}>
-                                        <td>{index}</td>
+                                        <td>{index + 1}</td>
                                         <td>{id}</td>
                                         <td>{serviceName}</td>
                                         <td>{unitPrice}</td>
