@@ -1,9 +1,24 @@
 import { NavLink } from "react-router-dom";
+import { roomService } from "@services/index";
 const ListRoom = (props) => {
   const rooms = props.rooms;
-  if (!rooms) {
-    return <></>;
-  }
+  const handelDelete = async (id) => {
+    //  e.preventDefault();
+    let warning = `Are you sure remove room id ${id}`;
+    if (confirm(warning) != true) {
+      return;
+    }
+    await roomService
+      .deleteRoom(id)
+      .then(() => {
+        alert(`Successfully remove room id ${id}`);
+        window.location.reload();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="card card-table">
       <div className="card-body booking_card">
@@ -61,18 +76,20 @@ const ListRoom = (props) => {
                         <div className="dropdown-menu dropdown-menu-right">
                           <NavLink
                             className="dropdown-item"
-                            to={() => `/edit-room?id=${room.id}`}
+                            to={`/hotel/room/edit-room/${room.id}`}
                           >
                             <i className="fas fa-pencil-alt m-r-5"></i> Edit
                           </NavLink>
-                          <a
+                          <div
                             className="dropdown-item"
-                            href="#"
                             data-toggle="modal"
                             data-target="#delete_asset"
+                            onClick={async (e) => {
+                              await handelDelete(room.id);
+                            }}
                           >
                             <i className="fas fa-trash-alt m-r-5"></i> Delete
-                          </a>
+                          </div>
                         </div>
                       </div>
                     </td>
