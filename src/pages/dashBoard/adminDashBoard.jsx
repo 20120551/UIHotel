@@ -53,9 +53,9 @@ export default function AdminDashBoard() {
         }
         // console.log(monthList)
         RevenueList = []
-        Promise.all(monthList.map((month) => {
+        Promise.all(monthList.map(async (month) => {
 
-            revenueService.getRevenueByMonth({
+            await revenueService.getRevenueByMonth({
                 month: month,
                 year: year
             }).then(data => {

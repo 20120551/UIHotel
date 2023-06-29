@@ -47,7 +47,7 @@ export default function SideBar() {
           <ul>
             <li>
               {" "}
-              <Link to="/hotel/dashboard">
+              <Link to="/hotel">
                 <i className="fas fa-tachometer-alt"></i> <span>Dashboard</span>
               </Link>{" "}
             </li>
