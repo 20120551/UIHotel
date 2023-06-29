@@ -44,7 +44,7 @@ const ListRoom = (props) => {
                   <tr key={room.id}>
                     <td>{room.id}</td>
                     <td>{room.roomType}</td>
-                    <td>{room.price}</td>
+                    <td>{parseFloat(room.price).toLocaleString('en')} VND / night</td>
                     <td>
                       <NavLink to="/hotel/room-detail">
                         {room.roomDetail}

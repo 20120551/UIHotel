@@ -45,7 +45,7 @@ function AllRoomDetails() {
                         {roomDetail.roomType}
                     </td>
                     <td>
-                        {roomDetail.price}
+                        {parseFloat(roomDetail.price).toLocaleString('en')} VND
                     </td>
                     <td>
                         {roomDetail.description}

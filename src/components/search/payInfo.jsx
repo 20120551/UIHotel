@@ -27,7 +27,7 @@ export default function PayInfo({
                                 <b>Room {index}: G-{id}</b> | {type}
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
-                                <b>{price} VND/night</b>
+                                <b>{parseFloat(price).toLocaleString('en')} VND/night</b>
                                 <button
                                     onClick={() => handleBookingRemove(card)}
                                     className="btn btn-outline-success">Remove</button>
@@ -40,9 +40,9 @@ export default function PayInfo({
             <div className="d-flex justify-content-between">
                 <div>Total Amount</div>
                 <h4 className="font-weight-bold">{
-                    cardInfo.reduce(
-                        (init, card) =>
-                            init + (card?.price || 0) * (substractDate(searchInfo.from, searchInfo.to) + 1), 0)} VND</h4>
+                        parseFloat(cardInfo.reduce((init, card) =>
+                            init + (card?.price || 0) * 
+                            (substractDate(searchInfo.from, searchInfo.to) + 1), 0)).toLocaleString('en')} VND</h4>
             </div>
             <button
                 data-toggle="modal" data-target="#exampleModal"

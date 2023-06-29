@@ -74,7 +74,7 @@ export default function RoomDetail() {
                                                 className="btn btn-info">Booking Now</button>
                                         </div>
                                     </div>
-                                    <h2>{state.room.detail?.price}$<span>/Pernight</span></h2>
+                                    <h2>{parseFloat(state.room.detail?.price).toLocaleString('en')} VND <span>/ night</span></h2>
                                     <table>
                                         <tbody>
                                             <tr>

@@ -159,7 +159,7 @@ export default function InvoiceDetail() {
                                                             <td>{roomId}</td>
                                                             <td>{arrivalDate}</td>
                                                             <td>{departureDate}</td>
-                                                            <td>${price}</td>
+                                                            <td>{parseFloat(price).toLocaleString('en')} VND</td>
                                                             <td>
                                                                 <button
                                                                     onClick={(e) => {
@@ -229,7 +229,7 @@ export default function InvoiceDetail() {
                                                             <td>{id}</td>
                                                             <td>{name}</td>
                                                             <td>{createOn}</td>
-                                                            <td>${price}</td>
+                                                            <td>{parseFloat(price).toLocaleString('en')} VND</td>
                                                         </tr>
                                                     )
                                                 })}
@@ -272,7 +272,7 @@ export default function InvoiceDetail() {
                                             <b>Service{index + 1}: S-{id}</b> | {name}
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center">
-                                            Price<b>{price} VND</b>
+                                            Price<b>{parseFloat(price).toLocaleString('en')} VND</b>
                                         </div>
                                     </div>
                                 )
@@ -286,7 +286,7 @@ export default function InvoiceDetail() {
                                             <b>Room {index + 1}: G{id}</b> | {roomType}
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center">
-                                            Price <b>{price} VND</b>
+                                            Price <b>{parseFloat(price).toLocaleString('en')} VND</b>
                                         </div>
                                     </div>
                                 )
@@ -296,15 +296,15 @@ export default function InvoiceDetail() {
                         <div className="border my-3"></div>
                         <div className="d-flex justify-content-between">
                             <div>Total</div>
-                            <h5>{state.invoice.totalSum} VND</h5>
+                            <h5>{parseFloat(state.invoice.totalSum).toLocaleString('en')} VND</h5>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div>Has Paid</div>
-                            <h5>{state.invoice.downPayment} VND</h5>
+                            <h5>{parseFloat(state.invoice.downPayment).toLocaleString('en')} VND</h5>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div>Charge</div>
-                            <h5 className="font-weight-bold">{state.invoice.totalSum - state.invoice.downPayment} VND</h5>
+                            <h5 className="font-weight-bold">{parseFloat(state.invoice.totalSum - state.invoice.downPayment).toLocaleString('en')}VND</h5>
                         </div>
                         <button
                             onClick={handlePayInvoice}

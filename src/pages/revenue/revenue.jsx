@@ -167,7 +167,7 @@ export default function Revenue() {
                 <tr key={index}>
                     <td>{index}</td>
                     <td>{revenue.id}</td>
-                    <td>{revenue.totalSum}</td>
+                    <td>{parseFloat(revenue.totalSum).toLocaleString('en')} VND</td>
                     <td>{revenue.percentage.toFixed(2)} %</td>
 
                 </tr>

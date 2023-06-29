@@ -109,7 +109,7 @@ export default function Invoice() {
                                                     <td>
                                                         <InvoiceStatus status={status} />
                                                     </td>
-                                                    <td>{totalSum}$</td>
+                                                    <td>{parseFloat(totalSum).toLocaleString('en')} VND</td>
                                                     <td>{nameCus}</td>
                                                 </tr>
                                             )
