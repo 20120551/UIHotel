@@ -27,15 +27,14 @@ function App() {
           <Route path="/hotel" element={<HomeLayout />}>
             <Route element={<ProtectRoute allowRoles={[role.MANAGER]} />}>
               <Route path="invoice/*" element={<InvoiceRoute />} />
-              <Route path="room/*" element={<RoomRoute />} />
-              <Route path="staff/*" element={<StaffRoute />} />
             </Route>
             <Route path="revenue/*" element={<RevenueRoute />} />
+            <Route path="room/*" element={<RoomRoute />} />
             <Route path="room-occupancy/*" element={<RoomOccupancyRoute />} />
             <Route path="reservation/*" element={<ReservationRoute />} />
             <Route path="room-detail/*" element={<RoomDetailRoute />} />
             <Route path="regulation/*" element={<RoomRegulationRoute />} />
-            <Route path="dashboard" element={<DashBoardRoute />} />
+            <Route path="dashboard/*" element={<DashBoardRoute />} />
           </Route>
         </Route>
 

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import 'daterangepicker/daterangepicker.css';
 import 'daterangepicker';
 import $ from 'jquery';
+import InvoiceStatus from "@components/invoice/invoiceStatus";
 
 export default function Reservation() {
     const [page, setPage] = useState(1);
@@ -43,7 +44,7 @@ export default function Reservation() {
                 format: 'DD/MM/YYYY'
             }
         });
-      }, []);
+    }, []);
 
     const HandleDetail = function (id) {
         navigate(`/hotel/reservation/${id}`);
@@ -136,7 +137,7 @@ export default function Reservation() {
                             </h4>
                             {/* <a onClick={(e) => { HandleAddReservation() }} className="btn btn-primary float-right veiwbutton ">Add
                                 Booking</a> */}
-                                <button to="/hotel/reservation/booking" className="btn btn-primary float-right veiwbutton" onClick={handleLinkClick}>Add
+                            <button to="/hotel/reservation/booking" className="btn btn-primary float-right veiwbutton" onClick={handleLinkClick}>Add
                                 Booking</button>
                         </div>
                     </div>
@@ -147,21 +148,21 @@ export default function Reservation() {
                     <div className="card card-table">
                         <div className="card-body booking_card">
                             <div className="table-responsive">
-                                <div className="mb-3 d-flex justify-content-between col-lg-8">
-                                    <div className="form-inline my-2 my-lg-0">
+                                <div className="mb-3 row col-lg-12">
+                                    <div className="form-inline m-2 my-lg-0 px-2">
                                         <input className="form-control mr-sm-2" type="number" placeholder="Invoice ID"
                                             aria-label="Search" onChange={(e) => setInvoiceId(e.target.value)} />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
                                             type="button" onClick={() => HandleSeachByInvoiceId(invoiceId)}>&#x1F50E;</button>
                                     </div>
-                                    <div className="form-inline my-2 my-lg-0">
+                                    <div className="form-inline m-2 my-lg-0 px-2">
                                         <input className="form-control mr-sm-2" type="number"
                                             onChange={(e) => setCardId(e.target.value)}
                                             placeholder="Reservation ID" aria-label="Search" />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
                                             type="button" onClick={() => HandleSeachByCardId(cardId)}>&#x1F50E;</button>
                                     </div>
-                                    <form className="form-inline my-2 my-lg-0">
+                                    <form className="form-inline m-2 my-lg-0 px-2">
                                         <input type="text" name="DateRangePickerReservationCard"
                                             className="form-control mr-sm-2" ref={inputTimeRef} />
                                         <button className="btn btn-outline-secondary my-2 my-sm-0"
@@ -191,7 +192,7 @@ export default function Reservation() {
                                                 return (
                                                     <tr>
                                                         <td>{id}</td>
-                                                        <td>{invoiceId}</td>
+                                                        <td><Link className="text-success" to={`/hotel/invoice/${invoiceId}`}>{invoiceId}</Link></td>
                                                         <td>{roomId}</td>
                                                         <td>{guestName}</td>
                                                         <td>{guestsNumber}</td>
@@ -202,7 +203,7 @@ export default function Reservation() {
                                                                 Details
                                                             </button>
                                                         </td>
-                                                        <td>{status}</td>
+                                                        <td><InvoiceStatus status={status} /></td>
                                                         <td className="text-right">
                                                             <div className="dropdown dropdown-action"> <a href="#"
                                                                 className="action-icon dropdown-toggle" data-toggle="dropdown"

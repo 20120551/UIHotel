@@ -1,3 +1,5 @@
+import { substractDate } from "@utls/date";
+
 export default function PayInfo({
     searchInfo,
     cardInfo = [],
@@ -37,7 +39,10 @@ export default function PayInfo({
             <div className="border my-3"></div>
             <div className="d-flex justify-content-between">
                 <div>Total Amount</div>
-                <h4 className="font-weight-bold">{cardInfo.reduce((init, card) => init + card.detail.price, 0)} VND</h4>
+                <h4 className="font-weight-bold">{
+                    cardInfo.reduce(
+                        (init, card) =>
+                            init + (card?.price || 0) * (substractDate(searchInfo.from, searchInfo.to) + 1), 0)} VND</h4>
             </div>
             <button
                 data-toggle="modal" data-target="#exampleModal"

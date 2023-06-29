@@ -1,12 +1,13 @@
 import ChangeRoom from "@components/invoice/changeRoom";
 import ChangeService from "@components/invoice/changeService";
 import InvoiceStatus from "@components/invoice/invoiceStatus";
+import PaymentDetail from "@components/invoice/paymentDetail";
 import MayEmpty from "@components/mayEmpty";
 import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services";
 import { invoice } from "@store/actions";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function InvoiceDetail() {
     const [roomChanged, setRoomchanged] = useState({
@@ -14,6 +15,9 @@ export default function InvoiceDetail() {
         isActiveRoomChange: false,
         isActiveServiceChange: false
     });
+    const [logs, setLogs] = useState([]);
+
+
     const navigate = useNavigate();
     const [state, dispatch] = useInvoice();
     const isEmptyCard = state.invoice.reservationCards ?
@@ -78,18 +82,30 @@ export default function InvoiceDetail() {
                 dispatch(invoice.getInvoice({ invoice: data }));
             })
     }
+    const getPaymentDetail = function () {
+        invoiceService.getPayDetail({ index: id })
+            .then(data => {
+                setLogs(_ => (data.detail))
+            })
+    }
 
     return (
         <div className="row flex flex-column">
             <div className="page-header">
                 <div className="row align-items-center">
-                    <div className="col">
+                    <div className="col-11">
                         <div className="mt-5">
                             <h3 className="card-title float-left mt-2">
                                 Invoice {state.invoice.id}
                                 <InvoiceStatus status={state.invoice.status} />
                             </h3>
                         </div>
+                    </div>
+                    <div className="col-1 mt-5">
+                        <button
+                            data-toggle="modal" data-target="#exampleModal1"
+                            onClick={() => { getPaymentDetail() }}
+                            className="btn btn-primary">Detail</button>
                     </div>
                 </div>
             </div>
@@ -119,6 +135,7 @@ export default function InvoiceDetail() {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Card</th>
                                                     <th>Room</th>
                                                     <th>Arrival Date</th>
                                                     <th>Departure Date</th>
@@ -133,9 +150,11 @@ export default function InvoiceDetail() {
                                                     const { id, price, arrivalDate, departureDate, roomId } = card;
                                                     return (
                                                         <tr
+                                                            onClick={() => navigate(`/hotel/reservation/${id}`)}
                                                             key={id}>
-                                                            <td>
-                                                                {index}
+                                                            <td>{index + 1}</td>
+                                                            <td className="text-success">
+                                                                {id}
                                                             </td>
                                                             <td>{roomId}</td>
                                                             <td>{arrivalDate}</td>
@@ -143,11 +162,14 @@ export default function InvoiceDetail() {
                                                             <td>${price}</td>
                                                             <td>
                                                                 <button
-                                                                    onClick={() => setRoomchanged(prev => ({
-                                                                        ...prev,
-                                                                        oldRoom: roomId,
-                                                                        isActiveRoomChange: true
-                                                                    }))}
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setRoomchanged(prev => ({
+                                                                            ...prev,
+                                                                            oldRoom: roomId,
+                                                                            isActiveRoomChange: true
+                                                                        }))
+                                                                    }}
                                                                     className="btn btn-info">Change</button>
                                                             </td>
                                                         </tr>
@@ -202,7 +224,7 @@ export default function InvoiceDetail() {
                                                     return (
                                                         <tr key={id}>
                                                             <td>
-                                                                {index}
+                                                                {index + 1}
                                                             </td>
                                                             <td>{id}</td>
                                                             <td>{name}</td>
@@ -247,7 +269,7 @@ export default function InvoiceDetail() {
                                 return (
                                     <div key={id}>
                                         <div className="mb-2">
-                                            <b>Service{index}: S-{id}</b> | {name}
+                                            <b>Service{index + 1}: S-{id}</b> | {name}
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center">
                                             Price<b>{price} VND</b>
@@ -261,7 +283,7 @@ export default function InvoiceDetail() {
                                 return (
                                     <div key={id}>
                                         <div className="mb-2">
-                                            <b>Room {index}: G{id}</b> | {roomType}
+                                            <b>Room {index + 1}: G{id}</b> | {roomType}
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center">
                                             Price <b>{price} VND</b>
@@ -290,6 +312,7 @@ export default function InvoiceDetail() {
                     </div>
                 </div>
             </div>
+            <PaymentDetail logs={logs} />
         </div >
     );
 }
