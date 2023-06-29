@@ -117,6 +117,12 @@ export default function RoomPaying() {
                             const { isCompleted, timeout } = data;
                             if (isCompleted) {
                                 clearInterval(interval2);
+                                createNotification({
+                                    type: "success",
+                                    title: "Payment Success",
+                                    message: `Your invoice being paid successfully at ${guest.payMethod} gateway,
+                                        please check your email ${guest.email} for seeing your invoice detail`
+                                });
                                 setTimeout(() => {
                                     clearInterval(interval1);
                                     buttonRef.current.click();
