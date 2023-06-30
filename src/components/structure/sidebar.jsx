@@ -85,7 +85,7 @@ export default function SideBar() {
             <li className="submenu">
               {" "}
               <a href="#">
-                <i className="fas fa-key"></i> <span> Room regulation </span>{" "}
+                <i className="fas fa-book"></i> <span> Room regulation </span>{" "}
                 <span className="menu-arrow"></span>
               </a>
               <ul className="submenu_class">
@@ -104,7 +104,7 @@ export default function SideBar() {
             <li className="submenu">
               {" "}
               <a href="#">
-                <i className="fas fa-key"></i> <span> Room detail </span>{" "}
+                <i className="fas fa-clipboard-list"></i> <span> Room detail </span>{" "}
                 <span className="menu-arrow"></span>
               </a>
               <ul className="submenu_class">
@@ -123,7 +123,7 @@ export default function SideBar() {
             <li className="submenu">
               {" "}
               <a href="#">
-                <i className="fas fa-key"></i> <span> Rooms </span>{" "}
+                <i className="fas fa-bed"></i> <span> Rooms </span>{" "}
                 <span className="menu-arrow"></span>
               </a>
               <ul className="submenu_class">
@@ -142,7 +142,7 @@ export default function SideBar() {
               <li className="submenu">
                 {" "}
                 <a href="#">
-                  <i className="fas fa-key"></i> <span> Report </span>{" "}
+                  <i className="fe fe-table"></i> <span> Report </span>{" "}
                   <span className="menu-arrow"></span>
                 </a>
                 <ul className="submenu_class">
