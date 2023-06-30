@@ -176,7 +176,7 @@ export default function SideBar() {
             <li className="submenu">
               {" "}
               <a href="#">
-                <i className="fas fa-key"></i> <span> Hotel Services </span>{" "}
+                <i className="fas fa-bell"></i> <span> Hotel Services </span>{" "}
                 <span className="menu-arrow"></span>
               </a>
               <ul className="submenu_class">
