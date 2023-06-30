@@ -58,7 +58,7 @@ export default function AdminDashBoard() {
         for (let m = 1; m <= month; m++) {
             monthList.push(m);
         }
-        // console.log(monthList)
+        console.log(monthList)
         RevenueList = []
         Promise.all(monthList.map(async (month) => {
 
@@ -70,8 +70,15 @@ export default function AdminDashBoard() {
                 data.forEach((revenue, index) => {
                     totalSum = totalSum + revenue.totalSum;
                 })
+
                 RevenueList.push(totalSum)
-                setTotalRevenue(totalRevenue + totalSum)
+                
+                totalSum=0;
+                RevenueList.forEach(x=>{
+                    totalSum=totalSum+x;
+                })
+                setTotalRevenue(totalSum)
+                console.log(totalSum);
 
             }).catch(err => {
                 const { message = "", code = err.response?.data } = err.response?.data;
@@ -79,7 +86,7 @@ export default function AdminDashBoard() {
             })
 
         }))
-        // console.log(RevenueList)
+        console.log(RevenueList)
 
 
         var chart = document.querySelector("#myChart");
@@ -207,7 +214,7 @@ export default function AdminDashBoard() {
                         <div className="card-body">
                             <div className="dash-widget-header">
                                 <div>
-                                    <h3 className="card_widget_header">{(revenue / totalRevenue) * 100} %</h3>
+                                    <h3 className="card_widget_header">{((revenue / totalRevenue) * 100).toFixed(2)} %</h3>
                                     <h6 className="text-muted">This month' revenue percentage</h6> </div>
                                 <div className="ml-auto mt-md-3 mt-lg-0"> <span className="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#009688" className="feather feather-globe">
                                     <circle cx="12" cy="12" r="10"></circle>
