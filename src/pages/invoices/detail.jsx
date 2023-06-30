@@ -46,6 +46,10 @@ export default function InvoiceDetail() {
         invoiceService.updateInvoiceStatus({ invoiceId: id })
             .then(data => {
                 dispatch(invoice.updateInvoiceStatus({ invoice: data }));
+                createNotification({
+                    type: "success",
+                    title: "Invoice paid", message: `Your invoice ${id} has been paid successfully`
+                });
             })
             .catch(err => {
                 const { message = "", code = err.response?.data } = err.response?.data;

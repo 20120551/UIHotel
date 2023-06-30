@@ -105,9 +105,12 @@ export default function RoomPaying() {
 
                         setTimeout(() => {
                             buttonRef.current.click();
-                            dispatch(search.createCard())
+                            dispatch(search.createCard({
+                                from: state.searchInfo.from,
+                                to: state.searchInfo.to
+                            }));
                             navigator("/");
-                        }, 1000 * 5);
+                        }, 1000 * 2);
                     }
                 }, 1000);
 
@@ -123,15 +126,19 @@ export default function RoomPaying() {
                                     message: `Your invoice being paid successfully at ${guest.payMethod} gateway,
                                         please check your email ${guest.email} for seeing your invoice detail`
                                 });
+                                setTimer(timeout * 1000);
                                 setTimeout(() => {
                                     clearInterval(interval1);
                                     buttonRef.current.click();
-                                    dispatch(search.createCard())
+                                    dispatch(search.createCard({
+                                        from: state.searchInfo.from,
+                                        to: state.searchInfo.to
+                                    }));
                                     navigator("/");
                                 }, 1000 * timeout);
                             }
                         }).catch(err => {
-                            const { message = "", code = err.response?.data } = err.response?.data;
+                            const { message = "", code = err.response?.data || "" } = err.response?.data;
                             createNotification({ type: "error", title: message, message: code });
                         })
                 }, 1000 * 10) // 30s

@@ -133,8 +133,9 @@ const searchReducer = (state, action) => {
         case payment.CREATE_PAYMENT:
             console.log("handling create card");
             console.log(action.payload);
+            const { from, to } = action.payload;
             index = cardInfo.findIndex(card =>
-                card.from === searchInfo.from && card.to === searchInfo.to);
+                card.from === from && card.to === to);
 
             if (index === -1) {
                 return { ...state };
