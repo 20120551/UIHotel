@@ -28,7 +28,7 @@ export default function Footer() {
                                 <ul>
                                     <li>(84) 969 486 906</li>
                                     <li>Roomee@hcmus.edu.com</li>
-                                    <li>Linh Trung Ward Đông Hòa, dĩ an,bình dương, Thu Duc District, Linh Trung, Khu Phố 6 .</li>
+                                    <li>Linh Trung Ward Đông Hòa, Dĩ An, Bình Dương, Thu Duc District, Linh Trung, Khu Phố 6 .</li>
                                 </ul>
                             </div>
                         </div>
