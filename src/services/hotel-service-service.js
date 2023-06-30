@@ -1,4 +1,4 @@
-import { privateAxios, createPrivateAxios } from "@lib/axios";
+import {createPrivateAxios } from "@lib/axios";
 
 export const getServiceByCategory = async ({ categoryId }) => {
   const response = await createPrivateAxios().get(
@@ -8,19 +8,19 @@ export const getServiceByCategory = async ({ categoryId }) => {
 };
 
 export const getAllServices = async () => {
-  const respone = await privateAxios.get("/service");
+  const respone = await createPrivateAxios().get("/service");
   return respone?.data;
 };
 
 export const addService = async (payload) => {
-  const respone = await privateAxios.post("/service", {
+  const respone = await createPrivateAxios().post("/service", {
     ...payload,
   });
   return respone?.data;
 };
 
 export const searchForService = async ({ value, category }) => {
-  const respone = await privateAxios.get(
+  const respone = await createPrivateAxios().get(
     `service/search?value=${value}&category=${category}`
   );
   return respone?.data;

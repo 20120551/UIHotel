@@ -1,4 +1,4 @@
-import axios, { privateAxios, createPrivateAxios } from '@lib/axios';
+import axios, {createPrivateAxios } from '@lib/axios';
 
 export const login = async ({ username, password }) => {
     const response = await axios.post('/user/login', {

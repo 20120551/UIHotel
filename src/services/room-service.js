@@ -1,4 +1,4 @@
-import axios, { pub, privateAxios } from "@lib/axios";
+import axios, {createPrivateAxios } from "@lib/axios";
 
 export const getFreeRooms = async ({ type, from, to }) => {
   const response = await axios.get(
@@ -12,26 +12,29 @@ export const getRoomDetail = async ({ id }) => {
   return response?.data;
 };
 export const GetAllRooms = async ({ page, pageSize }) => {
-  const response = await privateAxios.get(
+  const createAxios = createPrivateAxios();
+  const response = await createAxios.get(
     `/room?page=${page}&pageSize=${pageSize}`
   );
   return response?.data;
 };
 
 export const addRoom = async function (payload) {
-  const roomDetail = await privateAxios.post(`/room`, {
+  const createAxios = createPrivateAxios();
+  const roomDetail = await createAxios.post(`/room`, {
     ...payload,
   });
   return roomDetail.data;
 };
 export const deleteRoom = async (id) => {
-  const response = await privateAxios.delete(`/room?id=${id}`);
+  const createAxios = createPrivateAxios();
+  const response = await createAxios.delete(`/room?id=${id}`);
   return response?.data;
 };
 
 export const editRoom = async (payload) => {
-  console.log(payload);
-  const roomDetail = await privateAxios.put(`/room`, {
+  const createAxios = createPrivateAxios();
+  const roomDetail = await createAxios.put(`/room`, {
     ...payload,
   });
 };
