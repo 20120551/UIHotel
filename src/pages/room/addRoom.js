@@ -8,7 +8,7 @@ export default function AddRoom() {
   const [id, setID] = useState(0);
   const [status, setStatus] = useState("Active");
   const [note, setNote] = useState("");
-  const [detailID, setDetailID] = useState(0);
+  const [detailID, setDetailID] = useState(1);
   const [SelectedDetail, setSelectedDetail] = useState({
     id: 999,
     price: 9999,
@@ -25,9 +25,10 @@ export default function AddRoom() {
     },
   });
 
-  useState(() => {
+  useEffect(() => {
     roomDetailService.getAll().then((data) => {
       setDetails(data);
+      setDetailID(data[0]?.id);
       setSelectedDetail(data[0]);
     })
       .catch(err => {
