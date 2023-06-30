@@ -3,6 +3,7 @@ import MayEmpty from "@components/mayEmpty";
 import { useInvoice } from "@hooks/context-hooks";
 import { invoiceService } from "@services/index";
 import { invoice } from "@store/actions";
+import { getVietnameseDate } from "@utls/date";
 import { createNotification } from "@utls/notification";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -110,7 +111,7 @@ export default function Invoice() {
                                                     <td>
                                                         {id}
                                                     </td>
-                                                    <td>{date}</td>
+                                                    <td>{getVietnameseDate(new Date(date))}</td>
                                                     <td>
                                                         <InvoiceStatus status={status} />
                                                     </td>
