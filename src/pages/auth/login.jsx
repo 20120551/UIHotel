@@ -41,7 +41,7 @@ export default function Login() {
             <div className="login-wrapper">
                 <div className="container">
                     <div className="loginbox">
-                        <div className="login-left"> <img className="img-fluid" src="/assets/img/hotel_logo.png" alt="Logo" /> </div>
+                        <div className="login-left"> <img className="img-fluid" src="/assets/img/hotel_logo3.png" alt="Logo" /> </div>
                         <div className="login-right">
                             <div className="login-right-wrap">
                                 <h1>Login</h1>

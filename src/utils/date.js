@@ -13,6 +13,14 @@ export const getVietnameseDate = (date) => {
     const _date = new Date().toLocaleString('en-GB', options);
     return _date
 }
+export const compareDate = (date1, date2) => {
+    const _date1 = moment(date1, "DD/MM/YYYY").toDate();
+    const _date2 = moment(date2, "DD/MM/YYYY").toDate();
+
+    const timeDiff = _date1.getTime() - _date2.getTime();
+
+    return timeDiff > 0 ? 1 : -1;
+}
 
 export const substractDate = (date1, date2) => {
     const _date1 = moment(date1, "DD/MM/YYYY").toDate();

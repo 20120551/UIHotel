@@ -265,7 +265,7 @@ export default function InvoiceDetail() {
                         </div>
                         <div className="border my-3"></div>
                         <div>Time of stay</div>
-                        <div><b>22/05/2023 - 23/05/2023</b></div>
+                        <div><b>{state.invoice?.from} - {state.invoice?.to}</b></div>
                         <div className="border my-3"></div>
                         <div className="my-3">Price Details</div>
 

@@ -1,14 +1,34 @@
 import { invoice } from '@constant';
-import { getVietnameseDate } from '@utls/date';
+import { compareDate, getVietnameseDate, substractDate } from '@utls/date';
 
 const invoiceInitialState = {
     invoices: [],
     invoice: {
         hotelServices: [],
-        reservationCards: []
+        reservationCards: [],
+        from: '',
+        to: ''
     }
 }
 
+function getMinMaxDate(cards) {
+    let min = cards?.length ? cards[0].arrivalDate : getVietnameseDate();
+    let max = '01/01/1970';
+
+    for (let card of cards) {
+        const { arrivalDate, departureDate } = card;
+        console.log(min, arrivalDate);
+        if (compareDate(min, arrivalDate) > 0) {
+            min = arrivalDate;
+        }
+
+        if (compareDate(max, departureDate) < 0) {
+            max = departureDate;
+        }
+    }
+
+    return { min, max };
+}
 const invoiceReducer = (state, action) => {
     switch (action.type) {
         case invoice.GET_ALL_INVOICE:
@@ -21,9 +41,15 @@ const invoiceReducer = (state, action) => {
         case invoice.GET_INVOICE:
             console.log(action.payload.invoice);
             console.log("handling get all invoice event");
+            const { reservationCards } = action.payload.invoice;
+            const { min, max } = getMinMaxDate(reservationCards);
             return {
                 ...state,
-                invoice: action.payload.invoice
+                invoice: {
+                    ...action.payload.invoice,
+                    from: min,
+                    to: max
+                }
             }
         case invoice.ADD_RESERVATION_CARD:
             console.log(action.payload.cards);

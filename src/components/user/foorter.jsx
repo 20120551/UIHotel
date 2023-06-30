@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <footer className="footer-section">
-            <link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous"></link>
+            <link rel="stylesheet" media="all" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossOrigin="anonymous"></link>
             <div className="container">
                 <div className="footer-text">
                     <div className="row">
