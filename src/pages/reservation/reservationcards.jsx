@@ -88,7 +88,14 @@ export default function Reservation() {
     }
 
     const HandleDeleteReservationCard = (id) => {
-        reservationService.deleteReservationCard({ cardId: id });
+        reservationService.deleteReservationCard({ cardId: id })
+        .then(() => {
+            createNotification({ type: "success", title: "delete success", message: `Delete successfully reservation card id: ${id}` });
+        })
+        .catch(err => {
+            const { message = "", code = err.response?.data } = err.response?.data;
+            createNotification({ type: "error", title: message, message: code });
+        });
         setReservationCards(reservationCards.filter(c => c.id !== id));
     }
 

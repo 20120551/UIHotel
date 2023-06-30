@@ -34,13 +34,13 @@ function EditRegulation() {
             }
             else {
                 console.log('haha');
-                alert("Invalid room regulation id");
-                navigate("/regulation");
+                createNotification({ type: "warning", title: "error", message: "Invalid room regulation id" });
+                navigate("/hotel/regulation");
             }
         }).catch(err => {
             const { message = "", code = err.response?.data } = err.response?.data;
             createNotification({ type: "error", title: message, message: code });
-            navigate("/regulation")
+            navigate("/hotel/regulation")
         });
 
     }, [idr]);
@@ -54,15 +54,14 @@ function EditRegulation() {
             maxSurchargeRatio: maxSurchargeRatio,
             defaultGuest: defaultGuest
         }).then(data => {
-            navigate("/regulation");
+            navigate("/hotel/regulation");
             console.log(data);
             setDefaultGuets("");
             setMaxOverseaSurchagreRatio("");
             setMaximumGuests("");
             setRoomExchangeFee("");
             setMaxSurchargeRatio("");
-            alert("New room regulation successfully added");
-
+            createNotification({ type: "success", title: "add success", message: "New room regulation successfully added" });
 
         }).catch(err => {
             const { message = "", code = err.response?.data } = err.response?.data;
