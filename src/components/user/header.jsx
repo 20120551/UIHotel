@@ -12,7 +12,7 @@ export default function Header() {
                         <div className="col-lg-2 d-flex align-items-center justify-content-end">
                             <div className="logo">
                                 <Link to="/">
-                                    <img src="/assets/img/myRoomee.png" className="w-75"  alt="" />
+                                    <img src="/assets/img/myRoomee.png" className="w-50"  alt="" />
                                 </Link>
                             </div>
                         </div>
