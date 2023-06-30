@@ -173,6 +173,24 @@ export default function SideBar() {
                 </ul>
               </li>
             </ProtectComponent>
+            <li className="submenu">
+              {" "}
+              <a href="#">
+                <i className="fas fa-key"></i> <span> Hotel Services </span>{" "}
+                <span className="menu-arrow"></span>
+              </a>
+              <ul className="submenu_class">
+                <li>
+                  <Link to="/hotel/service">All Services </Link>
+                </li>
+
+                <ProtectComponent allowRoles={[role.MANAGER]}>
+                  <li>
+                    <Link to="/hotel/service/add-service"> Add Service </Link>
+                  </li>
+                </ProtectComponent>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

@@ -103,14 +103,16 @@ function RoomList() {
   const [end, setEnd] = useState(1);
 
   useEffect(() => {
-    roomService.GetAllRooms({ page: index, pageSize: 5 }).then((data) => {
-      setRooms(data.values);
-      setEnd(data.totalPage);
-    }).catch(err => {
-      const { message = "", code = "" } = err.response?.data;
-      createNotification({ type: "error", title: message, message: code });
-    });
-
+    roomService
+      .GetAllRooms({ page: index, pageSize: 5 })
+      .then((data) => {
+        setRooms(data.values);
+        setEnd(data.totalPage);
+      })
+      .catch((err) => {
+        const { message = "", code = "" } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
+      });
   }, [index]);
 
   return (
