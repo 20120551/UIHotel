@@ -6,6 +6,7 @@ import 'daterangepicker/daterangepicker.css';
 import 'daterangepicker';
 import moment from "moment";
 import $ from 'jquery';
+import { createNotification } from "@utls/notification";
 
 export default function SearchBar({ handleSearch, info }) {
     const [search, setSearch] = useState({ ...info });
@@ -50,8 +51,8 @@ export default function SearchBar({ handleSearch, info }) {
                             <label>Are you sure</label>
                             <div className="date cal-icon" id="date1" data-target-input="nearest">
                                 <input
-                                    onChange={(e) => setSearch(prev => ({ ...prev, from: e.target.value }))}
-                                    value={search.from}
+                                    onChange={(e) => setSearch(prev => ({ ...prev, from: fromRef.current.value }))}
+                                    value={fromRef.current ? fromRef.current.value : search.from}
                                     type="text" ref={fromRef} className="form-control" placeholder="Check in"
                                     data-target="#date1" data-toggle="datetimepicker" />
                             </div>
@@ -60,8 +61,8 @@ export default function SearchBar({ handleSearch, info }) {
                             <label>Are you sure</label>
                             <div className="date cal-icon" id="date2" data-target-input="nearest">
                                 <input
-                                    onChange={(e) => setSearch(prev => ({ ...prev, to: e.target.value }))}
-                                    value={search.to}
+                                    onChange={(e) => setSearch(prev => ({ ...prev, to: toRef.current.value }))}
+                                    value={toRef.current ? toRef.current.value : search.to}
                                     type="text" ref={toRef} className="form-control" placeholder="Check out"
                                     data-target="#date2" data-toggle="datetimepicker" />
                             </div>
@@ -87,7 +88,11 @@ export default function SearchBar({ handleSearch, info }) {
                 </div>
                 <div className="col-md-2 d-inline-flex p-3">
                     <button
-                        onClick={() => handleSearch(search)}
+                        onClick={() => handleSearch({
+                            ...search,
+                            from: fromRef.current.value,
+                            to: toRef.current.value
+                        })}
                         className="btn btn-primary w-100">Submit</button>
                 </div>
             </div>
