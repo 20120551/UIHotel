@@ -1,10 +1,19 @@
 import { substractDate } from "@utls/date";
+import { createNotification } from "@utls/notification";
 
 export default function PayInfo({
     searchInfo,
     cardInfo = [],
     handleBookingRemove,
     handleCreateCard }) {
+    const _handleCreateCard = function () {
+        if (cardInfo.length === 0) {
+            createNotification({ type: "error", message: "your reservation card is empty", title: "invalid input" });
+            return;
+        }
+
+        handleCreateCard();
+    }
     return (
         <div className="bg-white p-4">
             <div className="page-header ml-2">
@@ -40,13 +49,13 @@ export default function PayInfo({
             <div className="d-flex justify-content-between">
                 <div>Total Amount</div>
                 <h4 className="font-weight-bold">{
-                        parseFloat(cardInfo.reduce((init, card) =>
-                            init + (card?.price || 0) * 
-                            (substractDate(searchInfo.from, searchInfo.to) + 1), 0)).toLocaleString('en')} VND</h4>
+                    parseFloat(cardInfo.reduce((init, card) =>
+                        init + (card?.price || 0) *
+                        (substractDate(searchInfo.from, searchInfo.to) + 1), 0)).toLocaleString('en')} VND</h4>
             </div>
             <button
                 data-toggle="modal" data-target="#exampleModal"
-                onClick={() => handleCreateCard()}
+                onClick={() => _handleCreateCard()}
                 className="btn btn-info btn-block my-3">
                 next
             </button>
