@@ -20,7 +20,7 @@ import Notfound from "@pages/error/notfound";
 import ServerInterval from "@pages/error/serverInterval";
 import Unauthorization from "@pages/error/unauthorization";
 import NotFound from "@pages/error/notfound";
-import EditStaff from "@pages/staff/editStaff";
+import Profile from "@pages/home/profile";
 function App() {
   return (
     <>
@@ -38,7 +38,7 @@ function App() {
             <Route path="reservation/*" element={<ReservationRoute />} />
             <Route path="room-detail/*" element={<RoomDetailRoute />} />
             <Route path="regulation/*" element={<RoomRegulationRoute />} />
-            <Route path="profile/:id" element={<EditStaff />} />
+            <Route path="profile" element={<Profile />} />
             <Route index element={<DashBoardRoute />} />
           </Route>
         </Route>

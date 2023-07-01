@@ -51,8 +51,9 @@ function SearchBar(props) {
       .then((data) => {
         props.updateList(data);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(function (err) {
+        const { message = "", code = "" } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
       });
   };
   return (
@@ -80,9 +81,9 @@ function SearchBar(props) {
                   onChange={(e) => setCat(e.target.value)}
                 >
                   <option>All categories</option>
-                  <option>Room service</option>
-                  <option>Food</option>
-                  <option>Drink</option>
+                  <option value="Room service">Room service</option>
+                  <option value="Food">Food</option>
+                  <option value="Drink">Drink</option>
                 </select>
               </div>
             </div>
@@ -121,6 +122,18 @@ function ItemList() {
   const searchResult = (result) => {
     setServices(result);
   };
+
+  const handleRemoveService = function (e, id) {
+    e.preventDefault();
+    hotelServiceService.deleteService({ id })
+      .then(_ => {
+        setServices(prev => prev.filter(service => service.id !== id));
+        createNotification({ type: "success", title: "delete service", message: `delete service at ${id} successfully` });
+      }).catch(err => {
+        const { message = "", code = "" } = err.response?.data;
+        createNotification({ type: "error", title: message, message: code });
+      })
+  }
 
   return (
     <>
@@ -164,8 +177,9 @@ function ItemList() {
 
                           <td>
                             <div
-                              className="actions"
-                              style={{ backgroundColor: "#dae0e5" }}
+                              className="btn btn-sm bg-success-light"
+                              style={{ width: "120px" }}
+                            // style={{ backgroundColor: "#dae0e5" }}
                             >
                               {s.category}
                             </div>
@@ -187,22 +201,12 @@ function ItemList() {
                                 <i className="fas fa-ellipsis-v ellipse_color"></i>
                               </a>
                               <div className="dropdown-menu dropdown-menu-right">
-                                {" "}
                                 <a
                                   className="dropdown-item"
-                                  href="edit-service.html"
+                                  onClick={(e) => handleRemoveService(e, s.id)}
                                 >
                                   <i className="fas fa-pencil-alt m-r-5"></i>
-                                  Edit
-                                </a>{" "}
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  data-toggle="modal"
-                                  data-target="#delete_asset"
-                                >
-                                  <i className="fa-solid fa-user-xmark"></i>
-                                  Remove service
+                                  Remove
                                 </a>
                               </div>
                             </div>

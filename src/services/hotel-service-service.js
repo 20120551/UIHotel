@@ -1,4 +1,4 @@
-import {createPrivateAxios } from "@lib/axios";
+import { createPrivateAxios } from "@lib/axios";
 
 export const getServiceByCategory = async ({ categoryId }) => {
   const response = await createPrivateAxios().get(
@@ -25,3 +25,10 @@ export const searchForService = async ({ value, category }) => {
   );
   return respone?.data;
 };
+
+export const deleteService = async ({ id }) => {
+  const respone = await createPrivateAxios().delete(
+    `/service/${id}`
+  );
+  return respone?.data;
+}

@@ -48,7 +48,7 @@ function Header() {
                 <p className="text-muted mb-0">{state.role}</p>
               </div>
             </div>
-            <Link className="dropdown-item" to={`profile/${state.user?.id}`}>My Profile</Link>
+            <Link className="dropdown-item" to={`profile`}>My Profile</Link>
             <div
               onClick={handleLogout}
               className="dropdown-item"

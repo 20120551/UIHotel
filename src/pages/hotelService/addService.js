@@ -28,7 +28,7 @@ function Header() {
 
 function SeviceForm() {
   const [serviceName, setServiceName] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Room service");
   const [price, setPrice] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
